@@ -145,6 +145,17 @@ var _hmt = _hmt || [];
 									
 							<ul>
 								<li class="file">
+									<a href="/2022/01/21/spring-mvc/00-hello/">
+                     
+										    00-hello
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
 									<a href="/2022/01/19/spring-mvc/01-SpringMVC%E7%AE%80%E4%BB%8B/">
                      
 										    01-SpringMVC简介
@@ -159,17 +170,6 @@ var _hmt = _hmt || [];
 									<a href="/2022/01/21/spring-mvc/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/">
                      
 										    02-SpringMVC工程创建
-                     
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
-									<a href="/2022/01/21/spring-mvc/03-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/">
-                     
-										    03-SpringMVC工程创建
                      
 									</a>
 								</li>
@@ -227,6 +227,8 @@ var _hmt = _hmt || [];
 <p>可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置SpringMVC前端控制器，对前端的请求做统一管理--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>SpringMVC<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--选择SpringMVC自带的前端控制器DispatcherServlet--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--使用init-param标签(初始化参数)来改变SpringMVC配置文件的存放路径和名称</span></span><br><span class="line"><span class="comment">        参数：</span></span><br><span class="line"><span class="comment">        &lt;param-name&gt;:contextConfigLocation(上下文路径)-&gt;固定为这个</span></span><br><span class="line"><span class="comment">        &lt;param-value&gt;:需使用classpath来代表在main路径下的文件，填写好对应的名称(与自己创建配置文件时起的名称一致便可)</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:SpringMVC.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--SpringMVC的配置文件初始化默认是在浏览器的第一次请求时，如果有大量的配置文件需要初始化则会严重影响浏览器第一次时的速度</span></span><br><span class="line"><span class="comment">        因此使用&lt;load-on-startup&gt;标签将DispatcherServlet的初始化时间提前到服务器启动时</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>SpringMVC<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--因为是对所有请求进行处理，&quot;/&quot;代表当前浏览器所发生的所有请求</span></span><br><span class="line"><span class="comment">        例如/login或.js,.css等等的请求路径,但不包括对.jsp文件的请求路径--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
+<p>​       SpringMVCp配置文件的位置:</p>
+<p>​       <img src="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/image-20220121082508739.png" alt="image-20220121082508739"></p>
 
 </div>
 
@@ -234,9 +236,9 @@ var _hmt = _hmt || [];
     <div class="post-guide">
         <div class="item left">
             
-              <a href="/2022/01/21/spring-mvc/03-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/">
+              <a href="/2022/01/21/spring-mvc/00-hello/">
                   <i class="fa fa-angle-left" aria-hidden="true"></i>
-                  03-SpringMVC工程创建
+                  00-hello
               </a>
             
         </div>
