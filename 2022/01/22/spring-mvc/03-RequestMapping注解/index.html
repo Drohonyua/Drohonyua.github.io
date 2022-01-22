@@ -313,12 +313,6 @@ var _hmt = _hmt || [];
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;testPath/&#123;id&#125;/&#123;username&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testPath</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id,<span class="meta">@PathVariable(&quot;username&quot;)</span> String username)</span></span>&#123;</span><br><span class="line">    	<span class="comment">//请求路径/testPath/1/haha请求路径也必须有这一路径即/testPath已经不能访问了</span></span><br><span class="line">		System.out.println(<span class="string">&quot;id:&quot;</span>+id+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot;username:&quot;</span>+username);</span><br><span class="line">      	<span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>注：</p>
-<p>若请求所传输的请求参数中<strong>有多个同名的请求参数</strong>，此时可以在控制器方法的形参中设置<strong>字符串数组或者字符串类型的形参接收此请求参数</strong></p>
-<p>若使用<strong>字符串数组类型的形参</strong>，此<strong>参数的数组中包含了每一个数据</strong></p>
-<p>若使<strong>用字符串类型的形参</strong>，<strong>此参数的值为每个数据中间使用逗号拼接的结果</strong></p>
-</blockquote>
 
 </div>
 
