@@ -143,17 +143,6 @@ var _hmt = _hmt || [];
 									
 							<ul>
 								<li class="file">
-									<a href="/2022/01/21/spring-mvc/00-hello/">
-                     
-										    00-hello
-                     
-									</a>
-								</li>
-								<div class="article-toc" style="display: none;"></div>
-							</ul>
-			
-							<ul>
-								<li class="file">
 									<a href="/2022/01/19/spring-mvc/01-SpringMVC%E7%AE%80%E4%BB%8B/">
                      
 										    01-SpringMVC简介
@@ -185,6 +174,28 @@ var _hmt = _hmt || [];
 								<div class="article-toc" style="display: none;"></div>
 							</ul>
 			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/">
+                     
+										    04-SpringMVC获取请求参数
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/22/spring-mvc/hello/">
+                     
+										    hello
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
 								</li>
 								
 							</ul>
@@ -198,13 +209,12 @@ var _hmt = _hmt || [];
 		<div id="index">
 	
 		<div class="index-li">
-			<a href="/2022/01/22/spring-mvc/03-RequestMapping%E6%B3%A8%E8%A7%A3/">
+			<a href="/2022/01/22/spring-mvc/hello/">
 				<h2 class="index-title">
-					03-RequestMapping注解
+					hello
 				</h2>
 				<div class="index-brief">
-					123123
-
+					
 					...
 				</div>
 			</a>
@@ -217,18 +227,39 @@ var _hmt = _hmt || [];
 		</div>	
 	
 		<div class="index-li">
-			<a href="/2022/01/21/spring-mvc/00-hello/">
+			<a href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/">
 				<h2 class="index-title">
-					00-hello
+					04-SpringMVC获取请求参数
 				</h2>
 				<div class="index-brief">
-					Hello SpringMVC
-
+					1、通过ServletAPI获取将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象（如果使用了占位符的方式获取参数则不能在使用这种方式获取）
+页面代码:
+1&lt;a th:href=&quot;@&#12
 					...
 				</div>
 			</a>
                 <div class="article-meta">
-				    <span>2022-01-21</span>
+				    <span>2022-01-22</span>
+                    
+                            
+                    
+                </div>
+		</div>	
+	
+		<div class="index-li">
+			<a href="/2022/01/22/spring-mvc/03-RequestMapping%E6%B3%A8%E8%A7%A3/">
+				<h2 class="index-title">
+					03-RequestMapping注解
+				</h2>
+				<div class="index-brief">
+					1.@RequestMapping作用从注解名称上我们可以看到，@RequestMapping注解的作用就是将请求和处理请求的控制器中的方法关联起来，建立映射关系。
+SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的控制器方法来处理这个请求。
+注意：如果有多个@RequetMappi
+					...
+				</div>
+			</a>
+                <div class="article-meta">
+				    <span>2022-01-22</span>
                     
                             
                     

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	
+	<!-- title -->
+	
+	<title>
+	
+		03-RequestMapping注解 | 
+	 
+	Drohonyua Blog
+	</title>
+	
+	<!-- keywords,description -->
+	 
+
+	<!-- favicon -->
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+	
+
+
+	<!-- search -->
+	<script>
+		var searchEngine = "https://www.google.com/search?q=";
+		if(typeof searchEngine == "undefined" || searchEngine == null || searchEngine == ""){
+			searchEngine = "https://www.google.com/search?q=";
+		}
+		var homeHost = "wujun234.github.io";
+		if(typeof homeHost == "undefined" || homeHost == null || homeHost == ""){
+			homeHost = window.location.host;
+		}
+	</script>
+
+
+	
+<link rel="stylesheet" href="/css/main.css">
+
+	
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/darcula.min.css">
+
+	
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+
+	
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+	
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+	
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+
+	
+<script src="https://cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js"></script>
+
+	
+<script src="/js/main.js"></script>
+
+	
+		
+<script src="https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+
+		
+<script src="https://cdn.jsdelivr.net/npm/valine@v1.4.14/dist/Valine.min.js"></script>
+
+	
+	
+		<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+	<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?3efe99c287df5a1d6f0d02d187e403c1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<header id="header">
+    <a id="title" href="/" class="logo">Drohonyua Blog</a>
+
+	<ul id="menu">
+		<li class="menu-item">
+			<a href="/about" class="menu-item-link">ABOUT</a>
+		</li>
+	
+
+	
+	
+		<li class="menu-item">
+			<a href="/categories" class="menu-item-link">分类</a>
+		</li>
+		<li class="menu-item">
+			<a href="https://blog.csdn.net/weixin_44760622?spm=1000.2115.3001.5343" class="menu-item-link" target="_blank">
+				CSDN
+			</a>
+		</li>
+		<li class="menu-item">
+			<a href="https://github.com/Drohonyua" class="menu-item-link" target="_blank">
+				<i class="fa fa-github fa-2x"></i>
+			</a>
+		</li>
+	</ul>
+</header>
+
+	
+<div id="sidebar">
+	<button id="sidebar-toggle" class="toggle" ><i class="fa fa-arrow-right " aria-hidden="true"></i></button>
+	
+	<div id="site-toc">
+		<input id="search-input" class="search-input" type="search" placeholder="按回车全站搜索">
+		<div id="tree">
+			
+
+			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/19/hello-world/">
+                     
+										    hello-world
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="directory">
+									<a href="#" class="directory">
+										<i class="fa fa-plus-square-o"></i>
+										spring-mvc
+									</a>
+									
+							<ul>
+								<li class="file">
+									<a href="/2022/01/19/spring-mvc/01-SpringMVC%E7%AE%80%E4%BB%8B/">
+                     
+										    01-SpringMVC简介
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/21/spring-mvc/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/">
+                     
+										    02-SpringMVC工程创建
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file active">
+									<a href="/2022/01/22/spring-mvc/03-RequestMapping%E6%B3%A8%E8%A7%A3/">
+                     
+										    03-RequestMapping注解
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/">
+                     
+										    04-SpringMVC获取请求参数
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
+									<a href="/2022/01/22/spring-mvc/hello/">
+                     
+										    hello
+                     
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+								</li>
+								
+							</ul>
+			
+		</div>
+	</div>
+</div>
+
+	<!-- 引入正文 -->
+	<div id="content">
+		<h1 id="article-title">
+	03-RequestMapping注解
+</h1>
+<div class="article-meta">
+	
+	<span>John Doe</span>
+	<span>2022-01-22 15:04:39</span>
+		<div id="article-categories">
+    
+		<span>Categories：</span>
+            
+    
+
+    
+		<span>Tags：</span>
+            
+    
+		</div>
+
+</div>
+
+<div id="article-content">
+	<h1 id="1-RequestMapping作用"><a href="#1-RequestMapping作用" class="headerlink" title="1.@RequestMapping作用"></a>1.@RequestMapping作用</h1><p>从注解名称上我们可以看到，@RequestMapping注解的作用就是将请求和处理请求的控制器中的方法关联起来，建立映射关系。</p>
+<p>SpringMVC 接收到指定的请求，就会来找到在映射关系中对应的控制器方法来处理这个请求。</p>
+<p>注意：如果有多个@RequetMapping注解，则@RequetMapping的vluae值不能相同(相同时则代表请求路径相同，Spring不知道使用哪个映射关系),但可以通过其他方式如设置其他参数等等来帮助spring区分</p>
+<h1 id="2-RequestMapping位置"><a href="#2-RequestMapping位置" class="headerlink" title="2.@RequestMapping位置"></a>2.@RequestMapping位置</h1><p>@RequestMapping可以标识类也可以标识方法</p>
+<p>@RequestMapping标识一个类：<strong>设置映射请求的请求路径的初始信息，即请求路径加多一层目录,便于在工程中对于不同模块的控制器加以区分</strong></p>
+<p>@RequestMapping标识一个方法：设置映射请求请求路径的具体信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestMappingController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//此时请求映射所映射的请求的请求路径必须为：/hello/testRequestMapping</span></span><br><span class="line">    <span class="comment">//即请求http://localhost:8080/SpringMVC/hello/testRequestMapping</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/testRequestMapping&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">testRequestMapping</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//如果不使用@RequestMapping标识类则请求路径为http://localhost:8080/SpringMVC/testRequestMapping便可</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-RequestMapping的value属性"><a href="#3-RequestMapping的value属性" class="headerlink" title="3.@RequestMapping的value属性"></a>3.@RequestMapping的value属性</h1><p>@RequestMapping注解的value属性通过请求的请求地址来匹配请求映射</p>
+<p>@RequestMapping注解的<strong>value属性是一个字符串类型的数组</strong>，表示该请求映射<strong>能够匹配多个请求地址所对应的请求</strong></p>
+<p>@RequestMapping注解的<strong>value属性必须设置</strong>，至少通过请求地址匹配请求映射</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestMappingController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &#123;&quot;/testRequestMapping&quot;,&quot;/test&quot;&#125;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">success</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//请求路径可以为 /SpringMVC/testRequestMapping,也可以是/SpringMVC/test都能访问success网页</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-RequestMapping的methode属性"><a href="#4-RequestMapping的methode属性" class="headerlink" title="4.@RequestMapping的methode属性"></a>4.@RequestMapping的methode属性</h1><p>@RequestMapping注解的method属性通过请求的请求方式（get或post）匹配请求映射，即浏览器必须使用固定的请求方法(get或post)才能请求到该方法</p>
+<p>{</p>
+<p>回顾get与post区别 </p>
+<p>get:会把请求参数拼接到url中，效率较高但不安全,传输的数据量有限,文件上传不能用get</p>
+<p>post:会把请求参数放到请求体中，效率不高但较为安全，传输数据量可以较多约等于无限</p>
+<p>}</p>
+<p>@RequestMapping注解的method属性是一个RequestMethod类型的数组，表示该请求映射能够匹配多种请求方式的请求</p>
+<p>若当前请求的请求地址满足请求映射的value属性，但是请求方式不满足method属性，则浏览器报错405：Request method ‘POST’ not supported</p>
+<p>页面中代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/test&#125;&quot;</span>&gt;</span>测试@RequestMapping的value属性--&gt;/test<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">&quot;@&#123;/test&#125;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器中代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestMappingController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &#123;&quot;/testRequestMapping&quot;,&quot;test&quot;&#125;,method = &#123;RequestMethod.GET&#125;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">success</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//必须使用GET方法才能请求到该方法</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：</p>
+<p>1、对于处理指定请求方式的控制器方法，SpringMVC中提供了@RequestMapping的派生注解</p>
+<p>处理get请求的映射–&gt;@GetMapping  表示查询</p>
+<p>处理post请求的映射–&gt;@PostMapping 表示添加</p>
+<p>处理put请求的映射–&gt;@PutMapping 表示修改</p>
+<p>处理delete请求的映射–&gt;@DeleteMapping 表示删除</p>
+<p>例如@PostMapping(value = {“/testRequestMapping”,”test”}) 它就等于@RequestMapping(value = {“/testRequestMapping”,”test”},method = {RequestMethod.POST})</p>
+<p>2、常用的请求方式有get，post，put，delete</p>
+<p>但是目前浏览器只支持get和post，若在form表单提交时，为method设置了其他请求方式的字符串（put或delete），则按照默认的请求方式get处理</p>
+<p>若要发送put和delete请求，则需要通过spring提供的过滤器HiddenHttpMethodFilter，在RESTful部分会讲到</p>
+</blockquote>
+<h1 id="5、-RequestMapping注解的params属性（了解）"><a href="#5、-RequestMapping注解的params属性（了解）" class="headerlink" title="5、@RequestMapping注解的params属性（了解）"></a>5、@RequestMapping注解的params属性（了解）</h1><p>@RequestMapping注解的params属性通过请求的请求参数匹配请求映射</p>
+<p>@RequestMapping注解的params属性是一个字符串类型的数组，可以通过四种表达式设置请求参数和请求映射的匹配关系</p>
+<p>“param”：要求请求映射所匹配的请求必须携带param请求参数</p>
+<p>“!param”：要求请求映射所匹配的请求必须不能携带param请求参数</p>
+<p>“param=value”：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
+<p>“param!=value”：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
+<p>页面代码:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/test(username=&#x27;admin&#x27;,password=123456)&quot;</span>&gt;</span>测试@RequestMapping的params属性--&gt;/test<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(</span></span><br><span class="line"><span class="meta">        value = &#123;&quot;/testRequestMapping&quot;, &quot;/test&quot;&#125;</span></span><br><span class="line"><span class="meta">        ,method = &#123;RequestMethod.GET, RequestMethod.POST&#125;</span></span><br><span class="line"><span class="meta">    	//请求必须满足有username参数并且password=123456</span></span><br><span class="line"><span class="meta">        ,params = &#123;&quot;username&quot;,&quot;password!=123456&quot;&#125;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testRequestMapping</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：</p>
+<p>若当前请求满足@RequestMapping注解的value和method属性，但是不满足params属性，此时页面回报错400：Parameter conditions “username, password!=123456” not met for actual request parameters: username={admin}, password={123456}</p>
+</blockquote>
+<h1 id="6、-RequestMapping注解的headers属性（了解）"><a href="#6、-RequestMapping注解的headers属性（了解）" class="headerlink" title="6、@RequestMapping注解的headers属性（了解）"></a>6、@RequestMapping注解的headers属性（了解）</h1><p>@RequestMapping注解的headers属性通过请求的请求头信息匹配请求映射</p>
+<p>@RequestMapping注解的headers属性是一个字符串类型的数组，可以通过四种表达式设置请求头信息和请求映射的匹配关系</p>
+<p>“header”：要求请求映射所匹配的请求必须携带header请求头信息</p>
+<p>“!header”：要求请求映射所匹配的请求必须不能携带header请求头信息</p>
+<p>“header=value”：要求请求映射所匹配的请求必须携带header请求头信息且header=value</p>
+<p>“header!=value”：要求请求映射所匹配的请求必须携带header请求头信息且header!=value</p>
+<p>若当前请求满足@RequestMapping注解的value和method属性，但是不满足headers属性，此时页面显示404错误，即资源未找到</p>
+<h1 id="7-浏览器状态码"><a href="#7-浏览器状态码" class="headerlink" title="7.浏览器状态码"></a>7.浏览器状态码</h1><p>1.header不匹配    状态码：404</p>
+<p>2.method不匹配   状态码：405</p>
+<p>3.params不匹配   状态码：400</p>
+<p>4.value不匹配       状态码：404</p>
+<h1 id="8-SpringMVC支持ant风格的路径"><a href="#8-SpringMVC支持ant风格的路径" class="headerlink" title="8.SpringMVC支持ant风格的路径"></a>8.SpringMVC支持ant风格的路径</h1><p>地址模糊匹配的功能</p>
+<p>？：表示任意的单个字符</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/a?a/testAnt&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testAnt</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//请求地址可以为/aqa/testAnt或者/aba/testAnt均能访问即?可以为任意字符(&quot;/&quot;和&quot;?&quot;不行，特殊字符不行)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>*：表示任意的0个或多个字符</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/a*b/testAnt&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testAnt2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//请求地址可以为/aqb/testAnt或者/abdab/testAnt(a和b之间可以任意数量任意字符特殊符号除外)或者/ab/testAnt(不写)均能访问</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>**：表示任意的一层或多层目录</p>
+<p>注意：在使用**时，只能使用/**/xxx的方式/a**a/xxx</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/**/testAnt&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testAnt3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//请求地址可以为/sadasdsda/testAnt(目录任意字符任意数量，特殊符合也可以)均能访问</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="9、SpringMVC支持路径中的占位符（重点）"><a href="#9、SpringMVC支持路径中的占位符（重点）" class="headerlink" title="9、SpringMVC支持路径中的占位符（重点）"></a>9、SpringMVC支持路径中的占位符（重点）</h1><p>原始方式：/deleteUser?id=1</p>
+<p>rest方式：/deleteUser/1</p>
+<p>SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，就可以在相应的@RequestMapping注解的value属性中通过<strong>占位符{xxx}<strong>表示传输的数据，</strong>在通过@PathVariable注解</strong>，将占位符所表示的数据赋值给控制器方法的形参</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/testPath/1/haha&#125;&quot;</span>&gt;</span>测试获取请求参数--&gt;/testParam<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;testPath/&#123;id&#125;/&#123;username&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testPath</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id,<span class="meta">@PathVariable(&quot;username&quot;)</span> String username)</span></span>&#123;</span><br><span class="line">    	<span class="comment">//请求路径/testPath/1/haha请求路径也必须有这一路径即/testPath已经不能访问了</span></span><br><span class="line">		System.out.println(<span class="string">&quot;id:&quot;</span>+id+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot;username:&quot;</span>+username);</span><br><span class="line">      	<span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：</p>
+<p>若请求所传输的请求参数中<strong>有多个同名的请求参数</strong>，此时可以在控制器方法的形参中设置<strong>字符串数组或者字符串类型的形参接收此请求参数</strong></p>
+<p>若使用<strong>字符串数组类型的形参</strong>，此<strong>参数的数组中包含了每一个数据</strong></p>
+<p>若使<strong>用字符串类型的形参</strong>，<strong>此参数的值为每个数据中间使用逗号拼接的结果</strong></p>
+</blockquote>
+
+</div>
+
+
+    <div class="post-guide">
+        <div class="item left">
+            
+              <a href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i>
+                  04-SpringMVC获取请求参数
+              </a>
+            
+        </div>
+        <div class="item right">
+            
+              <a href="/2022/01/21/spring-mvc/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/">
+                02-SpringMVC工程创建
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </a>
+            
+        </div>
+    </div>
+
+
+
+
+<script>
+	
+	
+</script>
+	</div>
+	<div id="footer">
+	<p>
+	©2019-<span id="footerYear"></span> 
+	<a href="/">John Doe</a> 
+	
+	
+		|
+		<span id="busuanzi_container_site_pv">
+			pv
+			<span id="busuanzi_value_site_pv"></span>
+		</span>
+		|
+		<span id="busuanzi_container_site_uv"> 
+			uv
+			<span id="busuanzi_value_site_uv"></span>
+		</span>
+	
+	<br>
+	Theme <a href="//github.com/wujun234/hexo-theme-tree" target="_blank">Tree</a>
+	by <a href="//github.com/wujun234" target="_blank">WuJun</a>
+	Powered by <a href="//hexo.io" target="_blank">Hexo</a>
+	</p>
+</div>
+<script type="text/javascript"> 
+	document.getElementById('footerYear').innerHTML = new Date().getFullYear() + '';
+</script>
+	<button id="totop-toggle" class="toggle"><i class="fa fa-angle-double-up" aria-hidden="true"></i></button>
+</body>
+</html>
