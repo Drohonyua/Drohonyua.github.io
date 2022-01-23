@@ -128,7 +128,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(5)</small>
+                <small>(6)</small>
             
         </div>
     </li>
@@ -139,7 +139,7 @@
                     <div data-rel="SpringMVC">
                         
                         SpringMVC
-                        <small>(4)</small>
+                        <small>(5)</small>
                         
                     </div>
                     
@@ -164,7 +164,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_posts_number" value="6">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -214,6 +214,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/spring-mvc/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
         
         <a  class="全部文章 SpringMVC "
            href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
@@ -293,7 +301,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-23 18:52:03'>2022-01-22 22:37</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-23 22:49:53'>2022-01-22 22:37</time>
         
     </div>
     <div class="article-meta">
@@ -315,7 +323,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87ServletAPI%E8%8E%B7%E5%8F%96"><span class="toc-text">1、通过ServletAPI获取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%80%9A%E8%BF%87%E6%8E%A7%E5%88%B6%E5%99%A8%E6%96%B9%E6%B3%95%E7%9A%84%E5%BD%A2%E5%8F%82%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="toc-text">2、通过控制器方法的形参获取请求参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-RequestParam"><span class="toc-text">3.@RequestParam</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81-RequestHeader"><span class="toc-text">4、@RequestHeader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81-CookieValue"><span class="toc-text">5、@CookieValue</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87ServletAPI%E8%8E%B7%E5%8F%96"><span class="toc-text">1、通过ServletAPI获取</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%80%9A%E8%BF%87%E6%8E%A7%E5%88%B6%E5%99%A8%E6%96%B9%E6%B3%95%E7%9A%84%E5%BD%A2%E5%8F%82%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="toc-text">2、通过控制器方法的形参获取请求参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-RequestParam"><span class="toc-text">3.@RequestParam</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81-RequestHeader"><span class="toc-text">4、@RequestHeader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81-CookieValue"><span class="toc-text">5、@CookieValue</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81%E9%80%9A%E8%BF%87POJO%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="toc-text">6、通过POJO获取请求参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81%E8%A7%A3%E5%86%B3%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E7%9A%84%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="toc-text">7、解决获取请求参数的乱码问题</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -333,7 +341,7 @@
       
         <h1 id="1、通过ServletAPI获取"><a href="#1、通过ServletAPI获取" class="headerlink" title="1、通过ServletAPI获取"></a>1、通过ServletAPI获取</h1><p>将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象（如果使用了占位符的方式获取参数则不能在使用这种方式获取）</p>
 <p>页面代码:</p>
-<pre><code class="xml">&lt;a th:href=&quot;@&#123;/testServletAPI(username=&#39;admin&#39;,pwd=&#39;123456&#39;)&#125;&quot;&gt;test&lt;/a&gt;
+<pre><code class="html">&lt;a th:href=&quot;@&#123;/testServletAPI(username=&#39;admin&#39;,pwd=&#39;123456&#39;)&#125;&quot;&gt;test&lt;/a&gt;
 </code></pre>
 <p>控制器代码:</p>
 <pre><code class="java">@RequestMapping(&quot;/testParam&quot;)
@@ -346,7 +354,7 @@ public String testParam(HttpServletRequest request)&#123;
 </code></pre>
 <h1 id="2、通过控制器方法的形参获取请求参数"><a href="#2、通过控制器方法的形参获取请求参数" class="headerlink" title="2、通过控制器方法的形参获取请求参数"></a>2、通过控制器方法的形参获取请求参数</h1><p>在控制器方法的形参位置，设置<strong>和请求参数同名的形参</strong>，当浏览器发送请求，匹配到请求映射时，在DispatcherServlet中就会将请求参数赋值给相应的形参</p>
 <p>页面代码:</p>
-<pre><code class="xml">&lt;a th:href=&quot;@&#123;/testParams(username=&#39;long&#39;,pwd=&#39;123&#39;)&#125;&quot;&gt;通过控制器形参获取参数&lt;/a&gt;&lt;br&gt;
+<pre><code class="html">&lt;a th:href=&quot;@&#123;/testParams(username=&#39;long&#39;,pwd=&#39;123&#39;)&#125;&quot;&gt;通过控制器形参获取参数&lt;/a&gt;&lt;br&gt;
 </code></pre>
 <p>控制器代码:</p>
 <pre><code class="java">    @RequestMapping(&quot;/testParams&quot;)
@@ -365,7 +373,7 @@ public String testParam(HttpServletRequest request)&#123;
 </blockquote>
 <p>而有多个同名参数时：</p>
 <p>页面代码：</p>
-<pre><code class="xml">&lt;form th:action=&quot;@&#123;/testParams&#125;&quot; method=&quot;post&quot;&gt;
+<pre><code class="html">&lt;form th:action=&quot;@&#123;/testParams&#125;&quot; method=&quot;post&quot;&gt;
     用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
     密  码：&lt;input type=&quot;password&quot; name=&quot;pwd&quot;&gt;&lt;br&gt;
     爱  好： &lt;input type=&quot;checkbox&quot; name=&quot;hobby&quot; value=&quot;a&quot;&gt;a
@@ -442,6 +450,42 @@ public String testParams(@CookieValue(&quot;JSESSIONID&quot;)String jsessionid)
 <p>第一次访问含getsession的方法时， JSESSESSION在响应头中:</p>
 <p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220123150234249.png" alt="image-20220123150234249"></p>
 </blockquote>
+<h1 id="6、通过POJO获取请求参数"><a href="#6、通过POJO获取请求参数" class="headerlink" title="6、通过POJO获取请求参数"></a>6、通过POJO获取请求参数</h1><p>可以在控制器方法的形参位置设置一个实体类类型的形参，此时若浏览器传输的请求参数的参数名和实体类中的属性名一致，那么请求参数就会为此属性赋值</p>
+<pre><code class="html">&lt;form th:action=&quot;@&#123;/testpojo&#125;&quot; method=&quot;post&quot;&gt;
+    用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+    密码：&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;
+    性别：&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;&gt;男&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot;&gt;女&lt;br&gt;
+    年龄：&lt;input type=&quot;text&quot; name=&quot;age&quot;&gt;&lt;br&gt;
+    邮箱：&lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<pre><code class="java">@RequestMapping(&quot;/testpojo&quot;)
+public String testpojo(User user)&#123;
+     System.out.println(user);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id="7、解决获取请求参数的乱码问题"><a href="#7、解决获取请求参数的乱码问题" class="headerlink" title="7、解决获取请求参数的乱码问题"></a>7、解决获取请求参数的乱码问题</h1><p>解决获取请求参数的乱码问题，可以使用SpringMVC提供的编码过滤器CharacterEncodingFilter，但是必须在web.xml中进行注册</p>
+<p>加载时间：监听器(最早)-&gt;过滤器-&gt;servlet，因为监听器在监听完ServletContext创建和销毁只执行一次，而过滤器在一直执行，每个请求都要经过过滤器，因此使用过滤器来修改编码</p>
+<pre><code class="xml">&lt;!--配置springMVC的编码过滤器--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;encoding&lt;/param-name&gt;
+        &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;forceResponseEncoding&lt;/param-name&gt;
+        &lt;param-value&gt;true&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>

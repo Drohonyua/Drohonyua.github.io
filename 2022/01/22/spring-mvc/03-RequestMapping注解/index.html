@@ -128,7 +128,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(5)</small>
+                <small>(6)</small>
             
         </div>
     </li>
@@ -139,7 +139,7 @@
                     <div data-rel="SpringMVC">
                         
                         SpringMVC
-                        <small>(4)</small>
+                        <small>(5)</small>
                         
                     </div>
                     
@@ -164,7 +164,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="5">
+<input type="hidden" id="yelog_site_posts_number" value="6">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -214,6 +214,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/spring-mvc/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
         
         <a  class="全部文章 SpringMVC "
            href="/2022/01/22/spring-mvc/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
@@ -293,7 +301,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-23 00:42:24'>2022-01-22 15:04</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-23 21:36:10'>2022-01-22 15:04</time>
         
     </div>
     <div class="article-meta">
@@ -407,7 +415,7 @@ public class RequestMappingController &#123;
 <p>“param=value”：要求请求映射所匹配的请求必须携带param请求参数且param=value</p>
 <p>“param!=value”：要求请求映射所匹配的请求必须携带param请求参数但是param!=value</p>
 <p>页面代码:</p>
-<pre><code class="xml">&lt;a th:href=&quot;@&#123;/test(username=&#39;admin&#39;,password=123456)&quot;&gt;测试@RequestMapping的params属性--&gt;/test&lt;/a&gt;&lt;br&gt;
+<pre><code class="html">&lt;a th:href=&quot;@&#123;/test(username=&#39;admin&#39;,password=123456)&quot;&gt;测试@RequestMapping的params属性--&gt;/test&lt;/a&gt;&lt;br&gt;
 </code></pre>
 <pre><code class="java">@RequestMapping(
         value = &#123;&quot;/testRequestMapping&quot;, &quot;/test&quot;&#125;
@@ -460,7 +468,7 @@ public String testAnt3()&#123;
 <h1 id="9、SpringMVC支持路径中的占位符（重点）"><a href="#9、SpringMVC支持路径中的占位符（重点）" class="headerlink" title="9、SpringMVC支持路径中的占位符（重点）"></a>9、SpringMVC支持路径中的占位符（重点）</h1><p>原始方式：/deleteUser?id=1</p>
 <p>rest方式：/deleteUser/1</p>
 <p>SpringMVC路径中的占位符常用于RESTful风格中，当请求路径中将某些数据通过路径的方式传输到服务器中，就可以在相应的@RequestMapping注解的value属性中通过<strong>占位符{xxx}<strong>表示传输的数据，</strong>在通过@PathVariable注解</strong>，将占位符所表示的数据赋值给控制器方法的形参</p>
-<pre><code class="xml">&lt;a th:href=&quot;@&#123;/testPath/1/haha&#125;&quot;&gt;测试获取请求参数--&gt;/testParam&lt;/a&gt;&lt;br&gt;
+<pre><code class="html">&lt;a th:href=&quot;@&#123;/testPath/1/haha&#125;&quot;&gt;测试获取请求参数--&gt;/testParam&lt;/a&gt;&lt;br&gt;
 </code></pre>
 <pre><code class="java">@RequestMapping(value = &quot;testPath/&#123;id&#125;/&#123;username&#125;&quot;)
 public String testPath(@PathVariable(&quot;id&quot;) int id,@PathVariable(&quot;username&quot;) String username)&#123;
