@@ -301,7 +301,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-23 22:52:58'>2022-01-23 22:50</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-24 22:28:45'>2022-01-23 22:50</time>
         
     </div>
     <div class="article-meta">
@@ -323,7 +323,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E4%BD%BF%E7%94%A8ServletAPI%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">1、使用ServletAPI向request域对象共享数据</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%9F%9F%E5%AF%B9%E8%B1%A1"><span class="toc-text">1.域对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8ServletAPI%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">2.使用ServletAPI向request域对象共享数据</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -339,7 +339,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1、使用ServletAPI向request域对象共享数据"><a href="#1、使用ServletAPI向request域对象共享数据" class="headerlink" title="1、使用ServletAPI向request域对象共享数据"></a>1、使用ServletAPI向request域对象共享数据</h1>
+        <p><strong>后端往前端传输数据</strong></p>
+<h1 id="1-域对象"><a href="#1-域对象" class="headerlink" title="1.域对象"></a>1.域对象</h1><p><strong>域对象作用：在一定范围内可以共享数据(后端往前端共享数据)</strong></p>
+<p><strong>四大域对象：(在jsp中有四大，在servlet中没有pageContext)</strong></p>
+<p><strong>1.page(jsp有效)–&gt;page域指的是pageContext.(前后端分离模式下基本不用了,不重要)</strong></p>
+<p><strong>2.request(一次请求)–&gt;request域指的是HttpServletContext（需要掌握）</strong></p>
+<p>生命周期:</p>
+<p>创建：客户端向服务器发送一次请求,服务器就会创建request对象.<br>销毁：服务器对这次请求作出响应后就会销毁request对象.<br>有效：仅在当前请求中有效。</p>
+<p>可通过转发共享</p>
+<p><strong>3.session(一次会话)–&gt;session域指的是HttpSession</strong></p>
+<p>生命周期：</p>
+<p>创建：服务器端第一次调用getSession();(保存在服务器内存中)<br>销毁：<br>1.非正常关闭服务器(正常关闭session会序列化，再次启动服务器session会被反序列化)；<br>2.session过期了(默认30分钟)<br>3.手动调用session.invalidate();<br>注意:关闭浏览器再次访问会找不到session的会话id而不是session被销毁了。<br>有效：用户打开浏览器会话开始，直到关闭浏览器会话才会结束。一次会话期间只会创建一个session对象。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=session&spm=1001.2101.3001.7020">session</a>的钝化和活化</p>
+<p>钝化：</p>
+<p>当服务器正常关闭时,还存活着的session(在设置时间内没有销毁) 会随着服务器的关闭被以文件(“SESSIONS.ser”)的形式存储在tomcat 的work 目录下,这个过程叫做Session 的钝化。</p>
+<p>活化：</p>
+<p>当服务器再次正常开启时,服务器会找到之前的“SESSIONS.ser” 文件，从中恢复之前保存起来的Session 对象，这个过程叫做Session的活化。</p>
+<p>因此session的数据和服务器是否关闭没有任何关系，只和浏览器是否关闭有关系</p>
+</blockquote>
+<p><strong>4.application(当前web应用)–&gt;application域指的是application ServletContext；</strong></p>
+<p>生命周期:</p>
+<p>创建：服务器启动的时候,服务器为每个WEB应用创建一个属于该web项目的对象ServletContext类.<br>销毁：服务器关闭或者项目从服务器中移除的时候.<br>有效：此信息在整个服务器上被保留,即从服务器开启到服务器关闭。</p>
+<p><strong>之所以他们是域对象，原因是他们都内置了map集合，都有setAttribute和getAttribute方法。</strong></p>
+<h1 id="2-使用ServletAPI向request域对象共享数据"><a href="#2-使用ServletAPI向request域对象共享数据" class="headerlink" title="2.使用ServletAPI向request域对象共享数据"></a>2.使用ServletAPI向request域对象共享数据</h1><p>success页面中代码:</p>
+<p>```html</p>
+<!--这两种方式都能获取到request域中的数据,第二种会显示报错但能用-->
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
     </div>

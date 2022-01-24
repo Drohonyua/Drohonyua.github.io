@@ -301,7 +301,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-23 22:49:53'>2022-01-22 22:37</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-24 22:04:01'>2022-01-22 22:37</time>
         
     </div>
     <div class="article-meta">
@@ -339,7 +339,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1、通过ServletAPI获取"><a href="#1、通过ServletAPI获取" class="headerlink" title="1、通过ServletAPI获取"></a>1、通过ServletAPI获取</h1><p>将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象（如果使用了占位符的方式获取参数则不能在使用这种方式获取）</p>
+        <p><strong>前端向后端传输数据</strong></p>
+<h1 id="1、通过ServletAPI获取"><a href="#1、通过ServletAPI获取" class="headerlink" title="1、通过ServletAPI获取"></a>1、通过ServletAPI获取</h1><p>将HttpServletRequest作为控制器方法的形参，此时HttpServletRequest类型的参数表示封装了当前请求的请求报文的对象（如果使用了占位符的方式获取参数则不能在使用这种方式获取）</p>
 <p>页面代码:</p>
 <pre><code class="html">&lt;a th:href=&quot;@&#123;/testServletAPI(username=&#39;admin&#39;,pwd=&#39;123456&#39;)&#125;&quot;&gt;test&lt;/a&gt;
 </code></pre>
