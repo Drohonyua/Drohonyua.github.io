@@ -309,7 +309,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-25 17:51:21'>2022-01-25 00:01</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-25 23:42:30'>2022-01-25 00:01</time>
         
     </div>
     <div class="article-meta">
@@ -331,7 +331,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ThymeleafView"><span class="toc-text">1.ThymeleafView</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-ThymeleafView"><span class="toc-text">1.ThymeleafView</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%BD%AC%E5%8F%91%E8%AF%95%E5%9B%BE"><span class="toc-text">2.转发试图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%87%8D%E5%AE%9A%E5%90%91%E8%A7%86%E5%9B%BE"><span class="toc-text">3.重定向视图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E8%A7%86%E5%9B%BE%E6%8E%A7%E5%88%B6%E5%99%A8view-controller"><span class="toc-text">4.视图控制器view-controller</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -351,7 +351,7 @@
 <p><strong>SpringMVC视图的种类很多，默认有转发视图和重定向视图</strong></p>
 <p><strong>当工程引入jstl的依赖，转发视图会自动转换为JstlView</strong></p>
 <p><strong>若使用的视图技术为Thymeleaf，在SpringMVC的配置文件中配置了Thymeleaf的视图解析器，由此视图解析器解析之后所得到的是ThymeleafView</strong></p>
-<h2 id="1-ThymeleafView"><a href="#1-ThymeleafView" class="headerlink" title="1.ThymeleafView"></a>1.ThymeleafView</h2><p>当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图后缀所得到的最终路径，会通过转发的方式实现跳转</p>
+<h1 id="1-ThymeleafView"><a href="#1-ThymeleafView" class="headerlink" title="1.ThymeleafView"></a>1.ThymeleafView</h1><p>当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图后缀所得到的最终路径，会通过转发的方式实现跳转</p>
 <pre><code class="java">@RequestMapping(&quot;/testThymeleafView&quot;)
 public String testThymeleafView()&#123;
       //这里的success被Thymeleaf视图解析器解析，变成一个Thymeleaf视图(没有forward:或redirect:前缀)
@@ -359,6 +359,74 @@ public String testThymeleafView()&#123;
 &#125;
 </code></pre>
 <p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220125002258721.png" alt="image-20220125002258721"></p>
+<h1 id="2-转发试图"><a href="#2-转发试图" class="headerlink" title="2.转发试图"></a>2.转发试图</h1><p>SpringMVC中默认的转发视图是InternalResourceView</p>
+<p>SpringMVC中创建转发视图的情况：</p>
+<p>当控制器方法中所设置的视图名称以”forward:”为前缀时，创建InternalResourceView视图，<strong>此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析</strong>，而是会将前缀”forward:”去掉，剩余部分作为最终路径通过转发的方式实现跳转</p>
+<p>例如”forward:/“，”forward:/employee”</p>
+<pre><code class="java">@RequestMapping(&quot;/testForWard&quot;)
+public String testForWard()&#123;
+     //return &quot;forward:/testThymeleafView&quot;这样为转发请求可以跳转到另一个控制器方法上，而平时 return &quot;success&quot;则为转发视图
+     //因为使用了Thymeleaf视图解析器所以转发时可用这种写法，如果没有使用Thymeleaf视图解析器则可以直接写成return &quot;/testThymeleafView&quot;;
+     //添加forward后，就不会被我们配置的thymeleaf解析器解析，而是相当于一个普通请求路径，然后去和@RequestMapping中的映射路径匹配,不然会完整解析&quot;/testThymeleafView&quot;从而404
+     //因为有了前缀forwar:所以刚开始会完整地解析&quot;forward:/testThymeleafView&quot;一遍创建一个视图
+     //后面转发到/testThymeleafView请求时又会解析&quot;/testThymeleafView&quot;再创建一个视图返回给浏览器
+     return &quot;forward:/testThymeleafView&quot;;
+&#125;
+</code></pre>
+<p>因为配置了foward:前缀，所以该视图名不会被Thymeleaf视图解析器抢去，而是交给SpringMVC去解析创建成InternalResourceView</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220125230107006.png" alt="image-20220125230107006"></p>
+<h1 id="3-重定向视图"><a href="#3-重定向视图" class="headerlink" title="3.重定向视图"></a>3.重定向视图</h1><p>SpringMVC中默认的重定向视图是RedirectView</p>
+<p>当控制器方法中所设置的视图名称以”redirect:”为前缀时，创建RedirectView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀”redirect:”去掉，剩余部分作为最终路径通过重定向的方式实现跳转</p>
+<p>例如”redirect:/“，”redirect:/employee”</p>
+<pre><code class="java">@RequestMapping(&quot;/testRedirect&quot;)
+public String testRedirect()&#123;
+     //重定向到一个请求
+     return &quot;redirect:/testThymeleafView&quot;;
+&#125;
+</code></pre>
+<blockquote>
+<p>注：</p>
+<p>重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以/开头，若是则会自动拼接上下文路径转发和重定向区别</p>
+<p>转发：有两次请求一次是浏览器向服务器发起请求，第二次为服务器内部的请求</p>
+<p>{</p>
+<p><strong>1.浏览器只请求了一次</strong></p>
+<p><strong>2.url不变</strong></p>
+<p><strong>3.两个都可以获得请求域中的数据,因为request为同一对象</strong></p>
+<p><strong>4.转发不能跨域,只能访问同一服务器下的资源</strong></p>
+<p>}</p>
+<p>重定向：有两次请求一次是第一个页面，第二次请求为重定向页面的请求，均有浏览器发出</p>
+<p>{</p>
+<p><strong>1.浏览器请求了两次</strong></p>
+<p><strong>2.url改变</strong></p>
+<p><strong>3.重定向的页面无法获取前一个页面请求域中的数据,因为request对象不为同一个</strong></p>
+<p><strong>4.重定向可以跨域，能访问不同服务器下的资源，例如重定向到百度…</strong></p>
+<p>}</p>
+</blockquote>
+<h1 id="4-视图控制器view-controller"><a href="#4-视图控制器view-controller" class="headerlink" title="4.视图控制器view-controller"></a>4.视图控制器view-controller</h1><p>当控制器方法中，仅仅用来实现页面跳转(无任何其他操作仅仅为到另一个页面)，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示，好处：可以不用再专门为一个无任何其他操作的页面跳转写一个方法即不用再写</p>
+<pre><code class="java">//不用在写这个方法和注释
+@RequeMapping(&quot;/xxx&quot;) 
+
+public String xxx()
+
+&#123;
+    //仅有retrun，无其他任何操作
+    retrun &quot;xxx&quot;;
+&#125;
+</code></pre>
+<pre><code class="xml">&lt;!--
+    path：设置处理的请求地址
+    view-name：设置请求地址所对应的视图名称
+    (可能报红，但能用)
+--&gt;
+&lt;mvc:view-controller path=&quot;/&quot; view-name=&quot;index&quot;&gt;&lt;/mvc:view-controller&gt;
+//开启mvc的注解驱动
+&lt;mvc:annotation-driven /&gt;
+</code></pre>
+<blockquote>
+<p>注：</p>
+<p>当SpringMVC中设置任何一个view-controller时，<strong>其他控制器中的请求映射将全部失效</strong>，此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：</p>
+<p>&lt;mvc:annotation-driven /&gt;</p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
