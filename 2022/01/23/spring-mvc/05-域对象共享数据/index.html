@@ -317,7 +317,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:23:21'>2022-01-23 22:50</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:26:30'>2022-01-23 22:50</time>
         
     </div>
     <div class="article-meta">
@@ -339,7 +339,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%9F%9F%E5%AF%B9%E8%B1%A1"><span class="toc-text">1.域对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8ServletAPI%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">2.使用ServletAPI向request域对象共享数据</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%9F%9F%E5%AF%B9%E8%B1%A1"><span class="toc-text">1.域对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8ServletAPI%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">2.使用ServletAPI向request域对象共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8ModelAndView%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE-%E9%87%8D%E8%A6%81"><span class="toc-text">3.使用ModelAndView向request域对象共享数据(重要)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8Model%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">4.使用Model向request域对象共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8map%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">5.使用map向request域对象共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E4%BD%BF%E7%94%A8ModelMap%E5%90%91request%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">6.使用ModelMap向request域对象共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81Model%E3%80%81ModelMap%E3%80%81Map%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">7、Model、ModelMap、Map的关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-%E5%90%91session%E5%9F%9F%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">8.向session域共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-%E5%90%91application%E5%9F%9F%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE"><span class="toc-text">9.向application域共享数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -379,8 +379,81 @@
 <p>创建：服务器启动的时候,服务器为每个WEB应用创建一个属于该web项目的对象ServletContext类.<br>销毁：服务器关闭或者项目从服务器中移除的时候.<br>有效：此信息在整个服务器上被保留,即从服务器开启到服务器关闭。</p>
 <p><strong>之所以他们是域对象，原因是他们都内置了map集合，都有setAttribute和getAttribute方法。</strong></p>
 <h1 id="2-使用ServletAPI向request域对象共享数据"><a href="#2-使用ServletAPI向request域对象共享数据" class="headerlink" title="2.使用ServletAPI向request域对象共享数据"></a>2.使用ServletAPI向request域对象共享数据</h1><p>控制器代码:</p>
-<p>```java<br>@RequestMapping(“/testRequestByServletAPI”)<br>public String testRequestByServletAPI(HttpServletRequest request){<br>     request.setAttribute(“testRequestScope”,”hello”);<br>     return “success”;//这样也是转发,url没有改变，WEB-INF下的页面只能通过转发获取<br>    //前端获取的方式<br>    //&lt;p th:text=”$</p>
-
+<pre><code class="java">@RequestMapping(&quot;/testRequestByServletAPI&quot;)
+public String testRequestByServletAPI(HttpServletRequest request)&#123;
+     request.setAttribute(&quot;testRequestScope&quot;,&quot;hello&quot;);
+     return &quot;success&quot;;//这样也是转发,url没有改变，WEB-INF下的页面只能通过转发获取
+&#125;
+</code></pre>
+<h1 id="3-使用ModelAndView向request域对象共享数据-重要"><a href="#3-使用ModelAndView向request域对象共享数据-重要" class="headerlink" title="3.使用ModelAndView向request域对象共享数据(重要)"></a>3.使用ModelAndView向request域对象共享数据(重要)</h1><p>无论使用哪种方式进行域共享数据，最终都会封装成ModelAndView</p>
+<p>控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testModelAndView&quot;)
+//注意返回值为ModelAndView
+public ModelAndView testModelAndView()&#123;
+        ModelAndView mav = new ModelAndView();
+        /**
+         * ModelAndView有Model和View的功能
+         * Model主要用于向请求域共享数据
+         * View主要用于设置视图，实现页面跳转
+         */
+        //处理模型数据，即向域中存放数据
+        mav.addObject(&quot;testRequestScope&quot;,&quot;hello ModeAndView&quot;);
+        //设置视图名称
+        mav.setViewName(&quot;success&quot;);
+        return mav;
+&#125;
+</code></pre>
+<h1 id="4-使用Model向request域对象共享数据"><a href="#4-使用Model向request域对象共享数据" class="headerlink" title="4.使用Model向request域对象共享数据"></a>4.使用Model向request域对象共享数据</h1><p>这里的model其实就是ModelAndView里面的Model</p>
+<p>success页面代码:控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testModel&quot;)
+//需要model参数
+public String testModel(Model model)&#123;
+     model.addAttribute(&quot;testRequestScope&quot;,&quot;hello Model&quot;);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id="5-使用map向request域对象共享数据"><a href="#5-使用map向request域对象共享数据" class="headerlink" title="5.使用map向request域对象共享数据"></a>5.使用map向request域对象共享数据</h1><p>控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testMap&quot;)
+//这里的Map不写泛型也可以
+public String testMap(Map&lt;String,Object&gt; map)&#123;
+     map.put(&quot;testRequestScope&quot;,&quot;hello map&quot;);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id="6-使用ModelMap向request域对象共享数据"><a href="#6-使用ModelMap向request域对象共享数据" class="headerlink" title="6.使用ModelMap向request域对象共享数据"></a>6.使用ModelMap向request域对象共享数据</h1><p>控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testModelMap&quot;)
+public String testModelMap(ModelMap modelMap)&#123;
+     modelMap.addAttribute(&quot;testRequestScope&quot;,&quot;hello ModelMap&quot;);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id="7、Model、ModelMap、Map的关系"><a href="#7、Model、ModelMap、Map的关系" class="headerlink" title="7、Model、ModelMap、Map的关系"></a>7、Model、ModelMap、Map的关系</h1><p><strong>Model、ModelMap、Map类型的参数其实本质上都是 BindingAwareModelMap 类型的</strong></p>
+<pre><code>public interface Model&#123;&#125;
+public class ModelMap extends LinkedHashMap&lt;String, Object&gt; &#123;&#125;
+public class ExtendedModelMap extends ModelMap implements Model &#123;&#125;
+public class BindingAwareModelMap extends ExtendedModelMap &#123;&#125;
+</code></pre>
+<h1 id="8-向session域共享数据"><a href="#8-向session域共享数据" class="headerlink" title="8.向session域共享数据"></a>8.向session域共享数据</h1><p>success页面代码:</p>
+<pre><code class="html">&lt;p th:text-=&quot;$&#123;session.testSessionScope&#125;&quot;&gt;&lt;/p&gt;
+</code></pre>
+<p>控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testSession&quot;)
+public String testSessionScope(HttpSession session)&#123;
+     session.setAttribute(&quot;testSessionScope&quot;,&quot;hello session&quot;);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id="9-向application域共享数据"><a href="#9-向application域共享数据" class="headerlink" title="9.向application域共享数据"></a>9.向application域共享数据</h1><p>success页面代码:</p>
+<pre><code class="html">&lt;p th:text-=&quot;$&#123;session.testSessionScope&#125;&quot;&gt;&lt;/p&gt;
+</code></pre>
+<p>控制器代码:</p>
+<pre><code class="java">@RequestMapping(&quot;/testSession&quot;)
+public String testSessionScope(HttpSession session)&#123;
+     session.setAttribute(&quot;testSessionScope&quot;,&quot;hello session&quot;);
+     return &quot;success&quot;;
+&#125;
+</code></pre>
+<h1 id><a href="#" class="headerlink" title></a></h1>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
     </div>
