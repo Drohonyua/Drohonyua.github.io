@@ -317,7 +317,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:20:39'>2022-01-23 22:50</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:23:21'>2022-01-23 22:50</time>
         
     </div>
     <div class="article-meta">
@@ -378,10 +378,9 @@
 <p>生命周期:</p>
 <p>创建：服务器启动的时候,服务器为每个WEB应用创建一个属于该web项目的对象ServletContext类.<br>销毁：服务器关闭或者项目从服务器中移除的时候.<br>有效：此信息在整个服务器上被保留,即从服务器开启到服务器关闭。</p>
 <p><strong>之所以他们是域对象，原因是他们都内置了map集合，都有setAttribute和getAttribute方法。</strong></p>
-<h1 id="2-使用ServletAPI向request域对象共享数据"><a href="#2-使用ServletAPI向request域对象共享数据" class="headerlink" title="2.使用ServletAPI向request域对象共享数据"></a>2.使用ServletAPI向request域对象共享数据</h1><p>success页面中代码:</p>
-<p>```xml</p>
-<!--这两种方式都能获取到request域中的数据,第二种会显示报错但能用-->
-<!--<p th:text="$-->
+<h1 id="2-使用ServletAPI向request域对象共享数据"><a href="#2-使用ServletAPI向request域对象共享数据" class="headerlink" title="2.使用ServletAPI向request域对象共享数据"></a>2.使用ServletAPI向request域对象共享数据</h1><p>控制器代码:</p>
+<p>```java<br>@RequestMapping(“/testRequestByServletAPI”)<br>public String testRequestByServletAPI(HttpServletRequest request){<br>     request.setAttribute(“testRequestScope”,”hello”);<br>     return “success”;//这样也是转发,url没有改变，WEB-INF下的页面只能通过转发获取<br>    //前端获取的方式<br>    //&lt;p th:text=”$</p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
     </div>
