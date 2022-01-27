@@ -6,17 +6,19 @@
   <meta name="keywords" content="">
   <meta name="description" content="07-RESTful | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="1.RESTful简介REST：Representational State Transfer，表现层资源状态转移。 a&gt;资源 资源是一种看待服务器的方式，即，将服务器看作是由很多离散的资源组成。每个资源是服务器上一个可命名的抽象概念。因为资源是一个抽象的概念，所以它不仅仅能代表服务器文件系统中的一个文件、数据库中的一张表等等具体的东西，可以将资源设计的要多抽象有多抽象，只要想象力允许而且客">
-<meta property="og:type" content="article">
-<meta property="og:title" content="07-RESTful">
-<meta property="og:url" content="http://example.com/2022/01/27/spring-mvc/07-RESTful/index.html">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
 <meta property="og:site_name" content="Drohonyua Blog">
-<meta property="og:description" content="1.RESTful简介REST：Representational State Transfer，表现层资源状态转移。 a&gt;资源 资源是一种看待服务器的方式，即，将服务器看作是由很多离散的资源组成。每个资源是服务器上一个可命名的抽象概念。因为资源是一个抽象的概念，所以它不仅仅能代表服务器文件系统中的一个文件、数据库中的一张表等等具体的东西，可以将资源设计的要多抽象有多抽象，只要想象力允许而且客">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-27T07:53:48.594Z">
-<meta property="article:modified_time" content="2022-01-27T09:11:29.848Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
 <meta property="article:author" content="Drohonyua">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -315,7 +317,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 17:11:29'>2022-01-27 15:53</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:09:48'>2022-01-27 15:53</time>
         
     </div>
     <div class="article-meta">
@@ -337,7 +339,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RESTful%E7%AE%80%E4%BB%8B"><span class="toc-text">1.RESTful简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RESTful%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.RESTful的实现</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RESTful%E7%AE%80%E4%BB%8B"><span class="toc-text">1.RESTful简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RESTful%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.RESTful的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HiddenHttpMethodFilter"><span class="toc-text">3.HiddenHttpMethodFilter</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -402,6 +404,45 @@
 <td>user–&gt;put请求方式</td>
 </tr>
 </tbody></table>
+<h1 id="3-HiddenHttpMethodFilter"><a href="#3-HiddenHttpMethodFilter" class="headerlink" title="3.HiddenHttpMethodFilter"></a>3.HiddenHttpMethodFilter</h1><p>由于浏览器只支持发送get和post方式的请求，那么该如何发送put和delete请求呢？</p>
+<p>SpringMVC 提供了 <strong>HiddenHttpMethodFilter</strong> 帮助我们<strong>将 POST 请求转换为 DELETE 或 PUT 请求</strong></p>
+<p><strong>HiddenHttpMethodFilter</strong> 处理put和delete请求的条件：</p>
+<p>a&gt;当前请求的请求方式必须为post</p>
+<p>b&gt;当前请求必须传输请求参数_method</p>
+<p>满足以上条件，<strong>HiddenHttpMethodFilter</strong> 过滤器就会将当前请求的请求方式转换为请求参数_method的值，因此请求参数_method的值才是最终的请求方式</p>
+<p>在<strong>web.xml</strong>中注册<strong>HiddenHttpMethodFilter</strong> (<strong>注意：要放在编码过滤器后面，不然中文会乱码！！！！！！</strong>)</p>
+<pre><code class="xml">&lt;!--配置HiddenHttpMethodFilter--&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;HiddenHttpMethodFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.HiddenHttpMethodFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;HiddenHttpMethodFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+</code></pre>
+<blockquote>
+<p>该过滤器的源码中：</p>
+<p>请求方式被替换掉了，写个隐藏表单，里面写个name为_method，value为put或delete,然后表单外面的提交方式必须设置为post，就能被过滤器过滤到，通过这个方法把提交方式替换</p>
+<p>即该过滤器的执行方式：将请求方式作为参数传给后端，过滤器会将参数指定的请求方式作为请求的真正方式</p>
+</blockquote>
+<blockquote>
+<p>注：</p>
+<p>目前为止，SpringMVC中提供了两个过滤器：CharacterEncodingFilter和HiddenHttpMethodFilter</p>
+<p>在web.xml中注册时，<strong>必须先注册CharacterEncodingFilter，再注册HiddenHttpMethodFilter</strong></p>
+<p>原因：</p>
+<ul>
+<li><p>在 CharacterEncodingFilter 中通过 request.setCharacterEncoding(encoding) 方法设置字符集的</p>
+</li>
+<li><p>request.setCharacterEncoding(encoding) 方法要求前面不能有任何获取请求参数的操作</p>
+</li>
+<li><p>而 HiddenHttpMethodFilter 恰恰有一个获取请求方式的操作：</p>
+</li>
+<li><pre><code>String paramValue = request.getParameter(this.methodParam);
+</code></pre>
+</li>
+</ul>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
