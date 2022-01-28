@@ -363,7 +363,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:09:48'>2022-01-27 15:53</time>
+            发布时间 : <time class="date" title='最后更新: 2022-01-28 22:59:56'>2022-01-27 15:53</time>
         
     </div>
     <div class="article-meta">
@@ -385,7 +385,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RESTful%E7%AE%80%E4%BB%8B"><span class="toc-text">1.RESTful简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RESTful%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.RESTful的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HiddenHttpMethodFilter"><span class="toc-text">3.HiddenHttpMethodFilter</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RESTful%E7%AE%80%E4%BB%8B"><span class="toc-text">1.RESTful简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RESTful%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.RESTful的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HiddenHttpMethodFilter"><span class="toc-text">3.HiddenHttpMethodFilter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-RESTful%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="toc-text">4.RESTful的实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">1、准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%8A%9F%E8%83%BD%E6%B8%85%E5%8D%95"><span class="toc-text">2、功能清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.具体功能实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-gt-%E9%85%8D%E7%BD%AEview-controller"><span class="toc-text">a&gt;配置view-controller</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-gt-%E5%88%9B%E5%BB%BA%E9%A1%B5%E9%9D%A2"><span class="toc-text">b&gt;创建页面</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%85%B7%E4%BD%93%E5%8A%9F%E8%83%BD%EF%BC%9A%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%91%98%E5%B7%A5%E6%95%B0%E6%8D%AE"><span class="toc-text">4、具体功能：查询所有员工数据</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-gt-%E6%8E%A7%E5%88%B6%E5%99%A8%E6%96%B9%E6%B3%95"><span class="toc-text">a&gt;控制器方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-gt-%E5%88%9B%E5%BB%BAemployee-list-html"><span class="toc-text">b&gt;创建employee_list.html</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -489,7 +489,200 @@
 </li>
 </ul>
 </blockquote>
+<h1 id="4-RESTful的实例"><a href="#4-RESTful的实例" class="headerlink" title="4.RESTful的实例"></a>4.RESTful的实例</h1><h3 id="1、准备工作"><a href="#1、准备工作" class="headerlink" title="1、准备工作"></a>1、准备工作</h3><p>和传统 CRUD 一样，实现对员工信息的增删改查。</p>
+<ul>
+<li><p>搭建环境</p>
+</li>
+<li><p>准备实体类</p>
+<pre><code class="java">public class Employee &#123;
 
+   private Integer id;
+   private String lastName;
+
+   private String email;
+   //1 male, 0 female
+   private Integer gender;
+   
+   public Integer getId() &#123;
+      return id;
+   &#125;
+
+   public void setId(Integer id) &#123;
+      this.id = id;
+   &#125;
+
+   public String getLastName() &#123;
+      return lastName;
+   &#125;
+
+   public void setLastName(String lastName) &#123;
+      this.lastName = lastName;
+   &#125;
+
+   public String getEmail() &#123;
+      return email;
+   &#125;
+
+   public void setEmail(String email) &#123;
+      this.email = email;
+   &#125;
+
+   public Integer getGender() &#123;
+      return gender;
+   &#125;
+
+   public void setGender(Integer gender) &#123;
+      this.gender = gender;
+   &#125;
+
+   public Employee(Integer id, String lastName, String email, Integer gender) &#123;
+      super();
+      this.id = id;
+      this.lastName = lastName;
+      this.email = email;
+      this.gender = gender;
+   &#125;
+
+   public Employee() &#123;
+   &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>准备dao模拟数据</p>
+<pre><code class="java">@Repository
+public class EmployeeDao &#123;
+
+   private static Map&lt;Integer, Employee&gt; employees = null;
+   
+   static&#123;
+      employees = new HashMap&lt;Integer, Employee&gt;();
+
+      employees.put(1001, new Employee(1001, &quot;E-AA&quot;, &quot;aa@163.com&quot;, 1));
+      employees.put(1002, new Employee(1002, &quot;E-BB&quot;, &quot;bb@163.com&quot;, 1));
+      employees.put(1003, new Employee(1003, &quot;E-CC&quot;, &quot;cc@163.com&quot;, 0));
+      employees.put(1004, new Employee(1004, &quot;E-DD&quot;, &quot;dd@163.com&quot;, 0));
+      employees.put(1005, new Employee(1005, &quot;E-EE&quot;, &quot;ee@163.com&quot;, 1));
+   &#125;
+   
+   private static Integer initId = 1006;
+   
+   public void save(Employee employee)&#123;
+      if(employee.getId() == null)&#123;
+         employee.setId(initId++);
+      &#125;
+      employees.put(employee.getId(), employee);
+   &#125;
+   
+   public Collection&lt;Employee&gt; getAll()&#123;
+      return employees.values();
+   &#125;
+   
+   public Employee get(Integer id)&#123;
+      return employees.get(id);
+   &#125;
+   
+   public void delete(Integer id)&#123;
+      employees.remove(id);
+   &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+<p>IOC扫描多个包：</p>
+<pre><code class="xml">&lt;context:component-scan base-package=&quot;com.hong.controller,com.hong.dao&quot;&gt;&lt;/context:component-scan&gt;
+</code></pre>
+<p>目录结构:</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220128220604237.png" alt="image-20220128220604237"></p>
+<h3 id="2、功能清单"><a href="#2、功能清单" class="headerlink" title="2、功能清单"></a>2、功能清单</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>URL 地址</th>
+<th>请求方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问首页√</td>
+<td>/</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>查询全部数据√</td>
+<td>/employee</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>删除√</td>
+<td>/employee/2</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>跳转到添加数据页面√</td>
+<td>/toAdd</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行保存√</td>
+<td>/employee</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>跳转到更新数据页面√</td>
+<td>/employee/2</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>执行更新√</td>
+<td>/employee</td>
+<td>PUT</td>
+</tr>
+</tbody></table>
+<h3 id="3-具体功能实现"><a href="#3-具体功能实现" class="headerlink" title="3.具体功能实现"></a>3.具体功能实现</h3><h5 id="a-gt-配置view-controller"><a href="#a-gt-配置view-controller" class="headerlink" title="a&gt;配置view-controller"></a>a&gt;配置view-controller</h5><pre><code class="xml">&lt;mvc:view-controller path=&quot;/&quot; view-name=&quot;index&quot;/&gt;
+</code></pre>
+<h5 id="b-gt-创建页面"><a href="#b-gt-创建页面" class="headerlink" title="b&gt;创建页面"></a>b&gt;创建页面</h5><pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; &gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;首页&lt;/h1&gt;
+&lt;a th:href=&quot;@&#123;/employee&#125;&quot;&gt;访问员工信息&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="4、具体功能：查询所有员工数据"><a href="#4、具体功能：查询所有员工数据" class="headerlink" title="4、具体功能：查询所有员工数据"></a>4、具体功能：查询所有员工数据</h3><h5 id="a-gt-控制器方法"><a href="#a-gt-控制器方法" class="headerlink" title="a&gt;控制器方法"></a>a&gt;控制器方法</h5><pre><code class="java">@RequestMapping(value = &quot;/employee&quot;, method = RequestMethod.GET)
+public String getEmployeeList(Model model)&#123;
+    Collection&lt;Employee&gt; employeeList = employeeDao.getAll();
+    model.addAttribute(&quot;employeeList&quot;, employeeList);
+    return &quot;employee_list&quot;;
+&#125;
+</code></pre>
+<h5 id="b-gt-创建employee-list-html"><a href="#b-gt-创建employee-list-html" class="headerlink" title="b&gt;创建employee_list.html"></a>b&gt;创建employee_list.html</h5><p>```html<br><!DOCTYPE html></p>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Info</title>
+    <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
+</head>
+<body>
+
+<pre><code>&lt;table border=&quot;1&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;text-align: center;&quot; id=&quot;dataTable&quot;&gt;
+    &lt;tr&gt;
+        &lt;!--colspan表示合并列--&gt;
+        &lt;th colspan=&quot;5&quot;&gt;Employee Info&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;th&gt;id&lt;/th&gt;
+        &lt;th&gt;lastName&lt;/th&gt;
+        &lt;th&gt;email&lt;/th&gt;
+        &lt;th&gt;gender&lt;/th&gt;
+        &lt;th&gt;options(&lt;a th:href=&quot;@&#123;/toAdd&#125;&quot;&gt;add&lt;/a&gt;)&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;!--这里的th:each表示循环--&gt;
+    &lt;tr th:each=&quot;employee : $
+</code></pre>
+</body></html>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
     </div>
