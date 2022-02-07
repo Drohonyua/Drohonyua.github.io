@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>SpringMVC视图解析器配置 | Drohonyua Blog</title>
+  <title>注解驱动及静态资源访问 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="SpringMVC视图解析器配置 | Drohonyua Blog">
+  <meta name="description" content="注解驱动及静态资源访问 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -351,9 +351,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-常用配置/SpringMVC视图解析器" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-常用配置/注解驱动及静态资源访问" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">SpringMVC视图解析器配置</h1>
+        <h1 class="article-title">注解驱动及静态资源访问</h1>
     
     <div class="article-meta">
         
@@ -371,7 +371,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:39:43'>2022-01-27 22:31</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-07 21:10:41'>2022-02-07 21:06</time>
         
     </div>
     <div class="article-meta">
@@ -409,43 +409,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在SpringMVC.xml中配置</p>
-<pre><code class="xml">&lt;!--视图解析器配置，负责最终的页面跳转,即配置后在使用页面跳转时，只需填写页面名称便可，即想跳转indx页面,return &quot;index&quot;便可，无需填写具体路径及后缀,由视图解析器自动帮你配置--&gt;
-    &lt;!-- 配置Thymeleaf视图解析器
-    class-&gt;选择ThymeleafViewResolver （Thymeleaf视图解析器）
-    参数:
-    order-&gt;配置视图解析器的优先级(因为可以设置优先级代表着可以使用多个视图解析器为其分配不同的优先级来进行使用)
-    characterEncoding-&gt;编码
-    templateEngine-&gt;模板(选择对应模板并进行配置)-&gt;
-    --&gt;
-&lt;bean id=&quot;viewResolver&quot; class=&quot;org.thymeleaf.spring5.view.ThymeleafViewResolver&quot;&gt;
-    &lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
-    &lt;property name=&quot;characterEncoding&quot; value=&quot;UTF-8&quot;/&gt;
-    &lt;property name=&quot;templateEngine&quot;&gt;
-        &lt;bean class=&quot;org.thymeleaf.spring5.SpringTemplateEngine&quot;&gt;
-            &lt;property name=&quot;templateResolver&quot;&gt;
-                &lt;!--
-                &#123;(内部bean为templateEngine赋值)
-                classs:SpringResourceTemplateResolver
-                perfix：视图前缀
-                suffix:视图后缀
-                (这里前后缀即xxx文件夹下的xxx.html文件)
-                templateMode：模板类型
-                characterEncoding:编码
-                &#125;
-                --&gt;
-                &lt;bean class=&quot;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&quot;&gt;
-                    &lt;!-- 视图前缀 --&gt;
-                    &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/templates/&quot;/&gt;
-                    &lt;!-- 视图后缀 --&gt;
-                    &lt;property name=&quot;suffix&quot; value=&quot;.html&quot;/&gt;
-                    &lt;property name=&quot;templateMode&quot; value=&quot;HTML5&quot;/&gt;
-                    &lt;property name=&quot;characterEncoding&quot; value=&quot;UTF-8&quot; /&gt;
-                &lt;/bean&gt;
-            &lt;/property&gt;
-        &lt;/bean&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
+        <p><strong>在SpringMVC.xml中配置</strong></p>
+<pre><code class="xml">&lt;!--因为前端控制器不具备处理静态资源的能力，因此在这配置default-servlet-handler，当前端控制器无法处理静态资源时，就会交由默认的servlet来处理--&gt;
+&lt;!--开放对静态资源的访问--&gt;
+&lt;mvc:default-servlet-handler&gt;&lt;/mvc:default-servlet-handler&gt;
+&lt;!--开启MVC注解驱动--&gt;
+&lt;mvc:annotation-driven&gt;&lt;/mvc:annotation-driven&gt;
 </code></pre>
 
       
