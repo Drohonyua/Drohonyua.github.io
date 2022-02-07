@@ -379,7 +379,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-02-07 21:35:19'>2022-02-07 21:19</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-07 23:50:58'>2022-02-07 21:19</time>
         
     </div>
     <div class="article-meta">
@@ -401,7 +401,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81-RequestBody"><span class="toc-text">1、@RequestBody</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-RequestBody"><span class="toc-text">1.@RequestBody</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RequestEntity"><span class="toc-text">2.RequestEntity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%80%9A%E8%BF%87servletAPI%E6%9D%A5%E5%93%8D%E5%BA%94%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-text">3.通过servletAPI来响应浏览器的数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-ResponseBody"><span class="toc-text">4.@ResponseBody</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-SpringMVC%E5%A4%84%E7%90%86json"><span class="toc-text">5.SpringMVC处理json</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -420,7 +420,7 @@
         <p>HttpMessageConverter，报文信息转换器，将请求报文转换为Java对象，或将Java对象转换为响应报文</p>
 <p>HttpMessageConverter提供了两个注解和两个类型：@RequestBody，@ResponseBody，RequestEntity，</p>
 <p>ResponseEntity</p>
-<h3 id="1、-RequestBody"><a href="#1、-RequestBody" class="headerlink" title="1、@RequestBody"></a>1、@RequestBody</h3><p>@RequestBody可以获取请求体，需要在控制器方法设置一个形参，使用@RequestBody进行标识，当前请求的请求体就会为当前注解所标识的形参赋值</p>
+<h1 id="1-RequestBody"><a href="#1-RequestBody" class="headerlink" title="1.@RequestBody"></a>1.@RequestBody</h1><p>@RequestBody可以获取请求体，需要在控制器方法设置一个形参，<strong>使用@RequestBody进行标识</strong>，当前请求的请求体就会为当前注解所标识的形参赋值</p>
 <p>作用：将浏览器发送过来的请求体中的数据转换为java数据</p>
 <pre><code class="html">&lt;form th:action=&quot;@&#123;/testRequestBody&#125;&quot; method=&quot;post&quot;&gt;
     用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
@@ -435,7 +435,57 @@ public String testRequestBody(@RequestBody String requestBody)&#123;
 &#125;
 </code></pre>
 <p>输出结果：</p>
-<p>requestBody:username=admin&amp;password=123456</p>
+<p>requestBody:username=123&amp;password=123</p>
+<blockquote>
+<p>GET请求没有请求体！因为GET请求的请求参数在url中</p>
+</blockquote>
+<h1 id="2-RequestEntity"><a href="#2-RequestEntity" class="headerlink" title="2.RequestEntity"></a>2.RequestEntity</h1><p>RequestEntity<strong>封装整个请求报文</strong>的一种类型，需要在控制器方法的形参中设置该类型的形参，当前请求的请求报文就会赋值给该形参，可以通过**getHeaders()<strong>获取请求头信息，通过</strong>getBody()**获取请求体信息</p>
+<pre><code class="java">@RequestMapping(&quot;/testRequestEntity&quot;)
+public String testRequestEntity(RequestEntity&lt;String&gt; requestEntity)&#123;
+    //requestEntity为整个请求报文
+    System.out.println(&quot;requestHeader:&quot;+requestEntity.getHeaders());
+    System.out.println(&quot;requestBody:&quot;+requestEntity.getBody());
+    return &quot;success&quot;;
+&#125;
+</code></pre>
+<p>输出结果：<br>requestHeader:[host:”localhost:8080”, connection:”keep-alive”, content-length:”27”, cache-control:”max-age=0”, sec-ch-ua:”” Not A;Brand”;v=”99”, “Chromium”;v=”90”, “Google Chrome”;v=”90””, sec-ch-ua-mobile:”?0”, upgrade-insecure-requests:”1”, origin:”<a href="http://localhost:8080&quot;">http://localhost:8080&quot;</a>, user-agent:”Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36”]<br>requestBody:username=admin&amp;password=123</p>
+<h1 id="3-通过servletAPI来响应浏览器的数据"><a href="#3-通过servletAPI来响应浏览器的数据" class="headerlink" title="3.通过servletAPI来响应浏览器的数据"></a>3.通过servletAPI来响应浏览器的数据</h1><pre><code class="xml">&lt;a th:href=&quot;@&#123;/testResponse&#125;&quot;&gt;testResponse&lt;/a&gt;
+</code></pre>
+<pre><code class="java">@RequestMapping(value = &quot;/testResponse&quot;)
+public void testResponseBody(HttpServletResponse httpServletResponse) throws IOException &#123;
+    httpServletResponse.getWriter().println(&quot;hello&quot;);
+&#125;
+</code></pre>
+<h1 id="4-ResponseBody"><a href="#4-ResponseBody" class="headerlink" title="4.@ResponseBody"></a>4.@ResponseBody</h1><p>@ResponseBody用于标识一个控制器方法，可以将该方法的返回值直接作为响应报文的响应体响应到浏览器</p>
+<pre><code class="java">@RequestMapping(&quot;/testResponseBody&quot;)
+@ResponseBody
+//添加@ResponseBody后，return &quot;success&quot;;返回的不再是经过视图解析器解析后的success页面，而是字符串success，即success不再作为视图名称进行解析
+public String testResponseBody()&#123;
+    return &quot;success1&quot;;
+&#125;
+</code></pre>
+<p>结果：浏览器页面显示success1</p>
+<h1 id="5-SpringMVC处理json"><a href="#5-SpringMVC处理json" class="headerlink" title="5.SpringMVC处理json"></a>5.SpringMVC处理json</h1><p>@ResponseBody处理json的步骤：</p>
+<p>a&gt;导入jackson的依赖</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+    &lt;version&gt;2.12.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>b&gt;在SpringMVC的核心配置文件中开启mvc的注解驱动，此时在HandlerAdaptor中<strong>会自动装配一个消息转换器</strong>：MappingJackson2HttpMessageConverter，可以将响应到浏览器的<strong>Java对象转换为Json格式的字符串</strong></p>
+<pre><code class="xml">&lt;mvc:annotation-driven /&gt;
+</code></pre>
+<p>c&gt;在处理器方法上使用@ResponseBody注解进行标识</p>
+<p>d&gt;将Java对象直接作为控制器方法的返回值返回，就会自动转换为Json格式的字符串</p>
+<pre><code class="java">@RequestMapping(&quot;/testResponseUser&quot;)
+@ResponseBody
+public User testResponseUser()&#123;
+    return new User(1001,&quot;admin&quot;,&quot;123456&quot;,23,&quot;男&quot;);
+&#125;
+</code></pre>
+<p>浏览器的页面中展示的结果：</p>
+<p>{“id”:1001,”username”:”admin”,”password”:”123456”,”age”:23,”sex”:”男”}</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
