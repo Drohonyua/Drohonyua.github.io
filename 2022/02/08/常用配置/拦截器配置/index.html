@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Drohonyua Blog</title>
+  <title>拦截器配置 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="Drohonyua Blog">
+  <meta name="description" content="拦截器配置 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -58,7 +58,7 @@
 
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -381,12 +381,51 @@
         </div>
     </div>
 </aside>
-<div id="post" class="index">
+<div id="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-常用配置/拦截器配置" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Drohonyua-Blog"><span class="toc-text">Drohonyua Blog</span></a></li></ol>
+        <h1 class="article-title">拦截器配置</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="常用配置">常用配置</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-02-08 23:24:22'>2022-02-08 23:23</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
     
 <style>
     .left-col .switch-btn,
@@ -399,14 +438,52 @@
     }
 </style>
 </div>
-            <h1 id="Drohonyua-Blog"><a href="#Drohonyua-Blog" class="headerlink" title="Drohonyua Blog"></a>Drohonyua Blog</h1><ul>
-<li>个人博客</li>
-<li>记录学习笔记</li>
-</ul>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>在SpringMVC.xml中配置</strong></p>
+<pre><code class="xml">&lt;!--第一种方式--&gt;
+&lt;mvc:interceptors&gt;
+&lt;bean class=&quot;com.atguigu.interceptor.FirstInterceptor&quot;&gt;&lt;/bean&gt;
+&lt;/mvc:interceptors&gt;
 
-        </article>
-        
-        
+&lt;!--第二种方式--&gt;
+&lt;mvc:interceptors&gt;
+&lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
+&lt;/mvc:interceptors&gt;
+&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;
+
+&lt;!--第三种方式--&gt;
+&lt;mvc:interceptors&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/**&quot;/&gt;&lt;!--/*只表示一层目录,而/**表示任意目录--&gt;
+        &lt;mvc:exclude-mapping path=&quot;/testRequestEntity&quot;/&gt;
+        &lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
+    &lt;/mvc:interceptor&gt;
+&lt;/mvc:interceptors&gt;
+&lt;!-- 
+    通过mvc:mapping设置需要拦截的请求，
+    通过mvc:exclude-mapping设置需要排除的请求，即不需要拦截的请求，
+    以上配置方式可以通过ref或bean标签设置拦截器
+--&gt;
+</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -415,11 +492,11 @@
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-</div>
-<div class="full-toc">
-    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
+    </div>
 </div>
 
 </body>
