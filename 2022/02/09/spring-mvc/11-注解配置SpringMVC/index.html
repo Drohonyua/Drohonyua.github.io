@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>编码过滤器配置 | Drohonyua Blog</title>
+  <title>11-注解配置SpringMVC | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="编码过滤器配置 | Drohonyua Blog">
+  <meta name="description" content="11-注解配置SpringMVC | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -407,9 +407,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-常用配置/编码过滤器" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-spring-mvc/11-注解配置SpringMVC" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">编码过滤器配置</h1>
+        <h1 class="article-title">11-注解配置SpringMVC</h1>
     
     <div class="article-meta">
         
@@ -419,7 +419,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="常用配置">常用配置</a>
+            <a  data-rel="SpringMVC">SpringMVC</a>
             
         </span>
         
@@ -427,7 +427,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:34:31'>2022-01-27 22:30</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-09 22:48:07'>2022-02-09 21:46</time>
         
     </div>
     <div class="article-meta">
@@ -449,7 +449,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E7%B1%BB%EF%BC%8C%E4%BB%A3%E6%9B%BFweb-xml"><span class="toc-text">1、创建初始化类，代替web.xml</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BASpringConfig%E9%85%8D%E7%BD%AE%E7%B1%BB%EF%BC%8C%E4%BB%A3%E6%9B%BFspring%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">2、创建SpringConfig配置类，代替spring的配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E5%88%9B%E5%BB%BAWebConfig%E9%85%8D%E7%BD%AE%E7%B1%BB%EF%BC%8C%E4%BB%A3%E6%9B%BFSpringMVC%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">3、创建WebConfig配置类，代替SpringMVC的配置文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81%E6%B5%8B%E8%AF%95%E5%8A%9F%E8%83%BD"><span class="toc-text">4、测试功能</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -465,24 +465,141 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>在web.xml中配置(最好放在最前面)</strong></p>
-<pre><code class="xml">&lt;!--配置springMVC的编码过滤器--&gt;
-&lt;filter&gt;
-    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;encoding&lt;/param-name&gt;
-        &lt;param-value&gt;UTF-8&lt;/param-value&gt;
-    &lt;/init-param&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;forceResponseEncoding&lt;/param-name&gt;
-        &lt;param-value&gt;true&lt;/param-value&gt;
-    &lt;/init-param&gt;
-&lt;/filter&gt;
-&lt;filter-mapping&gt;
-     &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
-     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-&lt;/filter-mapping&gt;
+        <p>使用配置类和注解代替web.xml和SpringMVC配置文件的功能</p>
+<h1 id="1、创建初始化类，代替web-xml"><a href="#1、创建初始化类，代替web-xml" class="headerlink" title="1、创建初始化类，代替web.xml"></a>1、创建初始化类，代替web.xml</h1><p>在Servlet3.0环境中，容器会在类路径中查找实现javax.servlet.ServletContainerInitializer接口的类，如果找到的话就用它来配置Servlet容器。<br>Spring提供了这个接口的实现，名为SpringServletContainerInitializer，这个类反过来又会查找实现WebApplicationInitializer的类并将配置的任务交给它们来完成。Spring3.2引入了一个便利的WebApplicationInitializer基础实现，名为AbstractAnnotationConfigDispatcherServletInitializer，当我们的类扩展了AbstractAnnotationConfigDispatcherServletInitializer并将其部署到Servlet3.0容器的时候，容器会自动发现它，并用它来配置Servlet上下文。</p>
+<pre><code class="java">public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer &#123;
+
+    /**
+     * 指定spring的配置类(Spring.xml)
+     * @return
+     */
+    @Override
+    protected Class&lt;?&gt;[] getRootConfigClasses() &#123;
+        return new Class[]&#123;SpringConfig.class&#125;;
+    &#125;
+
+    /**
+     * 指定SpringMVC的配置类(SpringMVC.xml)
+     * @return
+     */
+    @Override
+    protected Class&lt;?&gt;[] getServletConfigClasses() &#123;
+        return new Class[]&#123;WebConfig.class&#125;;
+    &#125;
+
+    /**
+     * 指定DispatcherServlet的映射规则，即url-pattern
+     * @return
+     */
+    @Override
+    protected String[] getServletMappings() &#123;
+        return new String[]&#123;&quot;/&quot;&#125;;
+    &#125;
+
+    /**
+     * 添加过滤器
+     * @return
+     */
+    @Override
+    protected Filter[] getServletFilters() &#123;
+        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+        encodingFilter.setEncoding(&quot;UTF-8&quot;);
+        encodingFilter.setForceRequestEncoding(true);
+        HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
+        return new Filter[]&#123;encodingFilter, hiddenHttpMethodFilter&#125;;
+    &#125;
+&#125;
+</code></pre>
+<h1 id="2、创建SpringConfig配置类，代替spring的配置文件"><a href="#2、创建SpringConfig配置类，代替spring的配置文件" class="headerlink" title="2、创建SpringConfig配置类，代替spring的配置文件"></a>2、创建SpringConfig配置类，代替spring的配置文件</h1><pre><code class="java">@Configuration
+public class SpringConfig &#123;
+    //ssm整合之后，spring的配置信息写在此类中
+&#125;
+</code></pre>
+<h1 id="3、创建WebConfig配置类，代替SpringMVC的配置文件"><a href="#3、创建WebConfig配置类，代替SpringMVC的配置文件" class="headerlink" title="3、创建WebConfig配置类，代替SpringMVC的配置文件"></a>3、创建WebConfig配置类，代替SpringMVC的配置文件</h1><pre><code class="java">//将当前类表示为配置类
+@Configuration
+//扫描组件
+@ComponentScan(&quot;com.atguigu.mvc.controller&quot;)
+//开启MVC注解驱动
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer &#123;
+
+    //使用默认的servlet处理静态资源 类需继承WebMvcConfigurer
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) &#123;
+        configurer.enable();
+    &#125;
+
+    //配置文件上传解析器
+    @Bean
+    public CommonsMultipartResolver multipartResolver()&#123;
+        return new CommonsMultipartResolver();
+    &#125;
+
+    //配置拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) &#123;
+        FirstInterceptor firstInterceptor = new FirstInterceptor();
+        registry.addInterceptor(firstInterceptor).addPathPatterns(&quot;/**&quot;);
+    &#125;
+    
+    //配置视图控制
+    
+    /*@Override
+    public void addViewControllers(ViewControllerRegistry registry) &#123;
+        registry.addViewController(&quot;/&quot;).setViewName(&quot;index&quot;);
+    &#125;*/
+    
+    //配置异常映射
+    /*@Override
+    public void configureHandlerExceptionResolvers(List&lt;HandlerExceptionResolver&gt; resolvers) &#123;
+        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+        Properties prop = new Properties();
+        prop.setProperty(&quot;java.lang.ArithmeticException&quot;, &quot;error&quot;);
+        //设置异常映射
+        exceptionResolver.setExceptionMappings(prop);
+        //设置共享异常信息的键
+        exceptionResolver.setExceptionAttribute(&quot;ex&quot;);
+        resolvers.add(exceptionResolver);
+    &#125;*/
+
+    //配置生成模板解析器
+    @Bean
+    public ITemplateResolver templateResolver() &#123;
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        // ServletContextTemplateResolver需要一个ServletContext作为构造参数，可通过WebApplicationContext 的方法获得
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(
+                webApplicationContext.getServletContext());
+        templateResolver.setPrefix(&quot;/WEB-INF/templates/&quot;);
+        templateResolver.setSuffix(&quot;.html&quot;);
+        templateResolver.setCharacterEncoding(&quot;UTF-8&quot;);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        return templateResolver;
+    &#125;
+
+    //生成模板引擎并为模板引擎注入模板解析器
+    @Bean
+    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver) &#123;
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+        return templateEngine;
+    &#125;
+
+    //生成视图解析器并未解析器注入模板引擎
+    @Bean
+    public ViewResolver viewResolver(SpringTemplateEngine templateEngine) &#123;
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setCharacterEncoding(&quot;UTF-8&quot;);
+        viewResolver.setTemplateEngine(templateEngine);
+        return viewResolver;
+    &#125;
+
+
+&#125;
+</code></pre>
+<h1 id="4、测试功能"><a href="#4、测试功能" class="headerlink" title="4、测试功能"></a>4、测试功能</h1><pre><code class="java">@RequestMapping(&quot;/&quot;)
+public String index()&#123;
+    return &quot;index&quot;;
+&#125;
 </code></pre>
 
       

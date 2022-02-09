@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>编码过滤器配置 | Drohonyua Blog</title>
+  <title>10-异常处理器 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="编码过滤器配置 | Drohonyua Blog">
+  <meta name="description" content="10-异常处理器 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -407,9 +407,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-常用配置/编码过滤器" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-spring-mvc/10-异常处理器" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">编码过滤器配置</h1>
+        <h1 class="article-title">10-异常处理器</h1>
     
     <div class="article-meta">
         
@@ -419,7 +419,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="常用配置">常用配置</a>
+            <a  data-rel="SpringMVC">SpringMVC</a>
             
         </span>
         
@@ -427,7 +427,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:34:31'>2022-01-27 22:30</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-09 21:46:33'>2022-02-09 21:16</time>
         
     </div>
     <div class="article-meta">
@@ -449,7 +449,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E5%9F%BA%E4%BA%8E%E9%85%8D%E7%BD%AE%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">1、基于配置的异常处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">2、基于注解的异常处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -465,26 +465,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>在web.xml中配置(最好放在最前面)</strong></p>
-<pre><code class="xml">&lt;!--配置springMVC的编码过滤器--&gt;
-&lt;filter&gt;
-    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
-    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;encoding&lt;/param-name&gt;
-        &lt;param-value&gt;UTF-8&lt;/param-value&gt;
-    &lt;/init-param&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;forceResponseEncoding&lt;/param-name&gt;
-        &lt;param-value&gt;true&lt;/param-value&gt;
-    &lt;/init-param&gt;
-&lt;/filter&gt;
-&lt;filter-mapping&gt;
-     &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
-     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-&lt;/filter-mapping&gt;
+        <h1 id="1、基于配置的异常处理"><a href="#1、基于配置的异常处理" class="headerlink" title="1、基于配置的异常处理"></a>1、基于配置的异常处理</h1><p>SpringMVC提供了一个处理控制器方法执行过程中所出现的异常的接口：HandlerExceptionResolver</p>
+<p>HandlerExceptionResolver接口的实现类有：DefaultHandlerExceptionResolver和SimpleMappingExceptionResolver</p>
+<p>SpringMVC提供了自定义的异常处理器SimpleMappingExceptionResolver，使用方式：</p>
+<pre><code class="xml">&lt;bean class=&quot;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&quot;&gt;
+    &lt;property name=&quot;exceptionMappings&quot;&gt;
+        &lt;props&gt;
+            &lt;!--
+                properties的键表示处理器方法执行过程中出现的异常类型
+                properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面
+            --&gt;
+            &lt;prop key=&quot;java.lang.ArithmeticException&quot;&gt;error&lt;/prop&gt;
+        &lt;/props&gt;
+    &lt;/property&gt;
+    &lt;!--
+        exceptionAttribute属性设置一个属性名，将出现的异常信息在请求域中进行共享
+        以vlaue为键，以异常类型即name为值
+    --&gt;
+    &lt;property name=&quot;exceptionAttribute&quot; value=&quot;ex&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
 </code></pre>
+<h1 id="2、基于注解的异常处理"><a href="#2、基于注解的异常处理" class="headerlink" title="2、基于注解的异常处理"></a>2、基于注解的异常处理</h1><pre><code class="java">//@ControllerAdvice将当前类标识为异常处理的组件
+@ControllerAdvice
+public class ExceptionController &#123;
 
+    //@ExceptionHandler用于设置所标识方法处理的异常
+    //多个类型时这样写 @ExceptionHandler(value = &#123;ArithmeticException.class,NullPointerException.class&#125;)
+    @ExceptionHandler(ArithmeticException.class)
+    //ex表示当前请求处理中出现的异常对象
+    public String handleArithmeticException(Exception ex, Model model)&#123;
+        model.addAttribute(&quot;ex&quot;, ex);
+        return &quot;error&quot;;
+    &#125;
+
+&#125;
+</code></pre>
+<h1 id><a href="#" class="headerlink" title></a></h1>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
     </div>

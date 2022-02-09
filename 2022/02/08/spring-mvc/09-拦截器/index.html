@@ -128,7 +128,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(17)</small>
+                <small>(20)</small>
             
         </div>
     </li>
@@ -139,7 +139,7 @@
                     <div data-rel="SpringMVC">
                         
                         SpringMVC
-                        <small>(9)</small>
+                        <small>(11)</small>
                         
                     </div>
                     
@@ -153,7 +153,7 @@
                     <div data-rel="常用配置">
                         
                         常用配置
-                        <small>(7)</small>
+                        <small>(8)</small>
                         
                     </div>
                     
@@ -178,7 +178,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="17">
+<input type="hidden" id="yelog_site_posts_number" value="20">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -228,6 +228,30 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/spring-mvc/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/spring-mvc/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
         
         <a  class="全部文章 常用配置 "
            href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
@@ -403,7 +427,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-02-08 23:22:42'>2022-02-08 22:32</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-09 21:16:46'>2022-02-08 22:32</time>
         
     </div>
     <div class="article-meta">
@@ -444,9 +468,10 @@
         <h1 id="1、拦截器的配置"><a href="#1、拦截器的配置" class="headerlink" title="1、拦截器的配置"></a>1、拦截器的配置</h1><p>SpringMVC中的拦截器<strong>用于拦截控制器方法的执行</strong>(在控制器方法前执行)</p>
 <p>SpringMVC中的拦截器需要实现接口<strong>HandlerInterceptor</strong>例子：</p>
 <pre><code class="java">public class FirstInterceptor implements HandlerInterceptor &#123;
-    //重写方法可按alt+ins调出
+    //重写这些方法可按alt+ins调出
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
+        //返回true就放行不然就到下一个拦截器或直接拦截住
         return false;
     &#125;
 
@@ -486,14 +511,18 @@
 --&gt;
 </code></pre>
 <h1 id="2、拦截器的三个抽象方法"><a href="#2、拦截器的三个抽象方法" class="headerlink" title="2、拦截器的三个抽象方法"></a>2、拦截器的三个抽象方法</h1><p>SpringMVC中的拦截器有三个抽象方法：</p>
-<p>preHandle：控制器方法执行之前执行preHandle()，其boolean类型的返回值表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法 顺序：调用控制器方法前</p>
-<p>postHandle：控制器方法执行之后执行postHandle() 顺序：执行完控制器方法后</p>
-<p>afterComplation：处理完视图和模型数据，渲染视图完毕之后执行afterComplation() 顺序：控制器在渲染完视图后</p>
-<h1 id="3、多个拦截器的执行顺序"><a href="#3、多个拦截器的执行顺序" class="headerlink" title="3、多个拦截器的执行顺序"></a>3、多个拦截器的执行顺序</h1><p>a&gt;若每个拦截器的preHandle()都返回true</p>
-<p>此时多个拦截器的执行顺序和拦截器在SpringMVC的配置文件的配置顺序有关：</p>
-<p>preHandle()会按照配置的顺序执行，而postHandle()和afterComplation()会按照配置的反序执行</p>
-<p>b&gt;若某个拦截器的preHandle()返回了false</p>
-<p>preHandle()返回false和它之前的拦截器的preHandle()都会执行，postHandle()都不执行，返回false的拦截器之前的拦截器的afterComplation()会执行</p>
+<p>preHandle：控制器方法执行之前执行preHandle()，<strong>其boolean类型的返回值表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法</strong>    顺序：调用控制器方法前</p>
+<p>postHandle：控制器方法执行之后执行postHandle()   顺序：执行完控制器方法后</p>
+<p>afterComplation：处理完视图和模型数据，渲染视图完毕之后执行afterComplation()   顺序：控制器在渲染完视图后</p>
+<h1 id="3、多个拦截器的执行顺序"><a href="#3、多个拦截器的执行顺序" class="headerlink" title="3、多个拦截器的执行顺序"></a>3、多个拦截器的执行顺序</h1><p>a&gt;<strong>若每个拦截器的preHandle()都返回true</strong></p>
+<p>此时多个拦截器的执行顺序和拦截器在SpringMVC的配置文件的<strong>配置顺序有关</strong>：</p>
+<p><strong>preHandle()会按照配置的顺序执行，而postHandle()和afterComplation()会按照配置的反序执行</strong></p>
+<p>b&gt;<strong>若某个拦截器的preHandle()返回了false</strong></p>
+<p>preHandle()返回false和它之前的拦截器的<strong>preHandle()都会执行，postHandle()都不执行</strong>，<strong>返回false的拦截器之前的拦截器的afterComplation()会执行</strong></p>
+<blockquote>
+<p>若每个拦截器的preHandle()都返回true，就像环一样</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220209210536886.png" alt="image-20220209210536886"></p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
