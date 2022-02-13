@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>06-自动配置原理 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="06-自动配置原理 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(27)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(6)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="27">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-SpringBoot/06-自动配置原理" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">06-自动配置原理</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SpringBoot">SpringBoot</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-02-13 22:26:20'>2022-02-13 22:19</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8"><span class="toc-text">1.自动配置原理入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%BC%95%E5%AF%BC%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">1.1 引导加载自动配置类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-SpringBootConfiguration"><span class="toc-text">1.1.1 @SpringBootConfiguration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-ComponentScan"><span class="toc-text">1.1.2 @ComponentScan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-EnableAutoConfiguration"><span class="toc-text">1.1.3 @EnableAutoConfiguration</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-1-AutoConfigurationPackage"><span class="toc-text">1.1.3.1 @AutoConfigurationPackage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-2-Import-AutoConfigurationImportSelector-class"><span class="toc-text">1.1.3.2 @Import(AutoConfigurationImportSelector.class)</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-自动配置原理入门"><a href="#1-自动配置原理入门" class="headerlink" title="1.自动配置原理入门"></a>1.自动配置原理入门</h1><h2 id="1-1-引导加载自动配置类"><a href="#1-1-引导加载自动配置类" class="headerlink" title="1.1 引导加载自动配置类"></a>1.1 引导加载自动配置类</h2><pre><code class="java">@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(excludeFilters = &#123; @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+        @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)
+public @interface SpringBootApplication&#123;&#125;
+
+
+======================
+    
+</code></pre>
+<h3 id="1-1-1-SpringBootConfiguration"><a href="#1-1-1-SpringBootConfiguration" class="headerlink" title="1.1.1 @SpringBootConfiguration"></a>1.1.1 @SpringBootConfiguration</h3><p>@Configuration。代表当前是一个配置类</p>
+<h3 id="1-1-2-ComponentScan"><a href="#1-1-2-ComponentScan" class="headerlink" title="1.1.2 @ComponentScan"></a>1.1.2 @ComponentScan</h3><p>指定扫描哪些，Spring注解；</p>
+<h3 id="1-1-3-EnableAutoConfiguration"><a href="#1-1-3-EnableAutoConfiguration" class="headerlink" title="1.1.3 @EnableAutoConfiguration"></a>1.1.3 @EnableAutoConfiguration</h3><pre><code class="java">@AutoConfigurationPackage
+@Import(AutoConfigurationImportSelector.class)
+public @interface EnableAutoConfiguration &#123;&#125;
+</code></pre>
+<h4 id="1-1-3-1-AutoConfigurationPackage"><a href="#1-1-3-1-AutoConfigurationPackage" class="headerlink" title="1.1.3.1 @AutoConfigurationPackage"></a>1.1.3.1 @AutoConfigurationPackage</h4><p>自动配置包？指定了默认的包规则</p>
+<pre><code class="java">@Import(AutoConfigurationPackages.Registrar.class)  //给容器中导入一个组件
+public @interface AutoConfigurationPackage &#123;&#125;
+
+//利用Registrar给容器中导入一系列组件
+//将指定的一个包下的所有组件导入进来？MainApplication 所在包下。
+</code></pre>
+<h4 id="1-1-3-2-Import-AutoConfigurationImportSelector-class"><a href="#1-1-3-2-Import-AutoConfigurationImportSelector-class" class="headerlink" title="1.1.3.2 @Import(AutoConfigurationImportSelector.class)"></a>1.1.3.2 @Import(AutoConfigurationImportSelector.class)</h4><pre><code class="java">1、利用getAutoConfigurationEntry(annotationMetadata);给容器中批量导入一些组件
+2、调用List&lt;String&gt; configurations = getCandidateConfigurations(annotationMetadata, attributes)获取到所有需要导入到容器中的配置类
+3、利用工厂加载 Map&lt;String, List&lt;String&gt;&gt; loadSpringFactories(@Nullable ClassLoader classLoader)；得到所有的组件
+4、从META-INF/spring.factories位置来加载一个文件。
+    默认扫描我们当前系统里面所有META-INF/spring.factories位置的文件
+    spring-boot-autoconfigure-2.3.4.RELEASE.jar包里面也有META-INF/spring.factories
+    
+</code></pre>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220213222112567.png" alt="image-20220213222112567"></p>
+<pre><code class="xml">文件里面写死了spring-boot一启动就要给容器中加载的所有配置类
+spring-boot-autoconfigure-2.3.4.RELEASE.jar/META-INF/spring.factories
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\
+org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\
+org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\
+org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\
+org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\
+org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration,\
+org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration,\
+org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration,\
+org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.cassandra.CassandraRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.couchbase.CouchbaseDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.couchbase.CouchbaseRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRestClientAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.ldap.LdapRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.neo4j.Neo4jDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.neo4j.Neo4jRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.solr.SolrRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.r2dbc.R2dbcRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.r2dbc.R2dbcTransactionManagerAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration,\
+org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration,\
+org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration,\
+org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration,\
+org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration,\
+org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration,\
+org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,\
+org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration,\
+org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration,\
+org.springframework.boot.autoconfigure.hazelcast.HazelcastAutoConfiguration,\
+org.springframework.boot.autoconfigure.hazelcast.HazelcastJpaDependencyAutoConfiguration,\
+org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration,\
+org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration,\
+org.springframework.boot.autoconfigure.influx.InfluxDbAutoConfiguration,\
+org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration,\
+org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration,\
+org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,\
+org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
+org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,\
+org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration,\
+org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration,\
+org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration,\
+org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration,\
+org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration,\
+org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration,\
+org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration,\
+org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration,\
+org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration,\
+org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration,\
+org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration,\
+org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration,\
+org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration,\
+org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration,\
+org.springframework.boot.autoconfigure.ldap.LdapAutoConfiguration,\
+org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration,\
+org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration,\
+org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration,\
+org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration,\
+org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,\
+org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration,\
+org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration,\
+org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,\
+org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration,\
+org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration,\
+org.springframework.boot.autoconfigure.rsocket.RSocketMessagingAutoConfiguration,\
+org.springframework.boot.autoconfigure.rsocket.RSocketRequesterAutoConfiguration,\
+org.springframework.boot.autoconfigure.rsocket.RSocketServerAutoConfiguration,\
+org.springframework.boot.autoconfigure.rsocket.RSocketStrategiesAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.rsocket.RSocketSecurityAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.saml2.Saml2RelyingPartyAutoConfiguration,\
+org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration,\
+org.springframework.boot.autoconfigure.session.SessionAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration,\
+org.springframework.boot.autoconfigure.security.oauth2.resource.reactive.ReactiveOAuth2ResourceServerAutoConfiguration,\
+org.springframework.boot.autoconfigure.solr.SolrAutoConfiguration,\
+org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration,\
+org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration,\
+org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration,\
+org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration,\
+org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,\
+org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.HttpHandlerAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.function.client.ClientHttpConnectorAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration,\
+org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,\
+org.springframework.boot.autoconfigure.websocket.reactive.WebSocketReactiveAutoConfiguration,\
+org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration,\
+org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration,\
+org.springframework.boot.autoconfigure.webservices.WebServicesAutoConfiguration,\
+org.springframework.boot.autoconfigure.webservices.client.WebServiceTemplateAutoConfiguration
+</code></pre>
+<p> 1.2 按需开启自动配置项 </p>
+<pre><code class="tex">虽然我们127个场景的所有自动配置启动的时候默认全部加载。xxxxAutoConfiguration
+按照条件装配规则（@Conditional），最终会按需配置。
+</code></pre>
+<p> 1.3 修改默认配置 </p>
+<pre><code class="java">        @Bean
+        @ConditionalOnBean(MultipartResolver.class)  //容器中有这个类型组件
+        @ConditionalOnMissingBean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME) //容器中没有这个名字 multipartResolver 的组件
+        public MultipartResolver multipartResolver(MultipartResolver resolver) &#123;
+            //给@Bean标注的方法传入了对象参数，这个参数的值就会从容器中找。
+            //SpringMVC multipartResolver。防止有些用户配置的文件上传解析器不符合规范
+            // Detect if the user has created a MultipartResolver but named it incorrectly
+            return resolver;
+        &#125;
+给容器中加入了文件上传解析器；
+</code></pre>
+<p>SpringBoot默认会在底层配好所有的组件。但是如果用户自己配置了以用户的优先</p>
+<pre><code class="java">@Bean
+    @ConditionalOnMissingBean
+    public CharacterEncodingFilter characterEncodingFilter() &#123;
+    &#125;
+</code></pre>
+<p>总结：</p>
+<p>●SpringBoot先加载所有的自动配置类  xxxxxAutoConfiguration</p>
+<p>●每个自动配置类按照条件进行生效，默认都会绑定配置文件指定的值。xxxxProperties里面拿。xxxProperties和配置文件进行了绑定</p>
+<p>●生效的配置类就会给容器中装配很多组件</p>
+<p>●只要容器中有这些组件，相当于这些功能就有了</p>
+<p>●定制化配置</p>
+<p>○用户直接自己@Bean替换底层的组件</p>
+<p>○用户去看这个组件是获取的配置文件什么值就去修改。</p>
+<p>xxxxxAutoConfiguration —&gt; 组件  —&gt; xxxxProperties里面拿值  —-&gt; application.properties</p>
+<p> 1.4 最佳实践 </p>
+<p>●引入场景依赖</p>
+<p>○<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-spring-boot.html#using-boot-starter">https://docs.spring.io/spring-boot/docs/current/reference/html/using-spring-boot.html#using-boot-starter</a></p>
+<p>●查看自动配置了哪些（选做）</p>
+<p>○自己分析，引入场景对应的自动配置一般都生效了</p>
+<p>○配置文件中debug=true开启自动配置报告。Negative（不生效）\Positive（生效）</p>
+<p>●是否需要修改</p>
+<p>○参照文档修改配置项</p>
+<p>■<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties">https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties</a></p>
+<p>■自己分析。xxxxProperties绑定了配置文件的哪些。</p>
+<p>○自定义加入或者替换组件</p>
+<p>■@Bean、@Component。。。</p>
+<p>○自定义器  XXXXXCustomizer；</p>
+<p>○……</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

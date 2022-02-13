@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>02-SpringMVC工程创建 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="02-SpringMVC工程创建 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(27)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(6)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="27">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-SpringMVC/02-SpringMVC工程创建" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">02-SpringMVC工程创建</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SpringMVC">SpringMVC</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-01-27 22:02:50'>2022-01-21 07:51</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BAMaven%E5%B7%A5%E7%A8%8B"><span class="toc-text">1.创建Maven工程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0Web%E6%A8%A1%E5%9D%97"><span class="toc-text">2.添加Web模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AEweb-xml"><span class="toc-text">3.配置web.xml</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E8%AF%B7%E6%B1%82%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">4.创建请求控制器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%B5%8B%E8%AF%95"><span class="toc-text">5.测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1%E5%AE%9E%E7%8E%B0%E5%AF%B9%E9%A6%96%E9%A1%B5%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="toc-text">5.1实现对首页的访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2%E7%94%A8%E8%B6%85%E9%93%BE%E6%8E%A5%E8%AE%BF%E9%97%AE%E7%9B%AE%E6%A0%87%E9%A1%B5"><span class="toc-text">5.2用超链接访问目标页</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6.总结</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-创建Maven工程"><a href="#1-创建Maven工程" class="headerlink" title="1.创建Maven工程"></a>1.创建Maven工程</h1><p><img src="https://img-blog.csdnimg.cn/img_convert/26f921912e07a3be590d654f671ac0ca.png" alt="image-20220120222734744"></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121084349848.png" alt="image-20220121084349848"></p>
+<p><strong>在pom.xml中添加相应依赖</strong></p>
+<pre><code class="xml">    &lt;dependencies&gt;
+        &lt;!-- SpringMVC --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;5.3.1&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- 日志 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+            &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+            &lt;version&gt;1.2.3&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- ServletAPI --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;3.1.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Spring5和Thymeleaf整合包 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;
+            &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt;
+            &lt;version&gt;3.0.12.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+</code></pre>
+<h1 id="2-添加Web模块"><a href="#2-添加Web模块" class="headerlink" title="2.添加Web模块"></a>2.添加Web模块</h1><p><strong>在main文件夹下创建webapp文件夹</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/4fcc8ed6b99648a25e671c9706c7e20d.png" alt="image-20220120225125025"></p>
+<p>webapp蓝点解决办法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34309435/article/details/85970040?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164272493416780265452687%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164272493416780265452687&amp;biz_id=0&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/weixin_34309435/article/details/85970040?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164272493416780265452687%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164272493416780265452687&amp;biz_id=0&amp;spm=1018.2226.3001.4187</a></p>
+<p>设置project struct</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121084337217.png" alt="image-20220121084337217"></p>
+<h1 id="3-配置web-xml"><a href="#3-配置web-xml" class="headerlink" title="3.配置web.xml"></a>3.配置web.xml</h1><p><strong>主要负责注册servlet,过滤器，监听器等等</strong></p>
+<ul>
+<li><p>默认配置</p>
+<p>使用此配置作用下，SpringMVC的配置文件就会默认位于WEB-INF下，默认名称为下面的””&lt;servlet-name&gt;中的值””+”-servlet.xml”，例如，以下配置所对应SpringMVC的配置文件位于WEB-INF下，文件名为springMVC-servlet.xml,但这种方式并不好，SpringMVC的配置文件，应放在resource资源文件夹下，WEB-INF应该只存放页面文件例如***.html等，因此便产生了拓展配置，可以改变SpringMVC配置文件的位置</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;
+         version=&quot;4.0&quot;&gt;
+    &lt;!--配置SpringMVC前端控制器，对前端的请求做统一管理--&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+        &lt;!--选择SpringMVC自带的前端控制器DispatcherServlet--&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+        &lt;!--因为是对所有请求进行处理，&quot;/&quot;代表当前浏览器所发生的所有请求
+        例如/login或.js,.css等等的请求路径,但不包括对.jsp文件的请求路径--&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre>
+</li>
+<li><p>拓展配置</p>
+<p>可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;
+         version=&quot;4.0&quot;&gt;
+    &lt;!--配置SpringMVC前端控制器，对前端的请求做统一管理--&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+        &lt;!--选择SpringMVC自带的前端控制器DispatcherServlet--&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;!--使用init-param标签(初始化参数)来改变SpringMVC配置文件(即spring的配置文件)的存放路径和名称
+        参数：
+        &lt;param-name&gt;:contextConfigLocation(上下文路径)-&gt;固定为这个
+        &lt;param-value&gt;:需使用classpath来代表在main路径下的文件，填写好对应的名称(与自己创建配置文件时起的名称一致便可)
+        --&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;classpath:SpringMVC.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;!--SpringMVC的配置文件初始化默认是在浏览器的第一次请求时，如果有大量的配置文件需要初始化则会严重影响浏览器第一次时的速度
+        因此使用&lt;load-on-startup&gt;标签将DispatcherServlet的初始化时间提前到服务器启动时
+        --&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+        &lt;!--因为是对所有请求进行处理，&quot;/&quot;代表当前浏览器所发生的所有请求
+        例如/login或.js,.css等等的请求路径,但不包括对.jsp文件的请求路径--&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre>
+</li>
+</ul>
+<p>​       SpringMVCp配置文件的位置:     <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121084417653.png" alt="image-20220121084417653"></p>
+<h1 id="4-创建请求控制器"><a href="#4-创建请求控制器" class="headerlink" title="4.创建请求控制器"></a>4.创建请求控制器</h1><p>创建类com.hong.controller.***.java</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121142804545.png" alt="image-20220121142804545"></p>
+<p><strong>使用注解@Controller和在SpringMVC.xml中配置扫描的方式将其注册到spring中交由spring管理，并在SpringMVC.xml中配置好视图解析器</strong></p>
+<p>HelloController-&gt;</p>
+<pre><code class="java">//@Controller表示交由Spring管理
+@Controller
+public class HelloController &#123;
+    
+&#125;
+</code></pre>
+<p>SpringMVC.xml-&gt;</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+        &lt;!--扫描指定路径下的类，并对拥有对应注解的类进行注册管理--&gt;
+       &lt;context:component-scan base-package=&quot;com.hong.controller&quot;&gt;&lt;/context:component-scan&gt;
+
+        &lt;!--视图解析器配置，负责最终的页面跳转,即配置后在使用页面跳转时，只需填写页面名称便可，即想跳转indx页面,return &quot;index&quot;便可，无需填写具体路径及后缀,由视图解析器自动帮你配置--&gt;
+        &lt;!-- 配置Thymeleaf视图解析器
+        class-&gt;选择ThymeleafViewResolver （Thymeleaf视图解析器）
+        参数:
+        order-&gt;配置视图解析器的优先级(因为可以设置优先级代表着可以使用多个视图解析器为其分配不同的优先级来进行使用)
+        characterEncoding-&gt;编码
+        templateEngine-&gt;模板(选择对应模板并进行配置)-&gt;
+        --&gt;
+        &lt;bean id=&quot;viewResolver&quot; class=&quot;org.thymeleaf.spring5.view.ThymeleafViewResolver&quot;&gt;
+            &lt;property name=&quot;order&quot; value=&quot;1&quot;/&gt;
+            &lt;property name=&quot;characterEncoding&quot; value=&quot;UTF-8&quot;/&gt;
+            &lt;property name=&quot;templateEngine&quot;&gt;
+                &lt;bean class=&quot;org.thymeleaf.spring5.SpringTemplateEngine&quot;&gt;
+                    &lt;property name=&quot;templateResolver&quot;&gt;
+                        &lt;!--
+                            &#123;(内部bean为templateEngine赋值)
+                            classs:SpringResourceTemplateResolver
+                            perfix：视图前缀
+                            suffix:视图后缀
+                            (这里前后缀即xxx文件夹下的xxx.html文件)
+                            templateMode：模板类型
+                            characterEncoding:编码
+                            &#125;
+                        --&gt;
+                        &lt;bean class=&quot;org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver&quot;&gt;
+                            &lt;!-- 视图前缀 --&gt;
+                            &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/templates/&quot;/&gt;
+                            &lt;!-- 视图后缀 --&gt;
+                            &lt;property name=&quot;suffix&quot; value=&quot;.html&quot;/&gt;
+                            &lt;property name=&quot;templateMode&quot; value=&quot;HTML5&quot;/&gt;
+                            &lt;property name=&quot;characterEncoding&quot; value=&quot;UTF-8&quot; /&gt;
+                        &lt;/bean&gt;
+                    &lt;/property&gt;
+                &lt;/bean&gt;
+            &lt;/property&gt;
+        &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<h1 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h1><h2 id="5-1实现对首页的访问"><a href="#5-1实现对首页的访问" class="headerlink" title="5.1实现对首页的访问"></a>5.1实现对首页的访问</h2><p>在HelloWord.java中写好测试代码</p>
+<pre><code class="java">@Controller
+public class HelloController &#123;
+
+    //@RequestMapping 请求映射 作用为请求与对应的请求方法创建映射关系
+    //@RequestMapping注解的value属性可以通过请求地址匹配请求，/表示的当前工程的上下文路径
+    //即请求localhost:8080/springMVC/便可访问该请求方法
+    @RequestMapping(&quot;/&quot;)//如果只为value属性赋值时value可以不写
+    public String index()&#123;
+        //如果没有配置视图解析器，则需return &quot;/WEB-INF/templates/index.html&quot;
+        return &quot;index&quot;;
+    &#125;
+
+&#125;
+</code></pre>
+<p>结果：成功访问</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121160033934.png" alt="image-20220121160033934"></p>
+<p>遇到问题：</p>
+<p>在设置tomcat的Deployment中没有子项目的war选择导致跳转失败</p>
+<p>解决方法：</p>
+<p>点击Project Struct</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121155702763.png" alt="image-20220121155702763"></p>
+<p>选择对应子项目</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121155724398.png" alt="image-20220121155724398"></p>
+<p>便能找到</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121155854845.png" alt="image-20220121155854845"></p>
+<h2 id="5-2用超链接访问目标页"><a href="#5-2用超链接访问目标页" class="headerlink" title="5.2用超链接访问目标页"></a>5.2用超链接访问目标页</h2><p>1.对初始html页面index.html进行修改</p>
+<pre><code class="xml">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;首页&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;首页&lt;/h1&gt;
+&lt;!--/SpringMVC是上下文路径，可以随意改变，因此我们不能写死这个上下文路径，
+    我们可以使用thymeleaf来对其进行解析，使用thymeleaf语法(需配置xmlns:th=&quot;http://www.thymeleaf.org&quot;)
+--&gt;
+    &lt;!--h
+    写死路径的写法：
+    &lt;a tn:href=&quot;/SpringMVC/target&quot;&gt;访问目标页面target.html&lt;/a&gt;
+    --&gt;
+    &lt;!--使用thymeleaf--&gt;
+    &lt;a th:href=&quot;@&#123;/target&#125;&quot;&gt;访问目标页面target.html&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>2.控制器中代码(HelloController)</p>
+<pre><code class="java">@Controller
+public class HelloController &#123;
+
+    //@RequestMapping 请求映射 作用为请求与对应的请求方法创建映射关系
+    //@RequestMapping注解的value属性可以通过请求地址匹配请求，/表示的当前工程的上下文路径
+    //即请求localhost:8080/springMVC/便可访问该请求方法
+    @RequestMapping(&quot;/&quot;)//如果只为value属性赋值时value可以不写
+    public String index()&#123;
+        //如果没有配置视图解析器，则需return &quot;/WEB-INF/templates/index.html&quot;
+        return &quot;index&quot;;
+    &#125;
+
+    @RequestMapping(&quot;/target&quot;)//请求路径
+    public String toTarget()&#123;
+        return &quot;target&quot;;
+    &#125;
+&#125;
+</code></pre>
+<p>结果：</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121162802578.png" alt="image-20220121162802578"></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220121162836446.png" alt="image-20220121162836446"></p>
+<h1 id="6-总结"><a href="#6-总结" class="headerlink" title="6.总结"></a>6.总结</h1><p>浏览器发送请求，若请求地址符合前端控制器的url-pattern，该请求就会被前端控制器DispatcherServlet处理。前端控制器会读取SpringMVC的核心配置文件，通过扫描组件找到控制器，将请求地址和控制器中@RequestMapping注解的value属性值进行匹配，若匹配成功，该注解所标识的控制器方法就是处理请求的方法。处理请求的方法需要返回一个字符串类型的视图名称，该视图名称会被视图解析器解析，加上前缀和后缀组成视图的路径，通过Thymeleaf对视图进行渲染，最终转发到视图所对应页面</p>
+<p>即：</p>
+<p>1.向服务器请求(请求地址)</p>
+<p>2.前端控制器获得请求与自身配置(web.xml中)中的url-patten进行匹配，符合则由前端控制器处理</p>
+<p>3.前端控制器通过扫描包&lt;context:component-scan base-package=”xxx”&gt;找到控制器(@Controller)</p>
+<p>4.与在与控制器中@RequestMapping的value值相匹配</p>
+<p>5.匹配成功，由该方法返回字符串类型的视图名称(return “index”;)，该视图名称会被视图解析器解析，加上前缀和后缀组成视图的路径，通过Thymeleaf对视图进行渲染，最终转发到视图所对应页面</p>
+<p>总结视频:</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ry4y1574R?p=15">https://www.bilibili.com/video/BV1Ry4y1574R?p=15</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

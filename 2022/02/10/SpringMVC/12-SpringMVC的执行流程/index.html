@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>12-SpringMVC的执行流程 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="12-SpringMVC的执行流程 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(27)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(6)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="27">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-SpringMVC/12-SpringMVC的执行流程" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">12-SpringMVC的执行流程</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SpringMVC">SpringMVC</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-02-10 21:42:34'>2022-02-10 16:45</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81SpringMVC%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="toc-text">1、SpringMVC常用组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81DispatcherServlet%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="toc-text">2、DispatcherServlet初始化过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-gt-%E5%88%9D%E5%A7%8B%E5%8C%96WebApplicationContext"><span class="toc-text">a&gt;初始化WebApplicationContext</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-gt-%E5%88%9B%E5%BB%BAWebApplicationContext"><span class="toc-text">b&gt;创建WebApplicationContext</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-gt-DispatcherServlet%E5%88%9D%E5%A7%8B%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-text">c&gt;DispatcherServlet初始化策略</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81DispatcherServlet%E8%B0%83%E7%94%A8%E7%BB%84%E4%BB%B6%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82"><span class="toc-text">3、DispatcherServlet调用组件处理请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-gt-processRequest"><span class="toc-text">a&gt;processRequest()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-gt-doService"><span class="toc-text">b&gt;doService()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-gt-doDispatch"><span class="toc-text">c&gt;doDispatch()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d-gt-processDispatchResult"><span class="toc-text">d&gt;processDispatchResult()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">4、SpringMVC的执行流程</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1、SpringMVC常用组件"><a href="#1、SpringMVC常用组件" class="headerlink" title="1、SpringMVC常用组件"></a>1、SpringMVC常用组件</h1><ul>
+<li>DispatcherServlet：<strong>前端控制器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：统一处理请求和响应，整个流程控制的中心，由它调用其它组件处理用户的请求</p>
+<ul>
+<li>HandlerMapping：<strong>处理器映射器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：根据请求的url、method等信息查找Handler，即控制器方法</p>
+<ul>
+<li>Handler：<strong>处理器</strong>，需要工程师开发(其实就是我们写的控制器)</li>
+</ul>
+<p>作用：在DispatcherServlet的控制下Handler对具体的用户请求进行处理</p>
+<ul>
+<li>HandlerAdapter：<strong>处理器适配器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：通过HandlerAdapter对处理器（控制器方法）进行执行(由它来直接调用控制器方法)</p>
+<ul>
+<li>ViewResolver：<strong>视图解析器</strong>，不需要工程师开发，由框架提供</li>
+</ul>
+<p>作用：进行视图解析，得到相应的视图，例如：ThymeleafView、InternalResourceView、RedirectView</p>
+<ul>
+<li>View：<strong>视图</strong></li>
+</ul>
+<p>作用：将模型数据通过页面展示给用户</p>
+<blockquote>
+<p>处理器适配器是用来执行的,会进行方法形参的封装等操作<br>handlerMapping会进行参数解析 返回值内容协商<br>handler有很多中类型，所以需要有对应的HandlerAdapter来负责handler的调用</p>
+</blockquote>
+<p>顺序：DispatcherServlet-&gt;HandlerMapping-&gt;HandlerAdapter-&gt;Handler-&gt;viewResolver-&gt;view</p>
+<h1 id="2、DispatcherServlet初始化过程"><a href="#2、DispatcherServlet初始化过程" class="headerlink" title="2、DispatcherServlet初始化过程"></a>2、DispatcherServlet初始化过程</h1><p>DispatcherServlet 本质上是一个 Servlet，所以天然的遵循 Servlet 的生命周期。所以宏观上是 Servlet 生命周期来进行调度。</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220210201018757.png" alt="image-20220210201018757"></p>
+<h2 id="a-gt-初始化WebApplicationContext"><a href="#a-gt-初始化WebApplicationContext" class="headerlink" title="a&gt;初始化WebApplicationContext"></a>a&gt;初始化WebApplicationContext</h2><p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<pre><code class="java">protected WebApplicationContext initWebApplicationContext() &#123;
+    WebApplicationContext rootContext =
+        WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+    WebApplicationContext wac = null;
+
+    if (this.webApplicationContext != null) &#123;
+        // A context instance was injected at construction time -&gt; use it
+        wac = this.webApplicationContext;
+        if (wac instanceof ConfigurableWebApplicationContext) &#123;
+            ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
+            if (!cwac.isActive()) &#123;
+                // The context has not yet been refreshed -&gt; provide services such as
+                // setting the parent context, setting the application context id, etc
+                if (cwac.getParent() == null) &#123;
+                    // The context instance was injected without an explicit parent -&gt; set
+                    // the root application context (if any; may be null) as the parent
+                    cwac.setParent(rootContext);
+                &#125;
+                configureAndRefreshWebApplicationContext(cwac);
+            &#125;
+        &#125;
+    &#125;
+    if (wac == null) &#123;
+        // No context instance was injected at construction time -&gt; see if one
+        // has been registered in the servlet context. If one exists, it is assumed
+        // that the parent context (if any) has already been set and that the
+        // user has performed any initialization such as setting the context id
+        wac = findWebApplicationContext();
+    &#125;
+    if (wac == null) &#123;
+        // No context instance is defined for this servlet -&gt; create a local one
+        // 创建WebApplicationContext
+        wac = createWebApplicationContext(rootContext);
+    &#125;
+
+    if (!this.refreshEventReceived) &#123;
+        // Either the context is not a ConfigurableApplicationContext with refresh
+        // support or the context injected at construction time had already been
+        // refreshed -&gt; trigger initial onRefresh manually here.
+        synchronized (this.onRefreshMonitor) &#123;
+            // 刷新WebApplicationContext
+            onRefresh(wac);
+        &#125;
+    &#125;
+
+    if (this.publishContext) &#123;
+        // Publish the context as a servlet context attribute.
+        // 将IOC容器在应用域共享
+        String attrName = getServletContextAttributeName();
+        getServletContext().setAttribute(attrName, wac);
+    &#125;
+
+    return wac;
+&#125;
+</code></pre>
+<h2 id="b-gt-创建WebApplicationContext"><a href="#b-gt-创建WebApplicationContext" class="headerlink" title="b&gt;创建WebApplicationContext"></a>b&gt;创建WebApplicationContext</h2><p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<pre><code class="java">protected WebApplicationContext createWebApplicationContext(@Nullable ApplicationContext parent) &#123;
+    Class&lt;?&gt; contextClass = getContextClass();
+    if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) &#123;
+        throw new ApplicationContextException(
+            &quot;Fatal initialization error in servlet with name &#39;&quot; + getServletName() +
+            &quot;&#39;: custom WebApplicationContext class [&quot; + contextClass.getName() +
+            &quot;] is not of type ConfigurableWebApplicationContext&quot;);
+    &#125;
+    // 通过反射创建 IOC 容器对象
+    ConfigurableWebApplicationContext wac =
+        (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
+
+    wac.setEnvironment(getEnvironment());
+    // 设置父容器
+    wac.setParent(parent);
+    String configLocation = getContextConfigLocation();
+    if (configLocation != null) &#123;
+        wac.setConfigLocation(configLocation);
+    &#125;
+    configureAndRefreshWebApplicationContext(wac);
+
+    return wac;
+&#125;
+</code></pre>
+<h2 id="c-gt-DispatcherServlet初始化策略"><a href="#c-gt-DispatcherServlet初始化策略" class="headerlink" title="c&gt;DispatcherServlet初始化策略"></a>c&gt;DispatcherServlet初始化策略</h2><p>FrameworkServlet创建WebApplicationContext后，刷新容器，调用onRefresh(wac)，此方法在DispatcherServlet中进行了重写，调用了initStrategies(context)方法，初始化策略，即初始化DispatcherServlet的各个组件</p>
+<p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<pre><code class="java">protected void initStrategies(ApplicationContext context) &#123;
+   initMultipartResolver(context);
+   initLocaleResolver(context);
+   initThemeResolver(context);
+   initHandlerMappings(context);
+   initHandlerAdapters(context);
+   initHandlerExceptionResolvers(context);
+   initRequestToViewNameTranslator(context);
+   initViewResolvers(context);
+   initFlashMapManager(context);
+&#125;
+</code></pre>
+<blockquote>
+<p>1.监听器创建的容器是父容器，存放dao层、service层等对象。dispatcherServlet创建的是子容器，存放controller层的对象，子容器持有父容器.</p>
+<p>2.spring创建的ioc容器为父容器，springmvc创建的ioc容器为子容器</p>
+</blockquote>
+<h1 id="3、DispatcherServlet调用组件处理请求"><a href="#3、DispatcherServlet调用组件处理请求" class="headerlink" title="3、DispatcherServlet调用组件处理请求"></a>3、DispatcherServlet调用组件处理请求</h1><h2 id="a-gt-processRequest"><a href="#a-gt-processRequest" class="headerlink" title="a&gt;processRequest()"></a>a&gt;processRequest()</h2><p>FrameworkServlet重写HttpServlet中的service()和doXxx()，这些方法中调用了processRequest(request, response)</p>
+<p>所在类：org.springframework.web.servlet.FrameworkServlet</p>
+<pre><code class="java">protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException &#123;
+
+    long startTime = System.currentTimeMillis();
+    Throwable failureCause = null;
+
+    LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
+    LocaleContext localeContext = buildLocaleContext(request);
+
+    RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();
+    ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);
+
+    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+    asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
+
+    initContextHolders(request, localeContext, requestAttributes);
+
+    try &#123;
+        // 执行服务，doService()是一个抽象方法，在DispatcherServlet中进行了重写
+        doService(request, response);
+    &#125;
+    catch (ServletException | IOException ex) &#123;
+        failureCause = ex;
+        throw ex;
+    &#125;
+    catch (Throwable ex) &#123;
+        failureCause = ex;
+        throw new NestedServletException(&quot;Request processing failed&quot;, ex);
+    &#125;
+
+    finally &#123;
+        resetContextHolders(request, previousLocaleContext, previousAttributes);
+        if (requestAttributes != null) &#123;
+            requestAttributes.requestCompleted();
+        &#125;
+        logResult(request, response, failureCause, asyncManager);
+        publishRequestHandledEvent(request, response, startTime, failureCause);
+    &#125;
+&#125;
+</code></pre>
+<h2 id="b-gt-doService"><a href="#b-gt-doService" class="headerlink" title="b&gt;doService()"></a>b&gt;doService()</h2><p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<pre><code class="java">@Override
+protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;
+    logRequest(request);
+
+    // Keep a snapshot of the request attributes in case of an include,
+    // to be able to restore the original attributes after the include.
+    Map&lt;String, Object&gt; attributesSnapshot = null;
+    if (WebUtils.isIncludeRequest(request)) &#123;
+        attributesSnapshot = new HashMap&lt;&gt;();
+        Enumeration&lt;?&gt; attrNames = request.getAttributeNames();
+        while (attrNames.hasMoreElements()) &#123;
+            String attrName = (String) attrNames.nextElement();
+            if (this.cleanupAfterInclude || attrName.startsWith(DEFAULT_STRATEGIES_PREFIX)) &#123;
+                attributesSnapshot.put(attrName, request.getAttribute(attrName));
+            &#125;
+        &#125;
+    &#125;
+
+    // Make framework objects available to handlers and view objects.
+    request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
+    request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
+    request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
+    request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
+
+    if (this.flashMapManager != null) &#123;
+        FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);
+        if (inputFlashMap != null) &#123;
+            request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));
+        &#125;
+        request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());
+        request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);
+    &#125;
+
+    RequestPath requestPath = null;
+    if (this.parseRequestPath &amp;&amp; !ServletRequestPathUtils.hasParsedRequestPath(request)) &#123;
+        requestPath = ServletRequestPathUtils.parseAndCache(request);
+    &#125;
+
+    try &#123;
+        // 处理请求和响应
+        doDispatch(request, response);
+    &#125;
+    finally &#123;
+        if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;
+            // Restore the original attribute snapshot, in case of an include.
+            if (attributesSnapshot != null) &#123;
+                restoreAttributesAfterInclude(request, attributesSnapshot);
+            &#125;
+        &#125;
+        if (requestPath != null) &#123;
+            ServletRequestPathUtils.clearParsedRequestPath(request);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="c-gt-doDispatch"><a href="#c-gt-doDispatch" class="headerlink" title="c&gt;doDispatch()"></a>c&gt;doDispatch()</h2><p>所在类：org.springframework.web.servlet.DispatcherServlet</p>
+<pre><code class="java">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+    boolean multipartRequestParsed = false;
+
+    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+
+    try &#123;
+        ModelAndView mv = null;
+        Exception dispatchException = null;
+
+        try &#123;
+            processedRequest = checkMultipart(request);
+            multipartRequestParsed = (processedRequest != request);
+
+            // Determine handler for the current request.
+            /*
+                mappedHandler：调用链
+                包含handler、interceptorList、interceptorIndex
+                handler：浏览器发送的请求所匹配的控制器方法
+                interceptorList：处理控制器方法的所有拦截器集合
+                interceptorIndex：拦截器索引，控制拦截器afterCompletion()的执行
+            */
+            mappedHandler = getHandler(processedRequest);
+            if (mappedHandler == null) &#123;
+                noHandlerFound(processedRequest, response);
+                return;
+            &#125;
+
+            // Determine handler adapter for the current request.
+               // 通过控制器方法创建相应的处理器适配器，调用所对应的控制器方法
+            HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+            // Process last-modified header, if supported by the handler.
+            String method = request.getMethod();
+            boolean isGet = &quot;GET&quot;.equals(method);
+            if (isGet || &quot;HEAD&quot;.equals(method)) &#123;
+                long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+                if (new ServletWebRequest(request, response).checkNotModified(lastModified) &amp;&amp; isGet) &#123;
+                    return;
+                &#125;
+            &#125;
+            
+            // 调用拦截器的preHandle()
+            if (!mappedHandler.applyPreHandle(processedRequest, response)) &#123;
+                return;
+            &#125;
+
+            // Actually invoke the handler.
+            // 由处理器适配器调用具体的控制器方法，最终获得ModelAndView对象
+            mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+            if (asyncManager.isConcurrentHandlingStarted()) &#123;
+                return;
+            &#125;
+
+            applyDefaultViewName(processedRequest, mv);
+            // 调用拦截器的postHandle()
+            mappedHandler.applyPostHandle(processedRequest, response, mv);
+        &#125;
+        catch (Exception ex) &#123;
+            dispatchException = ex;
+        &#125;
+        catch (Throwable err) &#123;
+            // As of 4.3, we&#39;re processing Errors thrown from handler methods as well,
+            // making them available for @ExceptionHandler methods and other scenarios.
+            dispatchException = new NestedServletException(&quot;Handler dispatch failed&quot;, err);
+        &#125;
+        // 后续处理：处理模型数据和渲染视图
+        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    &#125;
+    catch (Exception ex) &#123;
+        triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+    &#125;
+    catch (Throwable err) &#123;
+        triggerAfterCompletion(processedRequest, response, mappedHandler,
+                               new NestedServletException(&quot;Handler processing failed&quot;, err));
+    &#125;
+    finally &#123;
+        if (asyncManager.isConcurrentHandlingStarted()) &#123;
+            // Instead of postHandle and afterCompletion
+            if (mappedHandler != null) &#123;
+                mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+            &#125;
+        &#125;
+        else &#123;
+            // Clean up any resources used by a multipart request.
+            if (multipartRequestParsed) &#123;
+                cleanupMultipart(processedRequest);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="d-gt-processDispatchResult"><a href="#d-gt-processDispatchResult" class="headerlink" title="d&gt;processDispatchResult()"></a>d&gt;processDispatchResult()</h2><pre><code class="java">private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
+                                   @Nullable HandlerExecutionChain mappedHandler, @Nullable ModelAndView mv,
+                                   @Nullable Exception exception) throws Exception &#123;
+
+    boolean errorView = false;
+
+    if (exception != null) &#123;
+        if (exception instanceof ModelAndViewDefiningException) &#123;
+            logger.debug(&quot;ModelAndViewDefiningException encountered&quot;, exception);
+            mv = ((ModelAndViewDefiningException) exception).getModelAndView();
+        &#125;
+        else &#123;
+            Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
+            mv = processHandlerException(request, response, handler, exception);
+            errorView = (mv != null);
+        &#125;
+    &#125;
+
+    // Did the handler return a view to render?
+    if (mv != null &amp;&amp; !mv.wasCleared()) &#123;
+        // 处理模型数据和渲染视图
+        render(mv, request, response);
+        if (errorView) &#123;
+            WebUtils.clearErrorRequestAttributes(request);
+        &#125;
+    &#125;
+    else &#123;
+        if (logger.isTraceEnabled()) &#123;
+            logger.trace(&quot;No view rendering, null ModelAndView returned.&quot;);
+        &#125;
+    &#125;
+
+    if (WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;
+        // Concurrent handling started during a forward
+        return;
+    &#125;
+
+    if (mappedHandler != null) &#123;
+        // Exception (if any) is already handled..
+        // 调用拦截器的afterCompletion()
+        mappedHandler.triggerAfterCompletion(request, response, null);
+    &#125;
+&#125;
+</code></pre>
+<blockquote>
+<p>通过map找到对应的controller的，映射关系建立是在webapplicationcontext初始化中完成的，通过beanpostprocessor</p>
+</blockquote>
+<h1 id="4、SpringMVC的执行流程"><a href="#4、SpringMVC的执行流程" class="headerlink" title="4、SpringMVC的执行流程"></a>4、SpringMVC的执行流程</h1><ol>
+<li><p>用户向服务器发送请求，请求被SpringMVC 前端控制器 DispatcherServlet捕获。</p>
+</li>
+<li><p>DispatcherServlet对请求URL进行解析，得到请求资源标识符（URI），判断请求URI对应的映射：</p>
+</li>
+</ol>
+<p>a) 不存在</p>
+<p>i. 再判断是否配置了mvc:default-servlet-handler</p>
+<p>ii. 如果没配置，则控制台报映射查找不到，客户端展示404错误</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220210210245288.png" alt="image-20220210210245288"></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220210210257142.png" alt="image-20220210210257142"></p>
+<p>iii. 如果有配置，则访问目标资源（一般为静态资源，如：JS,CSS,HTML），找不到客户端也会展示404错误</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220210210306702.png" alt="image-20220210210306702"></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220210210316870.png" alt="image-20220210210316870"></p>
+<p>b) 存在则执行下面的流程</p>
+<ol start="3">
+<li><p>根据该URI，调用HandlerMapping获得该Handler配置的所有相关的对象（包括Handler对象以及Handler对象对应的拦截器），最后以HandlerExecutionChain执行链对象的形式返回。</p>
+</li>
+<li><p>DispatcherServlet 根据获得的Handler，选择一个合适的HandlerAdapter。</p>
+</li>
+<li><p>如果成功获得HandlerAdapter，此时将开始执行拦截器的preHandler(…)方法【正向】</p>
+</li>
+<li><p>提取Request中的模型数据，填充Handler入参，开始执行Handler（Controller)方法，处理请求。在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：</p>
+</li>
+</ol>
+<p>a) HttpMessageConveter： 将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息</p>
+<p>b) 数据转换：对请求消息进行数据转换。如String转换成Integer、Double等</p>
+<p>c) 数据格式化：对请求消息进行数据格式化。 如将字符串转换成格式化数字或格式化日期等</p>
+<p>d) 数据验证： 验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中</p>
+<ol start="7">
+<li><p>Handler执行完成后，向DispatcherServlet 返回一个ModelAndView对象。</p>
+</li>
+<li><p>此时将开始执行拦截器的postHandle(…)方法【逆向】。</p>
+</li>
+<li><p>根据返回的ModelAndView（此时会判断是否存在异常：如果存在异常，则执行HandlerExceptionResolver进行异常处理）选择一个适合的ViewResolver进行视图解析，根据Model和View，来渲染视图。</p>
+</li>
+<li><p>渲染视图完毕执行拦截器的afterCompletion(…)方法【逆向】。</p>
+</li>
+<li><p>将渲染结果返回给客户端。</p>
+</li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
