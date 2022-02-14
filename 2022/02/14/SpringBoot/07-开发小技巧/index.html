@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>09-拦截器 | Drohonyua Blog</title>
+  <title>07-开发小工具 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="09-拦截器 | Drohonyua Blog">
+  <meta name="description" content="07-开发小工具 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -501,9 +501,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-SpringMVC/09-拦截器" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-SpringBoot/07-开发小技巧" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">09-拦截器</h1>
+        <h1 class="article-title">07-开发小工具</h1>
     
     <div class="article-meta">
         
@@ -513,7 +513,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="SpringMVC">SpringMVC</a>
+            <a  data-rel="SpringBoot">SpringBoot</a>
             
         </span>
         
@@ -521,7 +521,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-02-09 21:16:46'>2022-02-08 22:32</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-14 22:01:25'>2022-02-14 21:54</time>
         
     </div>
     <div class="article-meta">
@@ -543,7 +543,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">1、拦截器的配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E4%B8%89%E4%B8%AA%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-text">2、拦截器的三个抽象方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E5%A4%9A%E4%B8%AA%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">3、多个拦截器的执行顺序</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">1.开发小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1Lombok"><span class="toc-text">1.1Lombok</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-dev-tools"><span class="toc-text">1.2 dev-tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Spring-Initailizr%EF%BC%88%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E5%90%91%E5%AF%BC%EF%BC%89"><span class="toc-text">1.3 Spring Initailizr（项目初始化向导）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-%E9%80%89%E6%8B%A9%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84%E5%BC%80%E5%8F%91%E5%9C%BA%E6%99%AF"><span class="toc-text">1.3.1 选择我们需要的开发场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-%E8%87%AA%E5%8A%A8%E4%BE%9D%E8%B5%96%E5%BC%95%E5%85%A5"><span class="toc-text">1.3.2 自动依赖引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">1.3.3 自动创建项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4-%E8%87%AA%E5%8A%A8%E7%BC%96%E5%86%99%E5%A5%BD%E4%B8%BB%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">1.3.4 自动编写好主配置类</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -559,64 +559,64 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1、拦截器的配置"><a href="#1、拦截器的配置" class="headerlink" title="1、拦截器的配置"></a>1、拦截器的配置</h1><p>SpringMVC中的拦截器<strong>用于拦截控制器方法的执行</strong>(在控制器方法前执行)</p>
-<p>SpringMVC中的拦截器需要实现接口<strong>HandlerInterceptor</strong>例子：</p>
-<pre><code class="java">public class FirstInterceptor implements HandlerInterceptor &#123;
-    //重写这些方法可按alt+ins调出
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
-        //返回true就放行不然就到下一个拦截器或直接拦截住
-        return false;
+        <h1 id="1-开发小技巧"><a href="#1-开发小技巧" class="headerlink" title="1.开发小技巧"></a>1.开发小技巧</h1><h2 id="1-1Lombok"><a href="#1-1Lombok" class="headerlink" title="1.1Lombok"></a>1.1Lombok</h2><p>可以简化JavaBean开发</p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+
+idea中搜索安装lombok插件
+===============================简化JavaBean开发===================================
+@NoArgsConstructor
+//@AllArgsConstructor
+@Data
+@ToString
+@EqualsAndHashCode
+public class User &#123;
+
+    private String name;
+    private Integer age;
+
+    private Pet pet;
+
+    public User(String name,Integer age)&#123;
+        this.name = name;
+        this.age = age;
     &#125;
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;
 
-    &#125;
+&#125;
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;
 
+
+================================简化日志开发===================================
+@Slf4j
+@RestController
+public class HelloController &#123;
+    @RequestMapping(&quot;/hello&quot;)
+    public String handle01(@RequestParam(&quot;name&quot;) String name)&#123;
+        
+        log.info(&quot;请求进来了....&quot;);
+        
+        return &quot;Hello, Spring Boot 2!&quot;+&quot;你好：&quot;+name;
     &#125;
 &#125;
 </code></pre>
-<p>SpringMVC的拦截器必须在SpringMVC.xml的配置文件中进行配置：</p>
-<pre><code class="xml">&lt;!--第一种方式--&gt;
-&lt;mvc:interceptors&gt;
-&lt;bean class=&quot;com.atguigu.interceptor.FirstInterceptor&quot;&gt;&lt;/bean&gt;
-&lt;/mvc:interceptors&gt;
-
-&lt;!--第二种方式--&gt;
-&lt;mvc:interceptors&gt;
-&lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
-&lt;/mvc:interceptors&gt;
-&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;
-
-&lt;!--第三种方式--&gt;
-&lt;mvc:interceptor&gt;
-    &lt;mvc:mapping path=&quot;/**&quot;/&gt;&lt;!--/*只表示一层目录,而/**表示任意目录--&gt;
-    &lt;mvc:exclude-mapping path=&quot;/testRequestEntity&quot;/&gt;
-    &lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
-&lt;/mvc:interceptor&gt;
-&lt;!-- 
-    通过mvc:mapping设置需要拦截的请求，
-    通过mvc:exclude-mapping设置需要排除的请求，即不需要拦截的请求，
-    以上配置方式可以通过ref或bean标签设置拦截器
---&gt;
+<h2 id="1-2-dev-tools"><a href="#1-2-dev-tools" class="headerlink" title="1.2 dev-tools"></a>1.2 dev-tools</h2><p>自动启动，修改完后直接ctrl+f9</p>
+<pre><code class="xml">&lt;dependency&gt;
+       &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+       &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+       &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
 </code></pre>
-<h1 id="2、拦截器的三个抽象方法"><a href="#2、拦截器的三个抽象方法" class="headerlink" title="2、拦截器的三个抽象方法"></a>2、拦截器的三个抽象方法</h1><p>SpringMVC中的拦截器有三个抽象方法：</p>
-<p>preHandle：控制器方法执行之前执行preHandle()，<strong>其boolean类型的返回值表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法</strong>    顺序：调用控制器方法前</p>
-<p>postHandle：控制器方法执行之后执行postHandle()   顺序：执行完控制器方法后</p>
-<p>afterComplation：处理完视图和模型数据，渲染视图完毕之后执行afterComplation()   顺序：控制器在渲染完视图后</p>
-<h1 id="3、多个拦截器的执行顺序"><a href="#3、多个拦截器的执行顺序" class="headerlink" title="3、多个拦截器的执行顺序"></a>3、多个拦截器的执行顺序</h1><p>a&gt;<strong>若每个拦截器的preHandle()都返回true</strong></p>
-<p>此时多个拦截器的执行顺序和拦截器在SpringMVC的配置文件的<strong>配置顺序有关</strong>：</p>
-<p><strong>preHandle()会按照配置的顺序执行，而postHandle()和afterComplation()会按照配置的反序执行</strong></p>
-<p>b&gt;<strong>若某个拦截器的preHandle()返回了false</strong></p>
-<p>preHandle()返回false和它之前的拦截器的<strong>preHandle()都会执行，postHandle()都不执行</strong>，<strong>返回false的拦截器之前的拦截器的afterComplation()会执行</strong></p>
-<blockquote>
-<p>若每个拦截器的preHandle()都返回true，就像环一样</p>
-<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220209210536886.png" alt="image-20220209210536886"></p>
-</blockquote>
+<p>项目或者页面修改以后：Ctrl+F9；</p>
+<h2 id="1-3-Spring-Initailizr（项目初始化向导）"><a href="#1-3-Spring-Initailizr（项目初始化向导）" class="headerlink" title="1.3 Spring Initailizr（项目初始化向导）"></a>1.3 Spring Initailizr（项目初始化向导）</h2><h3 id="1-3-1-选择我们需要的开发场景"><a href="#1-3-1-选择我们需要的开发场景" class="headerlink" title="1.3.1 选择我们需要的开发场景"></a>1.3.1 选择我们需要的开发场景</h3><p>选择custom 填写url ： <a target="_blank" rel="noopener" href="https://start.aliyun.com/">https://start.aliyun.com</a></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220214214452613.png" alt="image-20220214214452613"></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/1602922147241-73fb2496-e795-4b5a-b909-a18c6011a028.png" alt="img"></p>
+<h3 id="1-3-2-自动依赖引入"><a href="#1-3-2-自动依赖引入" class="headerlink" title="1.3.2 自动依赖引入"></a>1.3.2 自动依赖引入</h3><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1354552/1602921777330-8fc5c198-75da-4ff9-b82c-71ee3fe18af8.png?x-oss-process=image/watermark,type_d3F5LW1pY3JvaGVp,size_28,text_YXRndWlndS5jb20g5bCa56GF6LC3,color_FFFFFF,shadow_50,t_80,g_se,x_10,y_10" alt="img"></p>
+<h3 id="1-3-3-自动创建项目结构"><a href="#1-3-3-自动创建项目结构" class="headerlink" title="1.3.3 自动创建项目结构"></a>1.3.3 自动创建项目结构</h3><p><img src="https://gitee.com/lhymo/mypng/raw/master/img/1602921758313-5099fe18-4c7b-4417-bf6f-2f40b9028296.png" alt="img"></p>
+<h3 id="1-3-4-自动编写好主配置类"><a href="#1-3-4-自动编写好主配置类" class="headerlink" title="1.3.4 自动编写好主配置类"></a>1.3.4 自动编写好主配置类</h3><p><img src="https://gitee.com/lhymo/mypng/raw/master/img/1602922039074-79e98aad-8158-4113-a7e7-305b57b0a6bf.png" alt="img"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>

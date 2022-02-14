@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>09-拦截器 | Drohonyua Blog</title>
+  <title>08-配置文件 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="09-拦截器 | Drohonyua Blog">
+  <meta name="description" content="08-配置文件 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -501,9 +501,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-SpringMVC/09-拦截器" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-SpringBoot/08-配置文件" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">09-拦截器</h1>
+        <h1 class="article-title">08-配置文件</h1>
     
     <div class="article-meta">
         
@@ -513,7 +513,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="SpringMVC">SpringMVC</a>
+            <a  data-rel="SpringBoot">SpringBoot</a>
             
         </span>
         
@@ -521,7 +521,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-02-09 21:16:46'>2022-02-08 22:32</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-14 23:26:17'>2022-02-14 21:55</time>
         
     </div>
     <div class="article-meta">
@@ -543,7 +543,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">1、拦截器的配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E4%B8%89%E4%B8%AA%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-text">2、拦截器的三个抽象方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E5%A4%9A%E4%B8%AA%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-text">3、多个拦截器的执行顺序</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">1、文件类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1%E3%80%81properties"><span class="toc-text">1.1、properties</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2%E3%80%81yaml"><span class="toc-text">1.2、yaml</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">1.2.1、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2%E3%80%81%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-text">1.2.2、基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">1.2.3、数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4%E3%80%81%E7%A4%BA%E4%BE%8B"><span class="toc-text">1.2.4、示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E9%85%8D%E7%BD%AE%E6%8F%90%E7%A4%BA"><span class="toc-text">2、配置提示</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -559,64 +559,134 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="1、拦截器的配置"><a href="#1、拦截器的配置" class="headerlink" title="1、拦截器的配置"></a>1、拦截器的配置</h1><p>SpringMVC中的拦截器<strong>用于拦截控制器方法的执行</strong>(在控制器方法前执行)</p>
-<p>SpringMVC中的拦截器需要实现接口<strong>HandlerInterceptor</strong>例子：</p>
-<pre><code class="java">public class FirstInterceptor implements HandlerInterceptor &#123;
-    //重写这些方法可按alt+ins调出
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
-        //返回true就放行不然就到下一个拦截器或直接拦截住
-        return false;
-    &#125;
+        <h1 id="1、文件类型"><a href="#1、文件类型" class="headerlink" title="1、文件类型"></a>1、文件类型</h1><h2 id="1-1、properties"><a href="#1-1、properties" class="headerlink" title="1.1、properties"></a>1.1、properties</h2><p>同以前的properties用法</p>
+<h2 id="1-2、yaml"><a href="#1-2、yaml" class="headerlink" title="1.2、yaml"></a>1.2、yaml</h2><h3 id="1-2-1、简介"><a href="#1-2-1、简介" class="headerlink" title="1.2.1、简介"></a>1.2.1、简介</h3><p>YAML 是 “YAML Ain’t Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。 </p>
+<p>非常适合用来做以数据为中心的配置文件</p>
+<h3 id="1-2-2、基本语法"><a href="#1-2-2、基本语法" class="headerlink" title="1.2.2、基本语法"></a>1.2.2、基本语法</h3><ul>
+<li><p>key: value；kv之间有空格</p>
+</li>
+<li><p>大小写敏感</p>
+</li>
+<li><p>使用缩进表示层级关系</p>
+</li>
+<li><p>缩进不允许使用tab，只允许空格</p>
+</li>
+<li><p>缩进的空格数不重要，只要相同层级的元素左对齐即可</p>
+</li>
+<li><p>‘#’表示注释</p>
+</li>
+<li><p>字符串无需加引号，如果要加，’’与””表示字符串内容 会被 转义/不转义</p>
+</li>
+</ul>
+<h3 id="1-2-3、数据类型"><a href="#1-2-3、数据类型" class="headerlink" title="1.2.3、数据类型"></a>1.2.3、数据类型</h3><ul>
+<li>字面量：单个的、不可再分的值。date、boolean、string、number、null</li>
+</ul>
+<pre><code class="yaml">#注意空格v前面有空格
+k: v
+</code></pre>
+<ul>
+<li>对象：键值对的集合。map、hash、set、object </li>
+</ul>
+<pre><code class="yaml">行内写法：  k: &#123;k1:v1,k2:v2,k3:v3&#125;
+#或
+k: 
+  k1: v1
+  k2: v2
+  k3: v3
+</code></pre>
+<ul>
+<li>数组：一组按次序排列的值。array、list、queue</li>
+</ul>
+<pre><code class="yaml">行内写法：  k: [v1,v2,v3]
+#或者
+k:
+ - v1
+ - v2
+ - v3
+</code></pre>
+<h3 id="1-2-4、示例"><a href="#1-2-4、示例" class="headerlink" title="1.2.4、示例"></a>1.2.4、示例</h3><pre><code class="java">@Data
+public class Person &#123;
+    
+    private String userName;
+    private Boolean boss;
+    private Date birth;
+    private Integer age;
+    private Pet pet;
+    private String[] interests;
+    private List&lt;String&gt; animal;
+    private Map&lt;String, Object&gt; score;
+    private Set&lt;Double&gt; salarys;
+    private Map&lt;String, List&lt;Pet&gt;&gt; allPets;
+&#125;
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;
-
-    &#125;
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;
-
-    &#125;
+@Data
+public class Pet &#123;
+    private String name;
+    private Double weight;
 &#125;
 </code></pre>
-<p>SpringMVC的拦截器必须在SpringMVC.xml的配置文件中进行配置：</p>
-<pre><code class="xml">&lt;!--第一种方式--&gt;
-&lt;mvc:interceptors&gt;
-&lt;bean class=&quot;com.atguigu.interceptor.FirstInterceptor&quot;&gt;&lt;/bean&gt;
-&lt;/mvc:interceptors&gt;
-
-&lt;!--第二种方式--&gt;
-&lt;mvc:interceptors&gt;
-&lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
-&lt;/mvc:interceptors&gt;
-&lt;!-- 以上两种配置方式都是对DispatcherServlet所处理的所有的请求进行拦截 --&gt;
-
-&lt;!--第三种方式--&gt;
-&lt;mvc:interceptor&gt;
-    &lt;mvc:mapping path=&quot;/**&quot;/&gt;&lt;!--/*只表示一层目录,而/**表示任意目录--&gt;
-    &lt;mvc:exclude-mapping path=&quot;/testRequestEntity&quot;/&gt;
-    &lt;ref bean=&quot;firstInterceptor&quot;&gt;&lt;/ref&gt;
-&lt;/mvc:interceptor&gt;
-&lt;!-- 
-    通过mvc:mapping设置需要拦截的请求，
-    通过mvc:exclude-mapping设置需要排除的请求，即不需要拦截的请求，
-    以上配置方式可以通过ref或bean标签设置拦截器
---&gt;
+<pre><code class="yaml"># yaml表示以上对象
+person:
+  #String类型 在字符串类型中 如果使用单引号&#39;zhangsan\n&#39;则不会换行(控制台中),而双引号则会换行”zhangsan\n“
+  userName: zhangsan
+  #boolean类型
+  boss: false
+  #Date类型
+  birth: 2019/12/12 20:12:33
+  #Integer
+  age: 18
+  #Pet 对象类型
+  pet: 
+    name: tomcat
+    weight: 23.4
+  #String[]
+  interests: [篮球,游泳]
+  #List&lt;String&gt;
+  animal: 
+    - jerry
+    - mario
+  #Map&lt;String, Object&gt;
+  score:
+    english: 
+      first: 30
+      second: 40
+      third: 50
+    math: [131,140,148]
+    chinese: &#123;first: 128,second: 136&#125;
+  #Set&lt;Double&gt;
+  salarys: [3999,4999.98,5999.99]
+  #Map&lt;String, List&lt;Pet&gt;&gt;
+  allPets:
+    sick:
+      - &#123;name: tom&#125;
+      - &#123;name: jerry,weight: 47&#125;
+    health: [&#123;name: mario,weight: 47&#125;]
 </code></pre>
-<h1 id="2、拦截器的三个抽象方法"><a href="#2、拦截器的三个抽象方法" class="headerlink" title="2、拦截器的三个抽象方法"></a>2、拦截器的三个抽象方法</h1><p>SpringMVC中的拦截器有三个抽象方法：</p>
-<p>preHandle：控制器方法执行之前执行preHandle()，<strong>其boolean类型的返回值表示是否拦截或放行，返回true为放行，即调用控制器方法；返回false表示拦截，即不调用控制器方法</strong>    顺序：调用控制器方法前</p>
-<p>postHandle：控制器方法执行之后执行postHandle()   顺序：执行完控制器方法后</p>
-<p>afterComplation：处理完视图和模型数据，渲染视图完毕之后执行afterComplation()   顺序：控制器在渲染完视图后</p>
-<h1 id="3、多个拦截器的执行顺序"><a href="#3、多个拦截器的执行顺序" class="headerlink" title="3、多个拦截器的执行顺序"></a>3、多个拦截器的执行顺序</h1><p>a&gt;<strong>若每个拦截器的preHandle()都返回true</strong></p>
-<p>此时多个拦截器的执行顺序和拦截器在SpringMVC的配置文件的<strong>配置顺序有关</strong>：</p>
-<p><strong>preHandle()会按照配置的顺序执行，而postHandle()和afterComplation()会按照配置的反序执行</strong></p>
-<p>b&gt;<strong>若某个拦截器的preHandle()返回了false</strong></p>
-<p>preHandle()返回false和它之前的拦截器的<strong>preHandle()都会执行，postHandle()都不执行</strong>，<strong>返回false的拦截器之前的拦截器的afterComplation()会执行</strong></p>
-<blockquote>
-<p>若每个拦截器的preHandle()都返回true，就像环一样</p>
-<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220209210536886.png" alt="image-20220209210536886"></p>
-</blockquote>
+<h1 id="2、配置提示"><a href="#2、配置提示" class="headerlink" title="2、配置提示"></a>2、配置提示</h1><p>自定义的类和配置文件绑定一般没有提示。</p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+
+&lt;!--因为这个提示器与业务功能无关，所以在打包时应添加如下代码来不让其打包进jar包--&gt;
+ &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;excludes&gt;
+                        &lt;exclude&gt;
+                            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+                        &lt;/exclude&gt;
+                    &lt;/excludes&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
