@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>01-SpringMVC简介 | Drohonyua Blog</title>
+  <title>09-web开发 | Drohonyua Blog</title>
   <meta name="keywords" content="">
-  <meta name="description" content="01-SpringMVC简介 | Drohonyua Blog">
+  <meta name="description" content="09-web开发 | Drohonyua Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
 <meta property="og:type" content="website">
@@ -509,9 +509,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-SpringMVC/01-SpringMVC简介" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-SpringBoot/10-请求参数处理" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">01-SpringMVC简介</h1>
+        <h1 class="article-title">09-web开发</h1>
     
     <div class="article-meta">
         
@@ -521,7 +521,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="SpringMVC">SpringMVC</a>
+            <a  data-rel="SpringBoot">SpringBoot</a>
             
         </span>
         
@@ -529,7 +529,7 @@
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2022-01-23 00:41:44'>2022-01-19 22:30</time>
+            发布时间 : <time class="date" title='最后更新: 2022-02-15 20:46:11'>2022-02-15 20:46</time>
         
     </div>
     <div class="article-meta">
@@ -551,7 +551,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFMVC"><span class="toc-text">1.什么是MVC?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AFSpringMVC"><span class="toc-text">2.什么是SpringMVC?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-SpringMVC%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">3.SpringMVC的优点</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81SpringMVC%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%A6%82%E8%A7%88"><span class="toc-text">1、SpringMVC自动配置概览</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E7%AE%80%E5%8D%95%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90"><span class="toc-text">2、简单功能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1%E3%80%81%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE"><span class="toc-text">2.1、静态资源访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95"><span class="toc-text">1、静态资源目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%89%8D%E7%BC%80"><span class="toc-text">2、静态资源访问前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81webjar"><span class="toc-text">3、webjar</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2%E3%80%81%E6%AC%A2%E8%BF%8E%E9%A1%B5%E6%94%AF%E6%8C%81"><span class="toc-text">2.2、欢迎页支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89-Favicon"><span class="toc-text">2.3、自定义 Favicon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4%E3%80%81%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86"><span class="toc-text">2.4、静态资源配置原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AE%E7%B1%BB%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E6%9C%89%E5%8F%82%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-text">1、配置类只有一个有参构造器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86%E7%9A%84%E9%BB%98%E8%AE%A4%E8%A7%84%E5%88%99"><span class="toc-text">2、资源处理的默认规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E6%AC%A2%E8%BF%8E%E9%A1%B5%E7%9A%84%E5%A4%84%E7%90%86%E8%A7%84%E5%88%99"><span class="toc-text">3、欢迎页的处理规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81favicon"><span class="toc-text">4、favicon</span></a></li></ol></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -567,30 +567,235 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>title: Hello World</p>
-<h1 id="1-什么是MVC"><a href="#1-什么是MVC" class="headerlink" title="1.什么是MVC?"></a>1.什么是MVC?</h1><p>MVC是一种架构思想，将软件按照模型，视图，控制器来进行划分</p>
-<p>M： Model,模型层，指工程中的pojo类,作用是处理一些数据(是指所有负责处理数据的类，并不仅仅是实体类)</p>
-<p>pojo分为两种:</p>
+        <p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220214232713745.png" alt="image-20220214232713745"></p>
+<h1 id="1、SpringMVC自动配置概览"><a href="#1、SpringMVC自动配置概览" class="headerlink" title="1、SpringMVC自动配置概览"></a>1、SpringMVC自动配置概览</h1><p>Spring Boot provides auto-configuration for Spring MVC that <strong>works well with most applications.(大多场景我们都无需自定义配置)</strong></p>
+<p>The auto-configuration adds the following features on top of Spring’s defaults:</p>
 <ul>
-<li>一类为实体类Bean：专门用于存储数据，例如Student,User等</li>
-<li>一类称为业务处理Bean：指Service或Dao对象，专门用于处理业务逻辑和数据访问</li>
+<li><p>Inclusion of <code>ContentNegotiatingViewResolver</code> and <code>BeanNameViewResolver</code> beans.</p>
+</li>
+<li><ul>
+<li>内容协商视图解析器和BeanName视图解析器</li>
 </ul>
-<p>V：View 视图层，指工程中的html或jsp等页面，作用为和用户进行交互，展示数据</p>
-<p>C：Controller,控制层，指工程中的servlet,作用为接收数据的请求与响应浏览器</p>
-<p>MVC的工作流程：<br>用户通过视图层发送请求到服务器，在服务器中请求被Controller接收，Controller调用相应的Model层处理请求，处理完毕将结果返回到Controller，Controller再根据请求处理的结果找到相应的View视图，渲染数据后最终响应给浏览器</p>
-<h1 id="2-什么是SpringMVC"><a href="#2-什么是SpringMVC" class="headerlink" title="2.什么是SpringMVC?"></a>2.什么是SpringMVC?</h1><p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
-<p>SpringMVC 是 Spring 为表述层开发提供的一整套完备的解决方案。在表述层框架历经 Strust、WebWork、Strust2 等诸多产品的历代更迭之后，目前业界普遍选择了 SpringMVC 作为 Java EE 项目表述层开发的<strong>首选方案</strong>。</p>
-<blockquote>
-<p>注：三层架构分为表述层（或表示层）、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet</p>
-</blockquote>
-<h1 id="3-SpringMVC的优点"><a href="#3-SpringMVC的优点" class="headerlink" title="3.SpringMVC的优点"></a>3.SpringMVC的优点</h1><ul>
-<li><strong>Spring 家族原生产品</strong>，与 IOC 容器等基础设施无缝对接</li>
-<li><strong>基于原生的Servlet</strong>，通过了功能强大的**前端控制器DispatcherServlet(本质便是个servlet需要在web.xml里面注册)**，对请求和响应进行统一处理</li>
-<li>表述层各细分领域需要解决的问题<strong>全方位覆盖</strong>，提供<strong>全面解决方案</strong></li>
-<li><strong>代码清新简洁</strong>，大幅度提升开发效率</li>
-<li>内部组件化程度高，可插拔式组件<strong>即插即用</strong>，想要什么功能配置相应组件即可</li>
-<li><strong>性能卓著</strong>，尤其适合现代大型、超大型互联网项目要求</li>
+</li>
+<li><p>Support for serving static resources, including support for WebJars (covered <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-mvc-static-content">later in this document</a>)).</p>
+</li>
+<li><ul>
+<li>静态资源（包括webjars）</li>
 </ul>
+</li>
+<li><p>Automatic registration of <code>Converter</code>, <code>GenericConverter</code>, and <code>Formatter</code> beans.</p>
+</li>
+<li><ul>
+<li>自动注册 <code>Converter，GenericConverter，Formatter </code></li>
+</ul>
+</li>
+<li><p>Support for <code>HttpMessageConverters</code> (covered <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-mvc-message-converters">later in this document</a>).</p>
+</li>
+<li><ul>
+<li>支持 <code>HttpMessageConverters</code> （后来我们配合内容协商理解原理）</li>
+</ul>
+</li>
+<li><p>Automatic registration of <code>MessageCodesResolver</code> (covered <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-message-codes">later in this document</a>).</p>
+</li>
+<li><ul>
+<li>自动注册 <code>MessageCodesResolver</code> （国际化用）</li>
+</ul>
+</li>
+<li><p>Static <code>index.html</code> support.</p>
+</li>
+<li><ul>
+<li>静态index.html 页支持</li>
+</ul>
+</li>
+<li><p>Custom <code>Favicon</code> support (covered <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-mvc-favicon">later in this document</a>).</p>
+</li>
+<li><ul>
+<li>自定义 <code>Favicon</code>  </li>
+</ul>
+</li>
+<li><p>Automatic use of a <code>ConfigurableWebBindingInitializer</code> bean (covered <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-spring-mvc-web-binding-initializer">later in this document</a>).</p>
+</li>
+<li><ul>
+<li>自动使用 <code>ConfigurableWebBindingInitializer</code> ，（DataBinder负责将请求数据绑定到JavaBean上）</li>
+</ul>
+</li>
+</ul>
+<p>If you want to keep those Spring Boot MVC customizations and make more <a target="_blank" rel="noopener" href="https://docs.spring.io/spring/docs/5.2.9.RELEASE/spring-framework-reference/web.html#mvc">MVC customizations</a> (interceptors, formatters, view controllers, and other features), you can add your own <code>@Configuration</code> class of type <code>WebMvcConfigurer</code> but <strong>without</strong> <code>@EnableWebMvc</code>.</p>
+<p><strong>不用@EnableWebMvc注解。使用</strong> <code>**@Configuration**</code> <strong>+</strong> <code>**WebMvcConfigurer**</code> <strong>自定义规则</strong></p>
+<p>If you want to provide custom instances of <code>RequestMappingHandlerMapping</code>, <code>RequestMappingHandlerAdapter</code>, or <code>ExceptionHandlerExceptionResolver</code>, and still keep the Spring Boot MVC customizations, you can declare a bean of type <code>WebMvcRegistrations</code> and use it to provide custom instances of those components.</p>
+<p><strong>声明</strong> <code>**WebMvcRegistrations**</code> <strong>改变默认底层组件</strong></p>
+<p>If you want to take complete control of Spring MVC, you can add your own <code>@Configuration</code> annotated with <code>@EnableWebMvc</code>, or alternatively add your own <code>@Configuration</code>-annotated <code>DelegatingWebMvcConfiguration</code> as described in the Javadoc of <code>@EnableWebMvc</code>.</p>
+<p><strong>使用</strong> <code>**@EnableWebMvc+@Configuration+DelegatingWebMvcConfiguration 全面接管SpringMVC**</code></p>
+<h1 id="2、简单功能分析"><a href="#2、简单功能分析" class="headerlink" title="2、简单功能分析"></a>2、简单功能分析</h1><h2 id="2-1、静态资源访问"><a href="#2-1、静态资源访问" class="headerlink" title="2.1、静态资源访问"></a>2.1、静态资源访问</h2><h3 id="1、静态资源目录"><a href="#1、静态资源目录" class="headerlink" title="1、静态资源目录"></a>1、静态资源目录</h3><p>只要静态资源放在类路径下： <code>/static</code> (或者 <code>/public</code> 或者 <code>/resources</code> 或者 <code>/META-INF/resources</code> 就能自动映射</p>
+<p>访问路径 ： 当前项目根路径/ + 静态资源名  例如(<a target="_blank" rel="noopener" href="http://localhost:8080/1.jpg">http://localhost:8080/1.jpg</a>)</p>
+<p>原理： 静态映射/**。</p>
+<p>请求进来，先去找Controller看能不能处理。不能处理的所有请求又都交给静态资源处理器。静态资源也找不到则响应404页面</p>
+<p>即如果在控制器中有与其请求路径相同的方法，则优先走控制器方法</p>
+<p>改变默认的静态资源路径</p>
+<pre><code class="yaml">spring:
+  mvc:
+    static-path-pattern: /res/**
+
+  resources:
+    static-locations: [classpath:/haha/]
+</code></pre>
+<h3 id="2、静态资源访问前缀"><a href="#2、静态资源访问前缀" class="headerlink" title="2、静态资源访问前缀"></a>2、静态资源访问前缀</h3><p>因为在web应用中通常会加入拦截器，当拦截器的拦截路径为/**时会拦截所有，这样就无法访问静态资源，因此可以修改静态资源的前缀来帮助拦截器放行固定的路径如/res/**</p>
+<p>默认无前缀，如果想修改前缀</p>
+<pre><code class="yaml">spring:
+  mvc:
+    static-path-pattern: /res/**
+</code></pre>
+<p>即请求路径变为-&gt;<a target="_blank" rel="noopener" href="http://localhost:8080/res/1.jpg">http://localhost:8080/res/1.jpg</a></p>
+<p>当前项目 + static-path-pattern + 静态资源名 = 静态资源文件夹下找</p>
+<h3 id="3、webjar"><a href="#3、webjar" class="headerlink" title="3、webjar"></a>3、webjar</h3><p>能自动映射 /<a target="_blank" rel="noopener" href="http://localhost:8080/webjars/jquery/3.5.1/jquery.js">webjars</a>/**</p>
+<p><a target="_blank" rel="noopener" href="https://www.webjars.org/">https://www.webjars.org/</a></p>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.webjars&lt;/groupId&gt;
+            &lt;artifactId&gt;jquery&lt;/artifactId&gt;
+            &lt;version&gt;3.5.1&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<p>访问地址：<a target="_blank" rel="noopener" href="http://localhost:8080/webjars/jquery/3.5.1/jquery.js">http://localhost:8080/webjars/<strong>jquery/3.5.1/jquery.js</strong></a>   后面地址要按照依赖里面的包路径</p>
+<h2 id="2-2、欢迎页支持"><a href="#2-2、欢迎页支持" class="headerlink" title="2.2、欢迎页支持"></a>2.2、欢迎页支持</h2><ul>
+<li><p>静态资源路径下  index.html</p>
+</li>
+<li><ul>
+<li>可以配置静态资源路径</li>
+<li>但是不可以配置静态资源的访问前缀。否则导致 index.html不能被默认访问</li>
+</ul>
+</li>
+</ul>
+<pre><code class="yaml">spring:
+#  mvc:
+#    static-path-pattern: /res/**   这个会导致welcome page功能失效
+
+  resources:
+    static-locations: [classpath:/haha/]
+</code></pre>
+<ul>
+<li>controller能处理/index</li>
+</ul>
+<h2 id="2-3、自定义-Favicon"><a href="#2-3、自定义-Favicon" class="headerlink" title="2.3、自定义 Favicon"></a>2.3、自定义 <code>Favicon</code></h2><p>favicon.ico 放在静态资源目录下即可。</p>
+<pre><code class="yaml">spring:
+#  mvc:
+#    static-path-pattern: /res/**   这个会导致 Favicon 功能失效
+</code></pre>
+<h2 id="2-4、静态资源配置原理"><a href="#2-4、静态资源配置原理" class="headerlink" title="2.4、静态资源配置原理"></a>2.4、静态资源配置原理</h2><ul>
+<li>SpringBoot启动默认加载  xxxAutoConfiguration 类（自动配置类）</li>
+<li>SpringMVC功能的自动配置类 WebMvcAutoConfiguration，生效</li>
+</ul>
+<pre><code class="java">@Configuration(proxyBeanMethods = false)
+@ConditionalOnWebApplication(type = Type.SERVLET)
+@ConditionalOnClass(&#123; Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class &#125;)
+@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)
+@AutoConfigureAfter(&#123; DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class,
+        ValidationAutoConfiguration.class &#125;)
+public class WebMvcAutoConfiguration &#123;&#125;
+</code></pre>
+<ul>
+<li>给容器中配了什么。</li>
+</ul>
+<pre><code class="java">    @Configuration(proxyBeanMethods = false)
+    @Import(EnableWebMvcConfiguration.class)
+    @EnableConfigurationProperties(&#123; WebMvcProperties.class, ResourceProperties.class &#125;)
+    @Order(0)
+    public static class WebMvcAutoConfigurationAdapter implements WebMvcConfigurer &#123;&#125;
+</code></pre>
+<ul>
+<li>配置文件的相关属性和xxx进行了绑定。WebMvcProperties==<strong>spring.mvc</strong>、ResourceProperties==<strong>spring.resources</strong></li>
+</ul>
+<h4 id="1、配置类只有一个有参构造器"><a href="#1、配置类只有一个有参构造器" class="headerlink" title="1、配置类只有一个有参构造器"></a>1、配置类只有一个有参构造器</h4><pre><code class="java">    //如果配置类只有一个有参构造器就代表着--&gt;有参构造器所有参数的值都会从容器中确定
+//ResourceProperties resourceProperties；获取和spring.resources绑定的所有的值的对象
+//WebMvcProperties mvcProperties 获取和spring.mvc绑定的所有的值的对象
+//ListableBeanFactory beanFactory Spring的beanFactory
+//HttpMessageConverters 找到所有的HttpMessageConverters
+//ResourceHandlerRegistrationCustomizer 找到 资源处理器的自定义器。=========
+//DispatcherServletPath  
+//ServletRegistrationBean   给应用注册Servlet、Filter....
+    public WebMvcAutoConfigurationAdapter(ResourceProperties resourceProperties, WebMvcProperties mvcProperties,
+                ListableBeanFactory beanFactory, ObjectProvider&lt;HttpMessageConverters&gt; messageConvertersProvider,
+                ObjectProvider&lt;ResourceHandlerRegistrationCustomizer&gt; resourceHandlerRegistrationCustomizerProvider,
+                ObjectProvider&lt;DispatcherServletPath&gt; dispatcherServletPath,
+                ObjectProvider&lt;ServletRegistrationBean&lt;?&gt;&gt; servletRegistrations) &#123;
+            this.resourceProperties = resourceProperties;
+            this.mvcProperties = mvcProperties;
+            this.beanFactory = beanFactory;
+            this.messageConvertersProvider = messageConvertersProvider;
+            this.resourceHandlerRegistrationCustomizer = resourceHandlerRegistrationCustomizerProvider.getIfAvailable();
+            this.dispatcherServletPath = dispatcherServletPath;
+            this.servletRegistrations = servletRegistrations;
+        &#125;
+</code></pre>
+<h4 id="2、资源处理的默认规则"><a href="#2、资源处理的默认规则" class="headerlink" title="2、资源处理的默认规则"></a>2、资源处理的默认规则</h4><pre><code class="java">@Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) &#123;
+            if (!this.resourceProperties.isAddMappings()) &#123;
+                logger.debug(&quot;Default resource handling disabled&quot;);
+                return;
+            &#125;
+            Duration cachePeriod = this.resourceProperties.getCache().getPeriod();
+            CacheControl cacheControl = this.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();
+            //webjars的规则
+            if (!registry.hasMappingForPattern(&quot;/webjars/**&quot;)) &#123;
+                customizeResourceHandlerRegistration(registry.addResourceHandler(&quot;/webjars/**&quot;)
+                        .addResourceLocations(&quot;classpath:/META-INF/resources/webjars/&quot;)
+                        .setCachePeriod(getSeconds(cachePeriod)).setCacheControl(cacheControl));
+            &#125;
+            
+            //
+            String staticPathPattern = this.mvcProperties.getStaticPathPattern();
+            if (!registry.hasMappingForPattern(staticPathPattern)) &#123;
+                customizeResourceHandlerRegistration(registry.addResourceHandler(staticPathPattern)
+                        .addResourceLocations(getResourceLocations(this.resourceProperties.getStaticLocations()))
+                        .setCachePeriod(getSeconds(cachePeriod)).setCacheControl(cacheControl));
+            &#125;
+        &#125;
+spring:
+#  mvc:
+#    static-path-pattern: /res/**
+
+  resources:
+    add-mappings: false   禁用所有静态资源规则
+@ConfigurationProperties(prefix = &quot;spring.resources&quot;, ignoreUnknownFields = false)
+public class ResourceProperties &#123;
+
+    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = &#123; &quot;classpath:/META-INF/resources/&quot;,
+            &quot;classpath:/resources/&quot;, &quot;classpath:/static/&quot;, &quot;classpath:/public/&quot; &#125;;
+
+    /**
+     * Locations of static resources. Defaults to classpath:[/META-INF/resources/,
+     * /resources/, /static/, /public/].
+     */
+    private String[] staticLocations = CLASSPATH_RESOURCE_LOCATIONS;
+</code></pre>
+<h4 id="3、欢迎页的处理规则"><a href="#3、欢迎页的处理规则" class="headerlink" title="3、欢迎页的处理规则"></a>3、欢迎页的处理规则</h4><pre><code class="java">    HandlerMapping：处理器映射。保存了每一个Handler能处理哪些请求。    
+
+    @Bean
+        public WelcomePageHandlerMapping welcomePageHandlerMapping(ApplicationContext applicationContext,
+                FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider) &#123;
+            WelcomePageHandlerMapping welcomePageHandlerMapping = new WelcomePageHandlerMapping(
+                    new TemplateAvailabilityProviders(applicationContext), applicationContext, getWelcomePage(),
+                    this.mvcProperties.getStaticPathPattern());
+            welcomePageHandlerMapping.setInterceptors(getInterceptors(mvcConversionService, mvcResourceUrlProvider));
+            welcomePageHandlerMapping.setCorsConfigurations(getCorsConfigurations());
+            return welcomePageHandlerMapping;
+        &#125;
+
+    WelcomePageHandlerMapping(TemplateAvailabilityProviders templateAvailabilityProviders,
+            ApplicationContext applicationContext, Optional&lt;Resource&gt; welcomePage, String staticPathPattern) &#123;
+        if (welcomePage.isPresent() &amp;&amp; &quot;/**&quot;.equals(staticPathPattern)) &#123;
+            //要用欢迎页功能，必须是/**
+            logger.info(&quot;Adding welcome page: &quot; + welcomePage.get());
+            setRootViewName(&quot;forward:index.html&quot;);
+        &#125;
+        else if (welcomeTemplateExists(templateAvailabilityProviders, applicationContext)) &#123;
+            // 调用Controller  /index
+            logger.info(&quot;Adding welcome page template: index&quot;);
+            setRootViewName(&quot;index&quot;);
+        &#125;
+    &#125;
+</code></pre>
+<h4 id="4、favicon"><a href="#4、favicon" class="headerlink" title="4、favicon"></a>4、favicon</h4><p>/favicon</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
