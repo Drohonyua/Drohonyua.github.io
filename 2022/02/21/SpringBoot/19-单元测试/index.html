@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>19-单元测试 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="19-单元测试 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(40)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(19)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="40">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/21/SpringBoot/19-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="19-单元测试">19-单元测试</span>
+            <span class="post-date" title="2022-02-21 22:19:21">2022/02/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/18-%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="18-数据访问">18-数据访问</span>
+            <span class="post-date" title="2022-02-18 21:50:56">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/17-%E5%AE%9A%E5%88%B6%E5%8C%96%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="17-定制化原理">17-定制化原理</span>
+            <span class="post-date" title="2022-02-18 21:27:31">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/16-%E5%B5%8C%E5%85%A5%E5%BC%8FServlet%E5%AE%B9%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="16-嵌入式Servlet容器">16-嵌入式Servlet容器</span>
+            <span class="post-date" title="2022-02-18 21:24:35">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/15-Web%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="15-Web原生组件注入">15-Web原生组件注入</span>
+            <span class="post-date" title="2022-02-18 13:22:02">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/14-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="14-异常处理">14-异常处理</span>
+            <span class="post-date" title="2022-02-17 22:23:09">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/13-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="13-文件上传">13-文件上传</span>
+            <span class="post-date" title="2022-02-17 21:42:20">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/12-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-拦截器">12-拦截器</span>
+            <span class="post-date" title="2022-02-17 20:31:33">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/16/SpringBoot/11-%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-视图解析器">11-视图解析器</span>
+            <span class="post-date" title="2022-02-16 16:08:45">2022/02/16</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/15/SpringBoot/10-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-请求参数处理">10-请求参数处理</span>
+            <span class="post-date" title="2022-02-15 20:46:17">2022/02/15</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/09-web%E5%BC%80%E5%8F%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-web开发">09-web开发</span>
+            <span class="post-date" title="2022-02-14 23:25:20">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/08-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-配置文件">08-配置文件</span>
+            <span class="post-date" title="2022-02-14 21:55:06">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/07-%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-开发小工具">07-开发小工具</span>
+            <span class="post-date" title="2022-02-14 21:54:33">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-SpringBoot/19-单元测试" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">19-单元测试</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="SpringBoot">SpringBoot</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-02-21 23:05:27'>2022-02-21 22:19</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81JUnit5-%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-text">1、JUnit5 的变化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81JUnit5%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3"><span class="toc-text">2、JUnit5常用注解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E6%96%AD%E8%A8%80%EF%BC%88assertions%EF%BC%89"><span class="toc-text">3、断言（assertions）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E5%8D%95%E6%96%AD%E8%A8%80"><span class="toc-text">1、简单断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%95%B0%E7%BB%84%E6%96%AD%E8%A8%80"><span class="toc-text">2、数组断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E7%BB%84%E5%90%88%E6%96%AD%E8%A8%80"><span class="toc-text">3、组合断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%BC%82%E5%B8%B8%E6%96%AD%E8%A8%80"><span class="toc-text">4、异常断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E8%B6%85%E6%97%B6%E6%96%AD%E8%A8%80"><span class="toc-text">5、超时断言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5"><span class="toc-text">6、快速失败</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6%EF%BC%88assumptions%EF%BC%89"><span class="toc-text">4、前置条件（assumptions）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E5%B5%8C%E5%A5%97%E6%B5%8B%E8%AF%95"><span class="toc-text">5、嵌套测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81%E5%8F%82%E6%95%B0%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-text">6、参数化测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81%E8%BF%81%E7%A7%BB%E6%8C%87%E5%8D%97"><span class="toc-text">7、迁移指南</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1、JUnit5-的变化"><a href="#1、JUnit5-的变化" class="headerlink" title="1、JUnit5 的变化"></a>1、JUnit5 的变化</h1><p><strong>Spring Boot 2.2.0 版本开始引入 JUnit 5 作为单元测试默认库</strong></p>
+<p>作为最新版本的JUnit框架，JUnit5与之前版本的Junit框架有很大的不同。由三个不同子项目的几个不同模块组成。</p>
+<p><strong>JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage</strong></p>
+<p><strong>JUnit Platform</strong>: Junit Platform是在JVM上启动测试框架的基础，不仅支持Junit自制的测试引擎，其他测试引擎也都可以接入。</p>
+<p><strong>JUnit Jupiter</strong>: JUnit Jupiter提供了JUnit5的新的编程模型，是JUnit5新特性的核心。内部 包含了一个<strong>测试引擎</strong>，用于在Junit Platform上运行。</p>
+<p><strong>JUnit Vintage</strong>: 由于JUint已经发展多年，为了照顾老的项目，JUnit Vintage提供了兼容JUnit4.x,Junit3.x的测试引擎。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/1354552/1606796395719-eb57ab48-ae44-45e5-8d2e-c4d507aff49a.png?x-oss-process=image/watermark,type_d3F5LW1pY3JvaGVp,size_19,text_YXRndWlndS5jb20g5bCa56GF6LC3,color_FFFFFF,shadow_50,t_80,g_se,x_10,y_10" alt="img"></p>
+<p>注意：</p>
+<p><strong>SpringBoot 2.4 以上版本移除了默认对</strong> <strong>Vintage 的依赖。如果需要兼容junit4需要自行引入（不能使用junit4的功能 @Test****）</strong></p>
+<p><strong>JUnit 5’s Vintage Engine Removed from</strong> <code>**spring-boot-starter-test,如果需要继续兼容junit4需要自行引入vintage**</code></p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.hamcrest&lt;/groupId&gt;
+            &lt;artifactId&gt;hamcrest-core&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/1354552/1606797616337-e73010e9-9cac-496d-a177-64b677af5a3d.png?x-oss-process=image/watermark,type_d3F5LW1pY3JvaGVp,size_18,text_YXRndWlndS5jb20g5bCa56GF6LC3,color_FFFFFF,shadow_50,t_80,g_se,x_10,y_10" alt="img"></p>
+<pre><code class="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>现在版本：</p>
+<pre><code class="java">@SpringBootTest
+class Boot05WebAdminApplicationTests &#123;
+
+
+    @Test
+    void contextLoads() &#123;
+
+    &#125;
+&#125;
+</code></pre>
+<p>以前：</p>
+<p>@SpringBootTest + @RunWith(SpringTest.class)</p>
+<p>SpringBoot整合Junit以后。</p>
+<ul>
+<li>编写测试方法：@Test标注（注意需要使用junit5版本的注解）</li>
+<li>Junit类具有Spring的功能，@Autowired、比如 @Transactional 标注测试方法，测试完成后自动回滚(测试数据库插入)</li>
+</ul>
+<h1 id="2、JUnit5常用注解"><a href="#2、JUnit5常用注解" class="headerlink" title="2、JUnit5常用注解"></a>2、JUnit5常用注解</h1><p>JUnit5的注解与JUnit4的注解有所变化</p>
+<p><a target="_blank" rel="noopener" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations">https://junit.org/junit5/docs/current/user-guide/#writing-tests-annotations</a></p>
+<ul>
+<li><p>**@Test :**表示方法是测试方法。但是与JUnit4的@Test不同，他的职责非常单一不能声明任何属性，拓展的测试将会由Jupiter提供额外测试</p>
+</li>
+<li><p>**@ParameterizedTest :**表示方法是参数化测试，下方会有详细介绍</p>
+</li>
+<li><p>**@RepeatedTest :**表示方法可重复执行，下方会有详细介绍(表示重复执行@RepeatedTest(6)表示该测试重复执行6次)</p>
+</li>
+<li><p>**@DisplayName :**为测试类或者测试方法设置展示名称</p>
+</li>
+<li><p>**@BeforeEach :**表示在每一个单元测试之前执行(比如有运行了两个测试方法，则这两个测试方法前面都会运行一次)</p>
+</li>
+<li><p>**@AfterEach :**表示在每一个单元测试之后执行(比如有运行了两个测试方法，则这两个测试方法前面都会运行一次)</p>
+</li>
+<li><p>**@BeforeAll :**表示在所有单元测试开始之前执行(需添加staic)</p>
+</li>
+<li><p>**@AfterAll :**表示在所有单元测试完成之后执行(需添加staic)</p>
+</li>
+<li><p>**@Tag :**表示单元测试类别，类似于JUnit4中的@Categories</p>
+</li>
+<li><p>**@Disabled :**表示测试类或测试方法不执行，类似于JUnit4中的@Ignore</p>
+</li>
+<li><p>**@Timeout :**表示测试方法运行如果超过了指定时间将会返回错误</p>
+</li>
+<li><p>**@ExtendWith :**为测试类或测试方法提供扩展类引用</p>
+</li>
+</ul>
+<pre><code class="java">import org.junit.jupiter.api.Test; //注意这里使用的是jupiter的Test注解！！
+
+
+public class TestDemo &#123;
+
+  @Test
+  @DisplayName(&quot;第一次测试&quot;)
+  public void firstTest() &#123;
+      System.out.println(&quot;hello world&quot;);
+  &#125;
+</code></pre>
+<h1 id="3、断言（assertions）"><a href="#3、断言（assertions）" class="headerlink" title="3、断言（assertions）"></a>3、断言（assertions）</h1><p>断言（assertions）是测试方法中的核心部分，用来对测试需要满足的条件进行验证。<strong>这些断言方法都是 org.junit.jupiter.api.Assertions 的静态方法</strong>。JUnit 5 内置的断言可以分成如下几个类别：</p>
+<p><strong>检查业务逻辑返回的数据是否合理。</strong></p>
+<p><strong>所有的测试运行结束以后，会有一个详细的测试报告；</strong></p>
+<h2 id="1、简单断言"><a href="#1、简单断言" class="headerlink" title="1、简单断言"></a>1、简单断言</h2><p>用来对单个值进行简单的验证。如：assertxxxx(期望值，真实值，”错误提示信息”)</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>assertEquals</td>
+<td>判断两个对象或两个原始类型是否相等</td>
+</tr>
+<tr>
+<td>assertNotEquals</td>
+<td>判断两个对象或两个原始类型是否不相等</td>
+</tr>
+<tr>
+<td>assertSame</td>
+<td>判断两个对象引用是否指向同一个对象</td>
+</tr>
+<tr>
+<td>assertNotSame</td>
+<td>判断两个对象引用是否指向不同的对象</td>
+</tr>
+<tr>
+<td>assertTrue</td>
+<td>判断给定的布尔值是否为 true</td>
+</tr>
+<tr>
+<td>assertFalse</td>
+<td>判断给定的布尔值是否为 false</td>
+</tr>
+<tr>
+<td>assertNull</td>
+<td>判断给定的对象引用是否为 null</td>
+</tr>
+<tr>
+<td>assertNotNull</td>
+<td>判断给定的对象引用是否不为 null</td>
+</tr>
+</tbody></table>
+<pre><code class="java">@Test
+@DisplayName(&quot;simple assertion&quot;)
+public void simple() &#123;
+     assertEquals(3, 1 + 2, &quot;simple math&quot;);
+     assertNotEquals(3, 1 + 1);
+
+     assertNotSame(new Object(), new Object());
+     Object obj = new Object();
+     assertSame(obj, obj);
+
+     assertFalse(1 &gt; 2);
+     assertTrue(1 &lt; 2);
+
+     assertNull(null);
+     assertNotNull(new Object());
+&#125;
+</code></pre>
+<h2 id="2、数组断言"><a href="#2、数组断言" class="headerlink" title="2、数组断言"></a>2、数组断言</h2><p>通过 assertArrayEquals 方法来判断两个对象或原始类型的数组是否相等</p>
+<pre><code class="java">@Test
+@DisplayName(&quot;array assertion&quot;)
+public void array() &#123;
+ assertArrayEquals(new int[]&#123;1, 2&#125;, new int[] &#123;1, 2&#125;);
+&#125;
+</code></pre>
+<h2 id="3、组合断言"><a href="#3、组合断言" class="headerlink" title="3、组合断言"></a>3、组合断言</h2><p>assertAll 方法接受多个 org.junit.jupiter.api.Executable 函数式接口的实例作为要验证的断言，可以通过 lambda 表达式很容易的提供这些断言</p>
+<pre><code class="java">@Test
+@DisplayName(&quot;assert all&quot;)
+public void all() &#123;
+ assertAll(&quot;Math&quot;,
+    () -&gt; assertEquals(2, 1 + 1),
+    () -&gt; assertTrue(1 &gt; 0)
+ );
+&#125;
+</code></pre>
+<h2 id="4、异常断言"><a href="#4、异常断言" class="headerlink" title="4、异常断言"></a>4、异常断言</h2><p>在JUnit4时期，想要测试方法的异常情况时，需要用**@Rule<strong>注解的ExpectedException变量还是比较麻烦的。而JUnit5提供了一种新的断言方式</strong>Assertions.assertThrows()** ,配合函数式编程就可以进行使用。</p>
+<pre><code class="java">@Test
+@DisplayName(&quot;异常测试&quot;)
+public void exceptionTest() &#123;
+    ArithmeticException exception = Assertions.assertThrows(
+           //扔出断言异常
+            ArithmeticException.class, () -&gt; System.out.println(1 % 0));
+
+&#125;
+</code></pre>
+<h2 id="5、超时断言"><a href="#5、超时断言" class="headerlink" title="5、超时断言"></a>5、超时断言</h2><p>Junit5还提供了<strong>Assertions.assertTimeout()</strong> 为测试方法设置了超时时间</p>
+<pre><code class="java">@Test
+@DisplayName(&quot;超时测试&quot;)
+public void timeoutTest() &#123;
+    //如果测试方法时间超过1s将会异常
+    Assertions.assertTimeout(Duration.ofMillis(1000), () -&gt; Thread.sleep(500));
+&#125;
+</code></pre>
+<h2 id="6、快速失败"><a href="#6、快速失败" class="headerlink" title="6、快速失败"></a>6、快速失败</h2><p>通过 fail 方法直接使得测试失败</p>
+<pre><code class="java">@Test
+@DisplayName(&quot;fail&quot;)
+public void shouldFail() &#123;
+ fail(&quot;This should fail&quot;);
+&#125;
+</code></pre>
+<h1 id="4、前置条件（assumptions）"><a href="#4、前置条件（assumptions）" class="headerlink" title="4、前置条件（assumptions）"></a>4、前置条件（assumptions）</h1><p>JUnit 5 中的前置条件（<strong>assumptions【假设】</strong>）类似于断言，不同之处在于<strong>不满足的断言会使得测试方法失败</strong>，而不满足的<strong>前置条件只会使得测试方法的执行终止</strong>。前置条件可以看成是测试方法执行的前提，当该前提不满足时，就没有继续执行的必要。</p>
+<pre><code class="java">@DisplayName(&quot;前置条件&quot;)
+public class AssumptionsTest &#123;
+ private final String environment = &quot;DEV&quot;;
+ 
+ @Test
+ @DisplayName(&quot;simple&quot;)
+ public void simpleAssume() &#123;
+    assumeTrue(Objects.equals(this.environment, &quot;DEV&quot;));
+    assumeFalse(() -&gt; Objects.equals(this.environment, &quot;PROD&quot;));
+ &#125;
+ 
+ @Test
+ @DisplayName(&quot;assume then do&quot;)
+ public void assumeThenDo() &#123;
+    assumingThat(
+       Objects.equals(this.environment, &quot;DEV&quot;),
+       () -&gt; System.out.println(&quot;In DEV&quot;)
+    );
+ &#125;
+&#125;
+</code></pre>
+<p>assumeTrue 和 assumFalse 确保给定的条件为 true 或 false，不满足条件会使得测试执行终止。assumingThat 的参数是表示条件的布尔值和对应的 Executable 接口的实现对象。只有条件满足时，Executable 对象才会被执行；当条件不满足时，测试执行并不会终止。</p>
+<h1 id="5、嵌套测试"><a href="#5、嵌套测试" class="headerlink" title="5、嵌套测试"></a>5、嵌套测试</h1><p>JUnit 5 可以通过 Java 中的内部类和@Nested 注解实现嵌套测试，从而可以更好的把相关的测试方法组织在一起。在内部类中可以使用@BeforeEach 和@AfterEach 注解，而且嵌套的层次没有限制。</p>
+<pre><code class="java">@DisplayName(&quot;A stack&quot;)
+class TestingAStackDemo &#123;
+
+    Stack&lt;Object&gt; stack;
+
+    @Test
+    @DisplayName(&quot;is instantiated with new Stack()&quot;)
+    void isInstantiatedWithNew() &#123;
+        new Stack&lt;&gt;();
+    &#125;
+
+    @Nested
+    @DisplayName(&quot;when new&quot;)
+    class WhenNew &#123;
+
+        @BeforeEach
+        void createNewStack() &#123;
+            stack = new Stack&lt;&gt;();
+        &#125;
+
+        @Test
+        @DisplayName(&quot;is empty&quot;)
+        void isEmpty() &#123;
+            assertTrue(stack.isEmpty());
+        &#125;
+
+        @Test
+        @DisplayName(&quot;throws EmptyStackException when popped&quot;)
+        void throwsExceptionWhenPopped() &#123;
+            assertThrows(EmptyStackException.class, stack::pop);
+        &#125;
+
+        @Test
+        @DisplayName(&quot;throws EmptyStackException when peeked&quot;)
+        void throwsExceptionWhenPeeked() &#123;
+            assertThrows(EmptyStackException.class, stack::peek);
+        &#125;
+
+        @Nested
+        @DisplayName(&quot;after pushing an element&quot;)
+        class AfterPushing &#123;
+
+            String anElement = &quot;an element&quot;;
+
+            @BeforeEach
+            void pushAnElement() &#123;
+                stack.push(anElement);
+            &#125;
+
+            @Test
+            @DisplayName(&quot;it is no longer empty&quot;)
+            void isNotEmpty() &#123;
+                assertFalse(stack.isEmpty());
+            &#125;
+
+            @Test
+            @DisplayName(&quot;returns the element when popped and is empty&quot;)
+            void returnElementWhenPopped() &#123;
+                assertEquals(anElement, stack.pop());
+                assertTrue(stack.isEmpty());
+            &#125;
+
+            @Test
+            @DisplayName(&quot;returns the element when peeked but remains not empty&quot;)
+            void returnElementWhenPeeked() &#123;
+                assertEquals(anElement, stack.peek());
+                assertFalse(stack.isEmpty());
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h1 id="6、参数化测试"><a href="#6、参数化测试" class="headerlink" title="6、参数化测试"></a>6、参数化测试</h1><p>参数化测试是JUnit5很重要的一个新特性，它使得用不同的参数多次运行测试成为了可能，也为我们的单元测试带来许多便利。</p>
+<p>利用**@ValueSource**等注解，指定入参，我们将可以使用不同的参数进行多次单元测试，而不需要每新增一个参数就新增一个单元测试，省去了很多冗余代码。</p>
+<p><strong>@ValueSource</strong>: 为参数化测试指定入参来源，支持八大基础类以及String类型,Class类型</p>
+<p><strong>@NullSource</strong>: 表示为参数化测试提供一个null的入参</p>
+<p><strong>@EnumSource</strong>: 表示为参数化测试提供一个枚举入参</p>
+<p><strong>@CsvFileSource</strong>：表示读取指定CSV文件内容作为参数化测试入参</p>
+<p><strong>@MethodSource</strong>：表示读取指定方法的返回值作为参数化测试入参(注意方法返回需要是一个流)</p>
+<p>当然如果参数化测试仅仅只能做到指定普通的入参还达不到让我觉得惊艳的地步。让我真正感到他的强大之处的地方在于他可以支持外部的各类入参。如:CSV,YML,JSON 文件甚至方法的返回值也可以作为入参。只需要去实现<strong>ArgumentsProvider</strong>接口，任何外部文件都可以作为它的入参。</p>
+<pre><code class="java">@ParameterizedTest
+@ValueSource(strings = &#123;&quot;one&quot;, &quot;two&quot;, &quot;three&quot;&#125;)
+@DisplayName(&quot;参数化测试1&quot;)
+public void parameterizedTest1(String string) &#123;
+    System.out.println(string);
+    Assertions.assertTrue(StringUtils.isNotBlank(string));
+&#125;
+
+
+@ParameterizedTest
+@MethodSource(&quot;method&quot;)    //指定方法名
+@DisplayName(&quot;方法来源参数&quot;)
+public void testWithExplicitLocalMethodSource(String name) &#123;
+    System.out.println(name);
+    Assertions.assertNotNull(name);
+&#125;
+
+static Stream&lt;String&gt; method() &#123;
+    return Stream.of(&quot;apple&quot;, &quot;banana&quot;);
+&#125;
+</code></pre>
+<h1 id="7、迁移指南"><a href="#7、迁移指南" class="headerlink" title="7、迁移指南"></a>7、迁移指南</h1><p>在进行迁移的时候需要注意如下的变化：</p>
+<ul>
+<li><p>注解在 org.junit.jupiter.api 包中，断言在 org.junit.jupiter.api.Assertions 类中，前置条件在 org.junit.jupiter.api.Assumptions 类中。</p>
+</li>
+<li><p>把@Before 和@After 替换成@BeforeEach 和@AfterEach。</p>
+</li>
+<li><p>把@BeforeClass 和@AfterClass 替换成@BeforeAll 和@AfterAll。</p>
+</li>
+<li><p>把@Ignore 替换成@Disabled。</p>
+</li>
+<li><p>把@Category 替换成@Tag。</p>
+</li>
+<li><p>把@RunWith、@Rule 和@ClassRule 替换成@ExtendWith。</p>
+</li>
+</ul>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
