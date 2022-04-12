@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>10-Redis持久化 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="10-Redis持久化 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(53)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(21)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="Redis">
+                        
+                        Redis
+                        <small>(11)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="53">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/11-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-主从复制">11-主从复制</span>
+            <span class="post-date" title="2022-04-10 18:04:22">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/10-Redis%E6%8C%81%E4%B9%85%E5%8C%96/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-Redis持久化">10-Redis持久化</span>
+            <span class="post-date" title="2022-04-10 16:54:14">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/08/redis/09-Redis_%E4%BA%8B%E5%8A%A1_%E9%94%81%E6%9C%BA%E5%88%B6_%E7%A7%92%E6%9D%80/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-Redis_事务_锁机制_秒杀">09-Redis_事务_锁机制_秒杀</span>
+            <span class="post-date" title="2022-04-08 18:56:11">2022/04/08</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/08-Redis%E4%B8%8ESpringBoot%E6%95%B4%E5%90%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-Redis与SpringBoot整合">08-Redis与SpringBoot整合</span>
+            <span class="post-date" title="2022-04-06 19:05:56">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/07-Redis_Jedis_%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-Redis_Jedis_测试">07-Redis_Jedis_测试</span>
+            <span class="post-date" title="2022-04-06 18:58:41">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/06-%E6%96%B0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-新数据类型">06-新数据类型</span>
+            <span class="post-date" title="2022-04-06 18:23:45">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/05-Redis%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-Redis发布与订阅">05-Redis发布与订阅</span>
+            <span class="post-date" title="2022-04-06 17:40:20">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/04-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-配置文件">04-配置文件</span>
+            <span class="post-date" title="2022-04-06 17:20:03">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/03-Redis%E5%B8%B8%E7%94%A8%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-常用五大数据类型">03-常用五大数据类型</span>
+            <span class="post-date" title="2022-04-05 20:01:58">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/02-Redis%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-Redis安装">02-Redis安装</span>
+            <span class="post-date" title="2022-04-05 19:53:55">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/01-Redis%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-Redis简介">01-Redis简介</span>
+            <span class="post-date" title="2022-04-05 19:44:59">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/21-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:33:47">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/20-%E6%8C%87%E6%A0%87%E7%9B%91%E6%8E%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:20:03">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/21/SpringBoot/19-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="19-单元测试">19-单元测试</span>
+            <span class="post-date" title="2022-02-21 22:19:21">2022/02/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/18-%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="18-数据访问">18-数据访问</span>
+            <span class="post-date" title="2022-02-18 21:50:56">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/17-%E5%AE%9A%E5%88%B6%E5%8C%96%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="17-定制化原理">17-定制化原理</span>
+            <span class="post-date" title="2022-02-18 21:27:31">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/16-%E5%B5%8C%E5%85%A5%E5%BC%8FServlet%E5%AE%B9%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="16-嵌入式Servlet容器">16-嵌入式Servlet容器</span>
+            <span class="post-date" title="2022-02-18 21:24:35">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/15-Web%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="15-Web原生组件注入">15-Web原生组件注入</span>
+            <span class="post-date" title="2022-02-18 13:22:02">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/14-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="14-异常处理">14-异常处理</span>
+            <span class="post-date" title="2022-02-17 22:23:09">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/13-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="13-文件上传">13-文件上传</span>
+            <span class="post-date" title="2022-02-17 21:42:20">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/12-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-拦截器">12-拦截器</span>
+            <span class="post-date" title="2022-02-17 20:31:33">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/16/SpringBoot/11-%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-视图解析器">11-视图解析器</span>
+            <span class="post-date" title="2022-02-16 16:08:45">2022/02/16</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/15/SpringBoot/10-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-请求参数处理">10-请求参数处理</span>
+            <span class="post-date" title="2022-02-15 20:46:17">2022/02/15</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/09-web%E5%BC%80%E5%8F%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-web开发">09-web开发</span>
+            <span class="post-date" title="2022-02-14 23:25:20">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/08-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-配置文件">08-配置文件</span>
+            <span class="post-date" title="2022-02-14 21:55:06">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/07-%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-开发小工具">07-开发小工具</span>
+            <span class="post-date" title="2022-02-14 21:54:33">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-redis/10-Redis持久化" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">10-Redis持久化</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Redis">Redis</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-04-10 17:58:50'>2022-04-10 16:54</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.1.  总体介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-RDB%EF%BC%88Redis-DataBase%EF%BC%89"><span class="toc-text">1.2.  RDB（Redis DataBase）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E5%AE%98%E7%BD%91%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.2.1.  官网介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">1.2.2.  是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-%E5%A4%87%E4%BB%BD%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84"><span class="toc-text">1.2.3.  备份是如何执行的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4-Fork"><span class="toc-text">1.2.4.  Fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-5-RDB%E6%8C%81%E4%B9%85%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-text">1.2.5.  RDB持久化流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-6-dump-rdb%E6%96%87%E4%BB%B6"><span class="toc-text">1.2.6.  dump.rdb文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-7-%E9%85%8D%E7%BD%AE%E4%BD%8D%E7%BD%AE"><span class="toc-text">1.2.7.  配置位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-8-%E5%A6%82%E4%BD%95%E8%A7%A6%E5%8F%91RDB%E5%BF%AB%E7%85%A7%EF%BC%9B%E4%BF%9D%E6%8C%81%E7%AD%96%E7%95%A5"><span class="toc-text">1.2.8.  如何触发RDB快照；保持策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E9%BB%98%E8%AE%A4%E7%9A%84%E5%BF%AB%E7%85%A7%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2.8.1. 配置文件中默认的快照配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-2-%E5%91%BD%E4%BB%A4save-VS-bgsave"><span class="toc-text">1.2.8.2. 命令save VS bgsave</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-3-flushall%E5%91%BD%E4%BB%A4"><span class="toc-text">1.2.8.3. flushall命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-4-SNAPSHOTTING%E5%BF%AB%E7%85%A7"><span class="toc-text">1.2.8.4. SNAPSHOTTING快照</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-5-Save"><span class="toc-text">1.2.8.5. Save</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-6-stop-writes-on-bgsave-error"><span class="toc-text">1.2.8.6. stop-writes-on-bgsave-error</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-7-rdbcompression-%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="toc-text">1.2.8.7. rdbcompression 压缩文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-8-rdbchecksum-%E6%A3%80%E6%9F%A5%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">1.2.8.8. rdbchecksum 检查完整性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-9-rdb%E7%9A%84%E5%A4%87%E4%BB%BD"><span class="toc-text">1.2.8.9. rdb的备份</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-9-%E4%BC%98%E5%8A%BF"><span class="toc-text">1.2.9.  优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-10-%E5%8A%A3%E5%8A%BF"><span class="toc-text">1.2.10.      劣势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-11-%E5%A6%82%E4%BD%95%E5%81%9C%E6%AD%A2"><span class="toc-text">1.2.11.      如何停止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-12-%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-text">1.2.12.      小总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Redis%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8BAOF"><span class="toc-text">2.  Redis持久化之AOF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-AOF%EF%BC%88Append-Only-File%EF%BC%89"><span class="toc-text">2.1.  AOF（Append Only File）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">2.1.1.  是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-AOF%E6%8C%81%E4%B9%85%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="toc-text">2.1.2.  AOF持久化流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-AOF%E9%BB%98%E8%AE%A4%E4%B8%8D%E5%BC%80%E5%90%AF"><span class="toc-text">2.1.3.  AOF默认不开启</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-4-AOF%E5%92%8CRDB%E5%90%8C%E6%97%B6%E5%BC%80%E5%90%AF%EF%BC%8Credis%E5%90%AC%E8%B0%81%E7%9A%84%EF%BC%9F"><span class="toc-text">2.1.4.  AOF和RDB同时开启，redis听谁的？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-5-AOF%E5%90%AF%E5%8A%A8-%E4%BF%AE%E5%A4%8D-%E6%81%A2%E5%A4%8D"><span class="toc-text">2.1.5.  AOF启动&#x2F;修复&#x2F;恢复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-6-AOF%E5%90%8C%E6%AD%A5%E9%A2%91%E7%8E%87%E8%AE%BE%E7%BD%AE"><span class="toc-text">2.1.6.  AOF同步频率设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-7-Rewrite%E5%8E%8B%E7%BC%A9"><span class="toc-text">2.1.7.  Rewrite压缩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-8-%E4%BC%98%E5%8A%BF"><span class="toc-text">2.1.8.  优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-9-%E5%8A%A3%E5%8A%BF"><span class="toc-text">2.1.9.  劣势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-10-%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-text">2.1.10.       小总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%80%BB%E7%BB%93-Which-one"><span class="toc-text">2.2.  总结(Which one)</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-总体介绍"><a href="#1-1-总体介绍" class="headerlink" title="1.1.  总体介绍"></a><strong>1.1.</strong>  <strong>总体介绍</strong></h2><p>官网介绍：<a target="_blank" rel="noopener" href="http://www.redis.io/">http://www.redis.io</a></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410165554068.png" alt="image-20220410165554068">                               </p>
+<p>Redis 提供了2个不同形式的持久化方式。</p>
+<p>l RDB（Redis DataBase）</p>
+<p>l AOF（Append Of File）</p>
+<h2 id="1-2-RDB（Redis-DataBase）"><a href="#1-2-RDB（Redis-DataBase）" class="headerlink" title="1.2.  RDB（Redis DataBase）"></a><strong>1.2.</strong>  <strong>RDB（Redis DataBase）</strong></h2><h3 id="1-2-1-官网介绍"><a href="#1-2-1-官网介绍" class="headerlink" title="1.2.1.  官网介绍"></a><strong>1.2.1.</strong>  <strong>官网介绍</strong></h3><p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410165811752.png" alt="image-20220410165811752"></p>
+<h3 id="1-2-2-是什么"><a href="#1-2-2-是什么" class="headerlink" title="1.2.2.  是什么"></a><strong>1.2.2.</strong>  <strong>是什么</strong></h3><p>在指定的时间间隔内将内存中的数据集快照写入磁盘， 也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里</p>
+<h3 id="1-2-3-备份是如何执行的"><a href="#1-2-3-备份是如何执行的" class="headerlink" title="1.2.3.  备份是如何执行的"></a><strong>1.2.3.</strong>  <strong>备份是如何执行的</strong></h3><p>Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到 一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。 整个过程中，主进程是不进行任何IO操作的，这就确保了极高的性能 如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。<strong>RDB****的缺点是最后一次持久化后的数据可能丢失</strong>。</p>
+<h3 id="1-2-4-Fork"><a href="#1-2-4-Fork" class="headerlink" title="1.2.4.  Fork"></a><strong>1.2.4.</strong>  <strong>Fork</strong></h3><p>l Fork的作用是复制一个与当前进程一样的进程。新进程的所有数据（变量、环境变量、程序计数器等） 数值都和原进程一致，但是是一个全新的进程，并作为原进程的子进程</p>
+<p>l 在Linux程序中，fork()会产生一个和父进程完全相同的子进程，但子进程在此后多会exec系统调用，出于效率考虑，Linux中引入了“<strong>写时复制技术</strong>”</p>
+<p>l <strong>一般情况父进程和子进程会共用同一段物理内存</strong>，只有进程空间的各段的内容要发生变化时，才会将父进程的内容复制一份给子进程。</p>
+<h3 id="1-2-5-RDB持久化流程"><a href="#1-2-5-RDB持久化流程" class="headerlink" title="1.2.5.  RDB持久化流程"></a><strong>1.2.5.</strong>  <strong>RDB持久化流程</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410165848884.png" alt="image-20220410165848884"></p>
+<h3 id="1-2-6-dump-rdb文件"><a href="#1-2-6-dump-rdb文件" class="headerlink" title="1.2.6.  dump.rdb文件"></a><strong>1.2.6.</strong>  <strong>dump.rdb文件</strong></h3><p>在redis.conf中配置文件名称，默认为dump.rdb</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410170314985.png" alt="image-20220410170314985"></p>
+<h3 id="1-2-7-配置位置"><a href="#1-2-7-配置位置" class="headerlink" title="1.2.7.  配置位置"></a><strong>1.2.7.</strong>  <strong>配置位置</strong></h3><p>rdb文件的保存路径，也可以修改。默认为Redis启动时命令行所在的目录下</p>
+<p>dir “/myredis/“</p>
+<p> <img src="C:/Users/10420/AppData/Roaming/Typora/typora-user-images/image-20220410170333708.png" alt="image-20220410170333708"></p>
+<h3 id="1-2-8-如何触发RDB快照；保持策略"><a href="#1-2-8-如何触发RDB快照；保持策略" class="headerlink" title="1.2.8.  如何触发RDB快照；保持策略"></a><strong>1.2.8.</strong>  <strong>如何触发RDB快照；保持策略</strong></h3><h4 id="1-2-8-1-配置文件中默认的快照配置"><a href="#1-2-8-1-配置文件中默认的快照配置" class="headerlink" title="1.2.8.1. 配置文件中默认的快照配置"></a><strong>1.2.8.1.</strong> <strong>配置文件中默认的快照配置</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410170415425.png" alt="image-20220410170415425"></p>
+<h4 id="1-2-8-2-命令save-VS-bgsave"><a href="#1-2-8-2-命令save-VS-bgsave" class="headerlink" title="1.2.8.2. 命令save VS bgsave"></a><strong>1.2.8.2.</strong> <strong>命令save VS bgsave</strong></h4><p>save ：save时只管保存，其它不管，全部阻塞。手动保存。不建议。</p>
+<p><strong>bgsave</strong>：<strong><strong>Redis</strong></strong>会在后台异步进行快照操作， <strong>快照同时还可以响应客户端请求。</strong></p>
+<p>可以通过lastsave 命令获取最后一次成功执行快照的时间</p>
+<h4 id="1-2-8-3-flushall命令"><a href="#1-2-8-3-flushall命令" class="headerlink" title="1.2.8.3. flushall命令"></a><strong>1.2.8.3.</strong> <strong>flushall命令</strong></h4><p>执行flushall命令，也会产生dump.rdb文件，但里面是空的，无意义</p>
+<h4 id="1-2-8-4-SNAPSHOTTING快照"><a href="#1-2-8-4-SNAPSHOTTING快照" class="headerlink" title="1.2.8.4. SNAPSHOTTING快照"></a><strong>1.2.8.4.</strong> <strong>SNAPSHOTTING快照</strong></h4><h4 id="1-2-8-5-Save"><a href="#1-2-8-5-Save" class="headerlink" title="1.2.8.5. Save"></a><strong>1.2.8.5.</strong> <strong>Save</strong></h4><p>格式：save 秒钟 写操作次数</p>
+<p>RDB是整个内存的压缩过的Snapshot，RDB的数据结构，可以配置复合的快照触发条件，</p>
+<p><strong>默认是1<strong><strong>分钟内改了1万次，或</strong></strong>5<strong><strong>分钟内改了</strong></strong>10<strong><strong>次，或</strong></strong>15<strong><strong>分钟内改了</strong></strong>1****次。</strong></p>
+<p>禁用</p>
+<p>不设置save指令，或者给save传入空字符串</p>
+<h4 id="1-2-8-6-stop-writes-on-bgsave-error"><a href="#1-2-8-6-stop-writes-on-bgsave-error" class="headerlink" title="1.2.8.6. stop-writes-on-bgsave-error"></a><strong>1.2.8.6.</strong> <strong>stop-writes-on-bgsave-error</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410170950952.png" alt="image-20220410170950952"></p>
+<p>当Redis无法写入磁盘的话，直接关掉Redis的写操作。推荐yes.</p>
+<h4 id="1-2-8-7-rdbcompression-压缩文件"><a href="#1-2-8-7-rdbcompression-压缩文件" class="headerlink" title="1.2.8.7. rdbcompression 压缩文件"></a><strong>1.2.8.7.</strong> <strong>rdbcompression</strong> <strong>压缩文件</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410171506296.png" alt="image-20220410171506296"></p>
+<p>对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩。</p>
+<p>如果你不想消耗CPU来进行压缩的话，可以设置为关闭此功能。推荐yes.</p>
+<h4 id="1-2-8-8-rdbchecksum-检查完整性"><a href="#1-2-8-8-rdbchecksum-检查完整性" class="headerlink" title="1.2.8.8. rdbchecksum 检查完整性"></a><strong>1.2.8.8.</strong> <strong>rdbchecksum</strong> <strong>检查完整性</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410171657584.png" alt="image-20220410171657584"></p>
+<p>在存储快照后，还可以让redis使用CRC64算法来进行数据校验，</p>
+<p>但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能</p>
+<p>推荐yes.</p>
+<h4 id="1-2-8-9-rdb的备份"><a href="#1-2-8-9-rdb的备份" class="headerlink" title="1.2.8.9. rdb的备份"></a><strong>1.2.8.9.</strong> <strong>rdb的备份</strong></h4><p>先通过config get dir 查询rdb文件的目录 </p>
+<p>将*.rdb的文件拷贝到别的地方</p>
+<p>rdb的恢复</p>
+<p>1.关闭Redis</p>
+<p>2.先把备份的文件拷贝到工作目录下 cp dump2.rdb dump.rdb</p>
+<p>3.启动Redis, 备份数据会直接加载</p>
+<h3 id="1-2-9-优势"><a href="#1-2-9-优势" class="headerlink" title="1.2.9.  优势"></a><strong>1.2.9.</strong>  <strong>优势</strong></h3><p>l 适合大规模的数据恢复</p>
+<p>l 对数据完整性和一致性要求不高更适合使用</p>
+<p>l 节省磁盘空间</p>
+<p>l 恢复速度快</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410174708125.png" alt="image-20220410174708125"></p>
+<h3 id="1-2-10-劣势"><a href="#1-2-10-劣势" class="headerlink" title="1.2.10.      劣势"></a><strong>1.2.10.</strong>      <strong>劣势</strong></h3><p>l Fork的时候，内存中的数据被克隆了一份，大致2倍的膨胀性需要考虑</p>
+<p>l 虽然Redis在fork时使用了<strong>写时拷贝技术</strong>,但是如果数据庞大时还是比较消耗性能。</p>
+<p>l 在备份周期在一定间隔时间做一次备份，所以如果Redis意外down掉的话，就会丢失最后一次快照后的所有修改。</p>
+<h3 id="1-2-11-如何停止"><a href="#1-2-11-如何停止" class="headerlink" title="1.2.11.      如何停止"></a><strong>1.2.11.</strong>      <strong>如何停止</strong></h3><p>动态停止RDB：redis-cli config set save “”#save后给空值，表示禁用保存策略</p>
+<h3 id="1-2-12-小总结"><a href="#1-2-12-小总结" class="headerlink" title="1.2.12.      小总结"></a><strong>1.2.12.</strong>      <strong>小总结</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175252740.png" alt="image-20220410175252740"></p>
+<h2 id="2-Redis持久化之AOF"><a href="#2-Redis持久化之AOF" class="headerlink" title="2.  Redis持久化之AOF"></a><strong>2.</strong>  <strong>Redis<strong><strong>持久化之</strong></strong>AOF</strong></h2><h3 id="2-1-AOF（Append-Only-File）"><a href="#2-1-AOF（Append-Only-File）" class="headerlink" title="2.1.  AOF（Append Only File）"></a><strong>2.1.</strong>  <strong>AOF（Append Only File）</strong></h3><h4 id="2-1-1-是什么"><a href="#2-1-1-是什么" class="headerlink" title="2.1.1.  是什么"></a><strong>2.1.1.</strong>  <strong>是什么</strong></h4><p>以<strong>日志</strong>的形式来记录每个写操作（增量保存），将Redis执行过的所有写指令记录下来(<strong>读操作不记录</strong>)， <strong>只许追加文件但不可以改写文件</strong>，redis启动之初会读取该文件重新构建数据，换言之，redis 重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作</p>
+<h4 id="2-1-2-AOF持久化流程"><a href="#2-1-2-AOF持久化流程" class="headerlink" title="2.1.2.  AOF持久化流程"></a><strong>2.1.2.</strong>  <strong>AOF持久化流程</strong></h4><p>（1）客户端的请求写命令会被append追加到AOF缓冲区内；</p>
+<p>（2）AOF缓冲区根据AOF持久化策略[always,everysec,no]将操作sync同步到磁盘的AOF文件中；</p>
+<p>（3）AOF文件大小超过重写策略或手动重写时，会对AOF文件rewrite重写，压缩AOF文件容量；</p>
+<p>（4）Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175534117.png" alt="image-20220410175534117"></p>
+<h4 id="2-1-3-AOF默认不开启"><a href="#2-1-3-AOF默认不开启" class="headerlink" title="2.1.3.  AOF默认不开启"></a><strong>2.1.3.</strong>  <strong>AOF默认不开启</strong></h4><p>可以在redis.conf中配置文件名称，默认为 appendonly.aof</p>
+<p>AOF文件的保存路径，同RDB的路径一致。</p>
+<h4 id="2-1-4-AOF和RDB同时开启，redis听谁的？"><a href="#2-1-4-AOF和RDB同时开启，redis听谁的？" class="headerlink" title="2.1.4.  AOF和RDB同时开启，redis听谁的？"></a><strong>2.1.4.</strong>  <strong>AOF和RDB同时开启，redis听谁的？</strong></h4><p>AOF和RDB同时开启，系统默认取AOF的数据（数据不会存在丢失）</p>
+<h4 id="2-1-5-AOF启动-修复-恢复"><a href="#2-1-5-AOF启动-修复-恢复" class="headerlink" title="2.1.5.  AOF启动/修复/恢复"></a><strong>2.1.5.</strong>  <strong>AOF启动/修复/恢复</strong></h4><p>l AOF的备份机制和性能虽然和RDB不同, 但是备份和恢复的操作同RDB一样，都是拷贝备份文件，需要恢复时再拷贝到Redis工作目录下，启动系统即加载。</p>
+<p>l 正常恢复</p>
+<p>n 修改默认的appendonly no，改为yes</p>
+<p>n 将有数据的aof文件复制一份保存到对应目录(查看目录：config get dir)</p>
+<p>n 恢复：重启redis然后重新加载</p>
+<p>l 异常恢复</p>
+<p>n 修改默认的appendonly no，改为yes</p>
+<p>n 如遇到<strong>AOF****文件损坏</strong>，通过/usr/local/bin/<strong>redis-check-aof–fix appendonly.aof</strong>进行恢复</p>
+<p>n 备份被写坏的AOF文件</p>
+<p>n 恢复：重启redis，然后重新加载</p>
+<h4 id="2-1-6-AOF同步频率设置"><a href="#2-1-6-AOF同步频率设置" class="headerlink" title="2.1.6.  AOF同步频率设置"></a><strong>2.1.6.</strong>  <strong>AOF同步频率设置</strong></h4><p>appendfsync always</p>
+<p>始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好</p>
+<p>appendfsync everysec</p>
+<p>每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失。</p>
+<p>appendfsync no</p>
+<p>redis不主动进行同步，把同步时机交给操作系统。</p>
+<h4 id="2-1-7-Rewrite压缩"><a href="#2-1-7-Rewrite压缩" class="headerlink" title="2.1.7.  Rewrite压缩"></a><strong>2.1.7.</strong>  <strong>Rewrite压缩</strong></h4><p>1是什么：</p>
+<p>AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制, 当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩， 只保留可以恢复数据的最小指令集.可以使用命令bgrewriteaof</p>
+<p>2重写原理，如何实现重写</p>
+<p>AOF文件持续增长而过大时，会fork出一条新进程来将文件重写(也是先写临时文件最后再rename)，redis4.0版本后的重写，是指上就是把rdb 的快照，以二级制的形式附在新的aof头部，作为已有的历史数据，替换掉原来的流水账操作。</p>
+<p>no-appendfsync-on-rewrite：</p>
+<p>如果 no-appendfsync-on-rewrite=yes ,不写入aof文件只写入缓存，用户请求不会阻塞，但是在这段时间如果宕机会丢失这段时间的缓存数据。（降低数据安全性，提高性能）</p>
+<p>   如果 no-appendfsync-on-rewrite=no, 还是会把数据往磁盘里刷，但是遇到重写操作，可能会发生阻塞。（数据安全，但是性能降低）</p>
+<p>触发机制，何时重写</p>
+<p>Redis会记录上次重写时的AOF大小，默认配置是当AOF文件大小是上次rewrite后大小的一倍且文件大于64M时触发</p>
+<p>重写虽然可以节约大量磁盘空间，减少恢复时间。但是每次重写还是有一定的负担的，因此设定Redis要满足一定条件才会进行重写。 </p>
+<p>auto-aof-rewrite-percentage：设置重写的基准值，文件达到100%时开始重写（文件是原来重写后文件的2倍时触发）</p>
+<p>auto-aof-rewrite-min-size：设置重写的基准值，最小文件64MB。达到这个值开始重写。</p>
+<p>例如：文件达到70MB开始重写，降到50MB，下次什么时候开始重写？100MB</p>
+<p>系统载入时或者上次重写完毕时，Redis会记录此时AOF大小，设为base_size,</p>
+<p>如果Redis的AOF当前大小&gt;= base_size +base_size*100% (默认)且当前大小&gt;=64mb(默认)的情况下，Redis会对AOF进行重写。 </p>
+<p>3、重写流程</p>
+<p>（1）bgrewriteaof触发重写，判断是否当前有bgsave或bgrewriteaof在运行，如果有，则等待该命令结束后再继续执行。</p>
+<p>（2）主进程fork出子进程执行重写操作，保证主进程不会阻塞。</p>
+<p>（3）子进程遍历redis内存中数据到临时文件，客户端的写请求同时写入aof_buf缓冲区和aof_rewrite_buf重写缓冲区保证原AOF文件完整以及新AOF文件生成期间的新的数据修改动作不会丢失。</p>
+<p>（4）1).子进程写完新的AOF文件后，向主进程发信号，父进程更新统计信息。2).主进程把aof_rewrite_buf中的数据写入到新的AOF文件。</p>
+<p>（5）使用新的AOF文件覆盖旧的AOF文件，完成AOF重写。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175733344.png" alt="image-20220410175733344"></p>
+<h4 id="2-1-8-优势"><a href="#2-1-8-优势" class="headerlink" title="2.1.8.  优势"></a><strong>2.1.8.</strong>  <strong>优势</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175745626.png" alt="image-20220410175745626"></p>
+<p>n 备份机制更稳健，丢失数据概率更低。</p>
+<p>n 可读的日志文本，通过操作AOF稳健，可以处理误操作。</p>
+<h4 id="2-1-9-劣势"><a href="#2-1-9-劣势" class="headerlink" title="2.1.9.  劣势"></a><strong>2.1.9.</strong>  <strong>劣势</strong></h4><p>n 比起RDB占用更多的磁盘空间。</p>
+<p>n 恢复备份速度要慢。</p>
+<p>n 每次读写都同步的话，有一定的性能压力。</p>
+<p>n 存在个别Bug，造成恢复不能。</p>
+<h4 id="2-1-10-小总结"><a href="#2-1-10-小总结" class="headerlink" title="2.1.10.       小总结"></a><strong>2.1.10.</strong>       <strong>小总结</strong></h4><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175815770.png" alt="image-20220410175815770"></p>
+<h3 id="2-2-总结-Which-one"><a href="#2-2-总结-Which-one" class="headerlink" title="2.2.  总结(Which one)"></a><strong>2.2.</strong>  <strong>总结(Which one)</strong></h3><p><strong>2.2.1.</strong>  <strong>用哪个好</strong></p>
+<p>官方推荐两个都启用。</p>
+<p>如果对数据不敏感，可以选单独用RDB。</p>
+<p>不建议单独用 AOF，因为可能会出现Bug。</p>
+<p>如果只是做纯内存缓存，可以都不用。</p>
+<p><strong>2.2.2.</strong>  <strong>官网建议</strong></p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220410175827692.png" alt="image-20220410175827692"></p>
+<p>l RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储</p>
+<p>l AOF持久化方式记录每次对服务器写的操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据,AOF命令以redis协议追加保存每次写的操作到文件末尾. </p>
+<p>l Redis还能对AOF文件进行后台重写,使得AOF文件的体积不至于过大</p>
+<p>l 只做缓存：如果你只希望你的数据在服务器运行的时候存在,你也可以不使用任何持久化方式.</p>
+<p>l 同时开启两种持久化方式</p>
+<p>l 在这种情况下,当redis重启的时候会优先载入AOF文件来恢复原始的数据, 因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整.</p>
+<p>l RDB的数据不实时，同时使用两者时服务器重启也只会找AOF文件。那要不要只使用AOF呢？ </p>
+<p>l 建议不要，因为RDB更适合用于备份数据库(AOF在不断变化不好备份)， 快速重启，而且不会有AOF可能潜在的bug，留着作为一个万一的手段。</p>
+<p>l 性能建议</p>
+<blockquote>
+<p>  因为RDB文件只用作后备用途，建议只在Slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留save 900 1这条规则。     如果使用AOF，好处是在最恶劣情况下也只会丢失不超过两秒数据，启动脚本较简单只load自己的AOF文件就可以了。  代价,一是带来了持续的IO，二是AOF rewrite的最后将rewrite过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的。  只要硬盘许可，应该尽量减少AOF  rewrite的频率，AOF重写的基础大小默认值64M太小了，可以设到5G以上。  默认超过原大小100%大小时重写可以改到适当的数值。  </p>
+</blockquote>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

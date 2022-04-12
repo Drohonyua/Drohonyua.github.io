@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>09-Redis_事务_锁机制_秒杀 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="09-Redis_事务_锁机制_秒杀 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(53)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(21)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="Redis">
+                        
+                        Redis
+                        <small>(11)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="53">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/11-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-主从复制">11-主从复制</span>
+            <span class="post-date" title="2022-04-10 18:04:22">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/10-Redis%E6%8C%81%E4%B9%85%E5%8C%96/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-Redis持久化">10-Redis持久化</span>
+            <span class="post-date" title="2022-04-10 16:54:14">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/08/redis/09-Redis_%E4%BA%8B%E5%8A%A1_%E9%94%81%E6%9C%BA%E5%88%B6_%E7%A7%92%E6%9D%80/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-Redis_事务_锁机制_秒杀">09-Redis_事务_锁机制_秒杀</span>
+            <span class="post-date" title="2022-04-08 18:56:11">2022/04/08</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/08-Redis%E4%B8%8ESpringBoot%E6%95%B4%E5%90%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-Redis与SpringBoot整合">08-Redis与SpringBoot整合</span>
+            <span class="post-date" title="2022-04-06 19:05:56">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/07-Redis_Jedis_%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-Redis_Jedis_测试">07-Redis_Jedis_测试</span>
+            <span class="post-date" title="2022-04-06 18:58:41">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/06-%E6%96%B0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-新数据类型">06-新数据类型</span>
+            <span class="post-date" title="2022-04-06 18:23:45">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/05-Redis%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-Redis发布与订阅">05-Redis发布与订阅</span>
+            <span class="post-date" title="2022-04-06 17:40:20">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/04-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-配置文件">04-配置文件</span>
+            <span class="post-date" title="2022-04-06 17:20:03">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/03-Redis%E5%B8%B8%E7%94%A8%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-常用五大数据类型">03-常用五大数据类型</span>
+            <span class="post-date" title="2022-04-05 20:01:58">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/02-Redis%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-Redis安装">02-Redis安装</span>
+            <span class="post-date" title="2022-04-05 19:53:55">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/01-Redis%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-Redis简介">01-Redis简介</span>
+            <span class="post-date" title="2022-04-05 19:44:59">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/21-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:33:47">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/20-%E6%8C%87%E6%A0%87%E7%9B%91%E6%8E%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:20:03">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/21/SpringBoot/19-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="19-单元测试">19-单元测试</span>
+            <span class="post-date" title="2022-02-21 22:19:21">2022/02/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/18-%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="18-数据访问">18-数据访问</span>
+            <span class="post-date" title="2022-02-18 21:50:56">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/17-%E5%AE%9A%E5%88%B6%E5%8C%96%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="17-定制化原理">17-定制化原理</span>
+            <span class="post-date" title="2022-02-18 21:27:31">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/16-%E5%B5%8C%E5%85%A5%E5%BC%8FServlet%E5%AE%B9%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="16-嵌入式Servlet容器">16-嵌入式Servlet容器</span>
+            <span class="post-date" title="2022-02-18 21:24:35">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/15-Web%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="15-Web原生组件注入">15-Web原生组件注入</span>
+            <span class="post-date" title="2022-02-18 13:22:02">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/14-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="14-异常处理">14-异常处理</span>
+            <span class="post-date" title="2022-02-17 22:23:09">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/13-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="13-文件上传">13-文件上传</span>
+            <span class="post-date" title="2022-02-17 21:42:20">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/12-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-拦截器">12-拦截器</span>
+            <span class="post-date" title="2022-02-17 20:31:33">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/16/SpringBoot/11-%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-视图解析器">11-视图解析器</span>
+            <span class="post-date" title="2022-02-16 16:08:45">2022/02/16</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/15/SpringBoot/10-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-请求参数处理">10-请求参数处理</span>
+            <span class="post-date" title="2022-02-15 20:46:17">2022/02/15</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/09-web%E5%BC%80%E5%8F%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-web开发">09-web开发</span>
+            <span class="post-date" title="2022-02-14 23:25:20">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/08-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-配置文件">08-配置文件</span>
+            <span class="post-date" title="2022-02-14 21:55:06">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/07-%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-开发小工具">07-开发小工具</span>
+            <span class="post-date" title="2022-02-14 21:54:33">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-redis/09-Redis_事务_锁机制_秒杀" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">09-Redis_事务_锁机制_秒杀</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Redis">Redis</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-04-08 19:38:02'>2022-04-08 18:56</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Redis-%E4%BA%8B%E5%8A%A1"><span class="toc-text">1. Redis_事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Redis%E7%9A%84%E4%BA%8B%E5%8A%A1%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.  Redis的事务定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Multi-Exec-discard"><span class="toc-text">1.2.  Multi,Exec,discard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">1.3.  事务的错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E6%88%90%E4%BA%8B%E5%8A%A1"><span class="toc-text">1.4.  为什么要做成事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E4%BA%8B%E5%8A%A1%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">1.5.  事务冲突的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-1-%E4%BE%8B%E5%AD%90"><span class="toc-text">1.5.1.  例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-2-%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-text">1.5.2.  悲观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-3-%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-text">1.5.3.  乐观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-4-WATCH-key-key-%E2%80%A6"><span class="toc-text">1.5.4.  WATCH key [key …]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-Redis%E4%BA%8B%E5%8A%A1%E4%B8%89%E7%89%B9%E6%80%A7"><span class="toc-text">1.6.  Redis事务三特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Redis-%E4%BA%8B%E5%8A%A1-%E7%A7%92%E6%9D%80%E6%A1%88%E4%BE%8B"><span class="toc-text">2.  Redis_事务_秒杀案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%A7%A3%E5%86%B3%E8%AE%A1%E6%95%B0%E5%99%A8%E5%92%8C%E4%BA%BA%E5%91%98%E8%AE%B0%E5%BD%95%E7%9A%84%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C"><span class="toc-text">2.1.  解决计数器和人员记录的事务操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Redis-%E4%BA%8B%E5%8A%A1%E2%80%93-%E7%A7%92%E6%9D%80%E5%B9%B6%E5%8F%91%E6%A8%A1%E6%8B%9F"><span class="toc-text">2.2.  Redis**事务–**秒杀并发模拟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E8%81%94%E7%BD%91%EF%BC%9Ayum-install-httpd-tools"><span class="toc-text">2.2.1.  联网：yum install httpd-tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E6%97%A0%E7%BD%91%E7%BB%9C"><span class="toc-text">2.2.2.  无网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E6%B5%8B%E8%AF%95%E5%8F%8A%E7%BB%93%E6%9E%9C"><span class="toc-text">2.2.3.  测试及结果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-1-%E9%80%9A%E8%BF%87ab%E6%B5%8B%E8%AF%95"><span class="toc-text">2.2.3.1. 通过ab测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-2-%E8%B6%85%E5%8D%96"><span class="toc-text">2.2.3.2. 超卖</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E8%B6%85%E5%8D%96%E9%97%AE%E9%A2%98"><span class="toc-text">2.3.  超卖问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E5%88%A9%E7%94%A8%E4%B9%90%E8%A7%82%E9%94%81%E6%B7%98%E6%B1%B0%E7%94%A8%E6%88%B7%EF%BC%8C%E8%A7%A3%E5%86%B3%E8%B6%85%E5%8D%96%E9%97%AE%E9%A2%98%E3%80%82"><span class="toc-text">2.4.  利用乐观锁淘汰用户，解决超卖问题。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E7%BB%A7%E7%BB%AD%E5%A2%9E%E5%8A%A0%E5%B9%B6%E5%8F%91%E6%B5%8B%E8%AF%95"><span class="toc-text">2.5.  继续增加并发测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-1-%E8%BF%9E%E6%8E%A5%E6%9C%89%E9%99%90%E5%88%B6"><span class="toc-text">2.5.1.  连接有限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-2-%E5%B7%B2%E7%BB%8F%E7%A7%92%E5%85%89%EF%BC%8C%E5%8F%AF%E6%98%AF%E8%BF%98%E6%9C%89%E5%BA%93%E5%AD%98"><span class="toc-text">2.5.2.  已经秒光，可是还有库存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-3-%E8%BF%9E%E6%8E%A5%E8%B6%85%E6%97%B6%EF%BC%8C%E9%80%9A%E8%BF%87%E8%BF%9E%E6%8E%A5%E6%B1%A0%E8%A7%A3%E5%86%B3"><span class="toc-text">2.5.3.  连接超时，通过连接池解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-4-%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="toc-text">2.5.4.  连接池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-%E8%A7%A3%E5%86%B3%E5%BA%93%E5%AD%98%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toc-text">2.6.  解决库存遗留问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-1-LUA%E8%84%9A%E6%9C%AC"><span class="toc-text">2.6.1.  LUA脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-2-LUA%E8%84%9A%E6%9C%AC%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">2.6.2.  LUA脚本在Redis中的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-2-%E7%AC%AC%E4%B8%80%E7%89%88%EF%BC%9A%E7%AE%80%E5%8D%95%E7%89%88"><span class="toc-text">2.7.2.  第一版：简单版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-3-%E7%AC%AC%E4%BA%8C%E7%89%88%EF%BC%9A%E5%8A%A0%E4%BA%8B%E5%8A%A1-%E4%B9%90%E8%A7%82%E9%94%81-%E8%A7%A3%E5%86%B3%E8%B6%85%E5%8D%96-%E4%BD%86%E5%87%BA%E7%8E%B0%E9%81%97%E7%95%99%E5%BA%93%E5%AD%98%E5%92%8C%E8%BF%9E%E6%8E%A5%E8%B6%85%E6%97%B6"><span class="toc-text">2.7.3.  第二版：加事务-乐观锁(解决超卖),但出现遗留库存和连接超时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-4-%E7%AC%AC%E4%B8%89%E7%89%88%EF%BC%9A%E8%BF%9E%E6%8E%A5%E6%B1%A0%E8%A7%A3%E5%86%B3%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98"><span class="toc-text">2.7.4.  第三版：连接池解决超时问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-5-%E7%AC%AC%E5%9B%9B%E7%89%88%EF%BC%9A%E8%A7%A3%E5%86%B3%E5%BA%93%E5%AD%98%E4%BE%9D%E8%B5%96%E9%97%AE%E9%A2%98%EF%BC%8CLUA%E8%84%9A%E6%9C%AC"><span class="toc-text">2.7.5.  第四版：解决库存依赖问题，LUA脚本</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-Redis-事务"><a href="#1-Redis-事务" class="headerlink" title="1. Redis_事务"></a><strong>1. Redis_事务</strong></h1><h2 id="1-1-Redis的事务定义"><a href="#1-1-Redis的事务定义" class="headerlink" title="1.1.  Redis的事务定义"></a><strong>1.1.</strong>  <strong>Redis的事务定义</strong></h2><p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408185829431.png" alt="image-20220408185829431">                               </p>
+<p>Redis事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</p>
+<p>Redis事务的主要作用就是串联多个命令防止别的命令插队。</p>
+<h2 id="1-2-Multi-Exec-discard"><a href="#1-2-Multi-Exec-discard" class="headerlink" title="1.2.  Multi,Exec,discard"></a><strong>1.2.</strong>  <strong>Multi,Exec,discard</strong></h2><p>从输入Multi命令开始，输入的命令都会依次进入命令队列中，但不会执行，直到输入Exec后，Redis会将之前的命令队列中的命令依次执行。</p>
+<p>组队的过程中可以通过discard来放弃组队。 </p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408185933354.png" alt="image-20220408185933354"></p>
+<p><strong>案例：</strong></p>
+<table>
+<thead>
+<tr>
+<th><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408185948488.png" alt="image-20220408185948488">         组队成功，提交成功</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408185956625.png" alt="image-20220408185956625">         组队阶段报错，提交失败</td>
+</tr>
+<tr>
+<td><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190002185.png" alt="image-20220408190002185">         组队成功，提交有成功有失败情况</td>
+</tr>
+</tbody></table>
+<h2 id="1-3-事务的错误处理"><a href="#1-3-事务的错误处理" class="headerlink" title="1.3.  事务的错误处理"></a><strong>1.3.</strong>  事务的错误处理</h2><p>组队中某个命令出现了报告错误，执行时整个的所有队列都会被取消。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190015771.png" alt="image-20220408190015771"></p>
+<p>如果执行阶段某个命令报出了错误，则只有报错的命令不会被执行，而其他的命令都会执行，不会回滚。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190022481.png" alt="image-20220408190022481"></p>
+<h2 id="1-4-为什么要做成事务"><a href="#1-4-为什么要做成事务" class="headerlink" title="1.4.  为什么要做成事务"></a><strong>1.4.</strong>  <strong>为什么要做成事务</strong></h2><p>想想一个场景：有很多人有你的账户,同时去参加双十一抢购</p>
+<h2 id="1-5-事务冲突的问题"><a href="#1-5-事务冲突的问题" class="headerlink" title="1.5.  事务冲突的问题"></a><strong>1.5.</strong>  <strong>事务冲突的问题</strong></h2><h3 id="1-5-1-例子"><a href="#1-5-1-例子" class="headerlink" title="1.5.1.  例子"></a><strong>1.5.1.</strong>  <strong>例子</strong></h3><p>一个请求想给金额减8000</p>
+<p>一个请求想给金额减5000</p>
+<p>一个请求想给金额减1000</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190030233.png" alt="image-20220408190030233"> </p>
+<h3 id="1-5-2-悲观锁"><a href="#1-5-2-悲观锁" class="headerlink" title="1.5.2.  悲观锁"></a><strong>1.5.2.</strong>  <strong>悲观锁</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190126656.png" alt="image-20220408190126656"></p>
+<p><strong>悲观锁(Pessimistic Lock)</strong>, 顾名思义，就是很悲观，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会block直到它拿到锁。<strong>传统的关系型数据库里边就用到了很多这种锁机制</strong>，比如<strong>行锁</strong>，<strong>表锁</strong>等，<strong>读锁</strong>，<strong>写锁</strong>等，都是在做操作之前先上锁。</p>
+<h3 id="1-5-3-乐观锁"><a href="#1-5-3-乐观锁" class="headerlink" title="1.5.3.  乐观锁"></a><strong>1.5.3.</strong>  <strong>乐观锁</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190137857.png" alt="image-20220408190137857"></p>
+<p><strong>乐观锁(Optimistic Lock),</strong> 顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。<strong>乐观锁适用于多读的应用类型，这样可以提高吞吐量</strong>。Redis就是利用这种check-and-set机制实现事务的。</p>
+<h3 id="1-5-4-WATCH-key-key-…"><a href="#1-5-4-WATCH-key-key-…" class="headerlink" title="1.5.4.  WATCH key [key …]"></a><strong>1.5.4.</strong>  <strong>WATCH</strong> <strong>key</strong> <strong>[key …]</strong></h3><p>在执行multi之前，先执行watch key1 [key2],可以监视一个(或多个) key ，如果在事务**执行之前这个(或这些) key **被其他命令所改动，那么事务将被打断。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190146343.png" alt="image-20220408190146343"></p>
+<p><strong>1.5.5.</strong>  <strong>unwatch</strong></p>
+<p>取消 WATCH 命令对所有 key 的监视。</p>
+<p>如果在执行 WATCH 命令之后，EXEC 命令或DISCARD 命令先被执行了的话，那么就不需要再执行UNWATCH 了。</p>
+<p><a target="_blank" rel="noopener" href="http://doc.redisfans.com/transaction/exec.html">http://doc.redisfans.com/transaction/exec.html</a></p>
+<h2 id="1-6-Redis事务三特性"><a href="#1-6-Redis事务三特性" class="headerlink" title="1.6.  Redis事务三特性"></a><strong>1.6.</strong>  <strong>Redis事务三特性</strong></h2><p>Ø 单独的隔离操作 </p>
+<p>n 事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。 </p>
+<p>Ø 没有隔离级别的概念 </p>
+<p>n 队列中的命令没有提交之前都不会实际被执行，因为事务提交前任何指令都不会被实际执行</p>
+<p>Ø 不保证原子性 </p>
+<p>n 事务中如果有一条命令执行失败，其后的命令仍然会被执行，没有回滚 </p>
+<h1 id="2-Redis-事务-秒杀案例"><a href="#2-Redis-事务-秒杀案例" class="headerlink" title="2.  Redis_事务_秒杀案例"></a><strong>2.</strong>  <strong>Redis_事务_秒杀案例</strong></h1><h2 id="2-1-解决计数器和人员记录的事务操作"><a href="#2-1-解决计数器和人员记录的事务操作" class="headerlink" title="2.1.  解决计数器和人员记录的事务操作"></a><strong>2.1.</strong>  <strong>解决计数器和人员记录的事务操作</strong></h2><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190447094.png" alt="image-20220408190447094"></p>
+<h2 id="2-2-Redis-事务–-秒杀并发模拟"><a href="#2-2-Redis-事务–-秒杀并发模拟" class="headerlink" title="2.2.  Redis**事务–**秒杀并发模拟"></a><strong>2.2.</strong>  <strong>Redis**<strong>事务</strong></strong>–**<strong>秒杀并发模拟</strong></h2><p>使用工具ab模拟测试</p>
+<p>CentOS6 默认安装</p>
+<p>CentOS7需要手动安装</p>
+<h3 id="2-2-1-联网：yum-install-httpd-tools"><a href="#2-2-1-联网：yum-install-httpd-tools" class="headerlink" title="2.2.1.  联网：yum install httpd-tools"></a><strong>2.2.1.</strong>  <strong>联网：yum install httpd-tools</strong></h3><h3 id="2-2-2-无网络"><a href="#2-2-2-无网络" class="headerlink" title="2.2.2.  无网络"></a><strong>2.2.2.</strong>  <strong>无网络</strong></h3><p>（1） 进入cd /run/media/root/CentOS 7 x86_64/Packages（路径跟centos6不同）</p>
+<p>（2） 顺序安装</p>
+<p>apr-1.4.8-3.el7.x86_64.rpm</p>
+<p>apr-util-1.5.2-6.el7.x86_64.rpm</p>
+<p>httpd-tools-2.4.6-67.el7.centos.x86_64.rpm </p>
+<h3 id="2-2-3-测试及结果"><a href="#2-2-3-测试及结果" class="headerlink" title="2.2.3.  测试及结果"></a><strong>2.2.3.</strong>  <strong>测试及结果</strong></h3><h4 id="2-2-3-1-通过ab测试"><a href="#2-2-3-1-通过ab测试" class="headerlink" title="2.2.3.1. 通过ab测试"></a><strong>2.2.3.1.</strong> <strong>通过ab测试</strong></h4><p>vim postfile 模拟表单提交参数,以&amp;符号结尾;存放当前目录。</p>
+<p>内容：prodid=0101&amp;</p>
+<p>ab -n 2000 -c 200 -k -p ~/postfile -T application/x-www-form-urlencoded <a target="_blank" rel="noopener" href="http://192.168.2.115:8081/Seckill/doseckill">http://192.168.2.115:8081/Seckill/doseckill</a></p>
+<h4 id="2-2-3-2-超卖"><a href="#2-2-3-2-超卖" class="headerlink" title="2.2.3.2. 超卖"></a><strong>2.2.3.2.</strong> <strong>超卖</strong></h4><table>
+<thead>
+<tr>
+<th><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190502601.png" alt="image-20220408190502601"></th>
+<th><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190517601.png" alt="image-20220408190517601"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2-3-超卖问题"><a href="#2-3-超卖问题" class="headerlink" title="2.3.  超卖问题"></a><strong>2.3.</strong>  <strong>超卖问题</strong></h2><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190524938.png" alt="image-20220408190524938"></p>
+<h2 id="2-4-利用乐观锁淘汰用户，解决超卖问题。"><a href="#2-4-利用乐观锁淘汰用户，解决超卖问题。" class="headerlink" title="2.4.  利用乐观锁淘汰用户，解决超卖问题。"></a><strong>2.4.</strong>  <strong>利用乐观锁淘汰用户，解决超卖问题。</strong></h2><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408190644160.png" alt="image-20220408190644160"></p>
+<pre><code class="java">//增加乐观锁
+jedis.watch(qtkey);
+ 
+//3.判断库存
+String qtkeystr = jedis.get(qtkey);
+if(qtkeystr==null || &quot;&quot;.equals(qtkeystr.trim())) &#123;
+System.out.println(&quot;未初始化库存&quot;);
+jedis.close();
+return false ;
+&#125;
+ 
+int qt = Integer.parseInt(qtkeystr);
+if(qt&lt;=0) &#123;
+System.err.println(&quot;已经秒光&quot;);
+jedis.close();
+return false;
+&#125;
+</code></pre>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408191047255.png" alt="image-20220408191047255"></p>
+<pre><code class="java">//增加事务
+Transaction multi = jedis.multi();
+ 
+//4.减少库存
+//jedis.decr(qtkey);
+multi.decr(qtkey);
+ 
+//5.加人
+//jedis.sadd(usrkey, uid);
+multi.sadd(usrkey, uid);
+ 
+//执行事务
+List&lt;Object&gt; list = multi.exec();
+ 
+//判断事务提交是否失败
+if(list==null || list.size()==0) &#123;
+System.out.println(&quot;秒杀失败&quot;);
+jedis.close();
+return false;
+&#125;
+System.err.println(&quot;秒杀成功&quot;);
+jedis.close();
+</code></pre>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408191556445.png" alt="image-20220408191556445"></p>
+<h2 id="2-5-继续增加并发测试"><a href="#2-5-继续增加并发测试" class="headerlink" title="2.5.  继续增加并发测试"></a><strong>2.5.</strong>  <strong>继续增加并发测试</strong></h2><h3 id="2-5-1-连接有限制"><a href="#2-5-1-连接有限制" class="headerlink" title="2.5.1.  连接有限制"></a><strong>2.5.1.</strong>  <strong>连接有限制</strong></h3><p>ab -n 2000 -c 200 -k -p postfile -T ‘application/x-www-form-urlencoded’ <a target="_blank" rel="noopener" href="http://192.168.140.1:8080/seckill/doseckill">http://192.168.140.1:8080/seckill/doseckill</a></p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408192959793.png" alt="image-20220408192959793"></p>
+<p>增加-r参数，-r  Don’t exit on socket receive errors.</p>
+<p><strong>ab -n 2000 -c 100 -r -p postfile -T ‘application/x-www-form-urlencoded’</strong> <a target="_blank" rel="noopener" href="http://192.168.140.1:8080/seckill/doseckill"><strong>http://192.168.140.1:8080/seckill/doseckill</strong></a></p>
+<h3 id="2-5-2-已经秒光，可是还有库存"><a href="#2-5-2-已经秒光，可是还有库存" class="headerlink" title="2.5.2.  已经秒光，可是还有库存"></a><strong>2.5.2.</strong>  <strong>已经秒光，可是还有库存</strong></h3><p>ab -n 2000 -c 100 -p postfile -T ‘application/x-www-form-urlencoded’ <a target="_blank" rel="noopener" href="http://192.168.137.1:8080/seckill/doseckill">http://192.168.137.1:8080/seckill/doseckill</a></p>
+<p>已经秒光，可是还有库存。原因，就是乐观锁导致很多请求都失败。先点的没秒到，后点的可能秒到了。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408192946178.png" alt="image-20220408192946178"></p>
+<h3 id="2-5-3-连接超时，通过连接池解决"><a href="#2-5-3-连接超时，通过连接池解决" class="headerlink" title="2.5.3.  连接超时，通过连接池解决"></a><strong>2.5.3.</strong>  <strong>连接超时，通过连接池解决</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408192933149.png" alt="image-20220408192933149"></p>
+<h3 id="2-5-4-连接池"><a href="#2-5-4-连接池" class="headerlink" title="2.5.4.  连接池"></a><strong>2.5.4.</strong>  <strong>连接池</strong></h3><p>节省每次连接redis服务带来的消耗，把连接好的实例反复利用。</p>
+<p>通过参数管理连接的行为</p>
+<p>代码见项目中</p>
+<p>链接池参数:</p>
+<p> MaxTotal：控制一个pool可分配多少个jedis实例，通过pool.getResource()来获取；如果赋值为-1，则表示不限制；如果pool已经分配了MaxTotal个jedis实例，则此时pool的状态为exhausted。</p>
+<p> maxIdle：控制一个pool最多有多少个状态为idle(空闲)的jedis实例；</p>
+<p> MaxWaitMillis：表示当borrow一个jedis实例时，最大的等待毫秒数，如果超过等待时间，则直接抛JedisConnectionException；</p>
+<p> testOnBorrow：获得一个jedis实例的时候是否检查连接可用性（ping()）；如果为true，则得到的jedis实例均是可用的；</p>
+<h2 id="2-6-解决库存遗留问题"><a href="#2-6-解决库存遗留问题" class="headerlink" title="2.6.  解决库存遗留问题"></a><strong>2.6.</strong>  <strong>解决库存遗留问题</strong></h2><h3 id="2-6-1-LUA脚本"><a href="#2-6-1-LUA脚本" class="headerlink" title="2.6.1.  LUA脚本"></a><strong>2.6.1.</strong>  <strong>LUA脚本</strong></h3><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408193306608.png" alt="image-20220408193306608"></p>
+<p>Lua 是一个小巧的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80">脚本语言</a>，Lua脚本可以很容易的被C/C++ 代码调用，也可以反过来调用C/C++的函数，Lua并没有提供强大的库，一个完整的Lua解释器不过200k，所以Lua不适合作为开发独立应用程序的语言，而是作为嵌入式脚本语言。</p>
+<p>很多应用程序、游戏使用LUA作为自己的嵌入式脚本语言，以此来实现可配置性、可扩展性。</p>
+<p>这其中包括魔兽争霸地图、魔兽世界、博德之门、愤怒的小鸟等众多游戏插件或外挂。</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/lua/">https://www.w3cschool.cn/lua/</a></p>
+<h3 id="2-6-2-LUA脚本在Redis中的优势"><a href="#2-6-2-LUA脚本在Redis中的优势" class="headerlink" title="2.6.2.  LUA脚本在Redis中的优势"></a><strong>2.6.2.</strong>  <strong>LUA脚本在Redis中的优势</strong></h3><p>将复杂的或者多步的redis操作，写为一个脚本，一次提交给redis执行，减少反复连接redis的次数。提升性能。</p>
+<p>LUA脚本是类似redis事务，有一定的原子性，不会被其他命令插队，可以完成一些redis事务性的操作。</p>
+<p>但是注意redis的lua脚本功能，只有在Redis 2.6以上的版本才可以使用。</p>
+<p>利用lua脚本淘汰用户，解决超卖问题。</p>
+<p>redis 2.6版本以后，通过lua脚本解决<strong>争抢问题</strong>，实际上是<strong>redis</strong> <strong>利用其单线程的特性，用任务队列的方式解决多任务并发问题</strong>。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408193403518.png" alt="image-20220408193403518"></p>
+<p><strong>2.7.</strong>  **Redis_**<strong>事务_秒杀案例_代码</strong></p>
+<p><strong>2.7.1.</strong>  <strong>项目结构</strong></p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220408193425462.png" alt="image-20220408193425462"> </p>
+<h3 id="2-7-2-第一版：简单版"><a href="#2-7-2-第一版：简单版" class="headerlink" title="2.7.2.  第一版：简单版"></a><strong>2.7.2.</strong>  <strong>第一版：简单版</strong></h3><p>老师点10次，正常秒杀</p>
+<p>同学一起点试一试，秒杀也是正常的。这是因为还达不到并发的效果。</p>
+<p>使用工具ab模拟并发测试，会出现超卖情况。查看库存会出现负数。</p>
+<h3 id="2-7-3-第二版：加事务-乐观锁-解决超卖-但出现遗留库存和连接超时"><a href="#2-7-3-第二版：加事务-乐观锁-解决超卖-但出现遗留库存和连接超时" class="headerlink" title="2.7.3.  第二版：加事务-乐观锁(解决超卖),但出现遗留库存和连接超时"></a><strong>2.7.3.</strong>  <strong>第二版：加事务-乐观锁(解决超卖),但出现遗留库存和连接超时</strong></h3><h3 id="2-7-4-第三版：连接池解决超时问题"><a href="#2-7-4-第三版：连接池解决超时问题" class="headerlink" title="2.7.4.  第三版：连接池解决超时问题"></a><strong>2.7.4.</strong>  <strong>第三版：连接池解决超时问题</strong></h3><h3 id="2-7-5-第四版：解决库存依赖问题，LUA脚本"><a href="#2-7-5-第四版：解决库存依赖问题，LUA脚本" class="headerlink" title="2.7.5.  第四版：解决库存依赖问题，LUA脚本"></a><strong>2.7.5.</strong>  <strong>第四版：解决库存依赖问题，LUA脚本</strong></h3><pre><code class="java">local userid=KEYS[1]; 
+local prodid=KEYS[2];
+local qtkey=&quot;sk:&quot;..prodid..&quot;:qt&quot;;
+local usersKey=&quot;sk:&quot;..prodid.&quot;:usr&#39;; 
+local userExists=redis.call(&quot;sismember&quot;,usersKey,userid);
+if tonumber(userExists)==1 then 
+  return 2;
+end
+local num= redis.call(&quot;get&quot; ,qtkey);
+if tonumber(num)&lt;=0 then 
+  return 0; 
+else 
+  redis.call(&quot;decr&quot;,qtkey);
+  redis.call(&quot;sadd&quot;,usersKey,userid);
+end
+return 1;
+</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

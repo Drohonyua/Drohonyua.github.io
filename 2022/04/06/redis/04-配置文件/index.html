@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>04-配置文件 | Drohonyua Blog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="04-配置文件 | Drohonyua Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Drohonyua Blog">
+<meta property="og:description" content="个人学习博客线路：JavaWeb-&gt;Spring5-&gt;SpringMVC-&gt;SpringBoot-&gt;SpringCloud 加油，冲冲冲！ 背好八股文哇~ ~ ~ ~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+<meta property="article:published_time" content="2022-01-19T04:45:41.000Z">
+<meta property="article:modified_time" content="2022-01-19T13:55:23.247Z">
+<meta property="article:author" content="Drohonyua">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Drohonyua/blog_images/master/img/%E5%8A%A0%E6%B2%B9.jpg">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Drohonyua</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/Drohonyua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/weixin_44760622"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:1042041191@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1042041191&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(53)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="SpringMVC">
+                        
+                        SpringMVC
+                        <small>(12)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="SpringBoot">
+                        
+                        SpringBoot
+                        <small>(21)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="Redis">
+                        
+                        Redis
+                        <small>(11)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="常用配置">
+                        
+                        常用配置
+                        <small>(8)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">关于</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="53">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/11-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-主从复制">11-主从复制</span>
+            <span class="post-date" title="2022-04-10 18:04:22">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/10/redis/10-Redis%E6%8C%81%E4%B9%85%E5%8C%96/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-Redis持久化">10-Redis持久化</span>
+            <span class="post-date" title="2022-04-10 16:54:14">2022/04/10</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/08/redis/09-Redis_%E4%BA%8B%E5%8A%A1_%E9%94%81%E6%9C%BA%E5%88%B6_%E7%A7%92%E6%9D%80/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-Redis_事务_锁机制_秒杀">09-Redis_事务_锁机制_秒杀</span>
+            <span class="post-date" title="2022-04-08 18:56:11">2022/04/08</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/08-Redis%E4%B8%8ESpringBoot%E6%95%B4%E5%90%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-Redis与SpringBoot整合">08-Redis与SpringBoot整合</span>
+            <span class="post-date" title="2022-04-06 19:05:56">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/07-Redis_Jedis_%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-Redis_Jedis_测试">07-Redis_Jedis_测试</span>
+            <span class="post-date" title="2022-04-06 18:58:41">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/06-%E6%96%B0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-新数据类型">06-新数据类型</span>
+            <span class="post-date" title="2022-04-06 18:23:45">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/05-Redis%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-Redis发布与订阅">05-Redis发布与订阅</span>
+            <span class="post-date" title="2022-04-06 17:40:20">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/06/redis/04-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-配置文件">04-配置文件</span>
+            <span class="post-date" title="2022-04-06 17:20:03">2022/04/06</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/03-Redis%E5%B8%B8%E7%94%A8%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-常用五大数据类型">03-常用五大数据类型</span>
+            <span class="post-date" title="2022-04-05 20:01:58">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/02-Redis%E5%AE%89%E8%A3%85/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-Redis安装">02-Redis安装</span>
+            <span class="post-date" title="2022-04-05 19:53:55">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 Redis "
+           href="/2022/04/05/redis/01-Redis%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-Redis简介">01-Redis简介</span>
+            <span class="post-date" title="2022-04-05 19:44:59">2022/04/05</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/21-%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:33:47">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/22/SpringBoot/20-%E6%8C%87%E6%A0%87%E7%9B%91%E6%8E%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="20-指标监控">20-指标监控</span>
+            <span class="post-date" title="2022-02-22 22:20:03">2022/02/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/21/SpringBoot/19-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="19-单元测试">19-单元测试</span>
+            <span class="post-date" title="2022-02-21 22:19:21">2022/02/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/18-%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="18-数据访问">18-数据访问</span>
+            <span class="post-date" title="2022-02-18 21:50:56">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/17-%E5%AE%9A%E5%88%B6%E5%8C%96%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="17-定制化原理">17-定制化原理</span>
+            <span class="post-date" title="2022-02-18 21:27:31">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/16-%E5%B5%8C%E5%85%A5%E5%BC%8FServlet%E5%AE%B9%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="16-嵌入式Servlet容器">16-嵌入式Servlet容器</span>
+            <span class="post-date" title="2022-02-18 21:24:35">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/18/SpringBoot/15-Web%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%85%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="15-Web原生组件注入">15-Web原生组件注入</span>
+            <span class="post-date" title="2022-02-18 13:22:02">2022/02/18</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/14-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="14-异常处理">14-异常处理</span>
+            <span class="post-date" title="2022-02-17 22:23:09">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/13-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="13-文件上传">13-文件上传</span>
+            <span class="post-date" title="2022-02-17 21:42:20">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/17/SpringBoot/12-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-拦截器">12-拦截器</span>
+            <span class="post-date" title="2022-02-17 20:31:33">2022/02/17</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/16/SpringBoot/11-%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-视图解析器">11-视图解析器</span>
+            <span class="post-date" title="2022-02-16 16:08:45">2022/02/16</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/15/SpringBoot/10-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-请求参数处理">10-请求参数处理</span>
+            <span class="post-date" title="2022-02-15 20:46:17">2022/02/15</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/09-web%E5%BC%80%E5%8F%91/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-web开发">09-web开发</span>
+            <span class="post-date" title="2022-02-14 23:25:20">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/08-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-配置文件">08-配置文件</span>
+            <span class="post-date" title="2022-02-14 21:55:06">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/14/SpringBoot/07-%E5%BC%80%E5%8F%91%E5%B0%8F%E6%8A%80%E5%B7%A7/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-开发小工具">07-开发小工具</span>
+            <span class="post-date" title="2022-02-14 21:54:33">2022/02/14</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/06-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-自动配置原理">06-自动配置原理</span>
+            <span class="post-date" title="2022-02-13 22:19:47">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/13/SpringBoot/05-%E5%AE%B9%E5%99%A8%E5%8A%9F%E8%83%BD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-容器功能">05-容器功能</span>
+            <span class="post-date" title="2022-02-13 21:29:18">2022/02/13</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/04-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-自动装配">04-自动装配</span>
+            <span class="post-date" title="2022-02-12 23:07:21">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/12/SpringBoot/03-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-依赖管理">03-依赖管理</span>
+            <span class="post-date" title="2022-02-12 22:44:37">2022/02/12</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/02-SpringBoot%E5%85%A5%E9%97%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringBoot入门">02-SpringBoot入门</span>
+            <span class="post-date" title="2022-02-11 22:41:24">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringBoot "
+           href="/2022/02/11/SpringBoot/01-SpringBoot%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringBoot简介">01-SpringBoot简介</span>
+            <span class="post-date" title="2022-02-11 22:41:06">2022/02/11</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/10/SpringMVC/12-SpringMVC%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="12-SpringMVC的执行流程">12-SpringMVC的执行流程</span>
+            <span class="post-date" title="2022-02-10 16:45:37">2022/02/10</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/09/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC配置文件">SpringMVC配置文件</span>
+            <span class="post-date" title="2022-02-09 22:21:32">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/11-%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AESpringMVC/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="11-注解配置SpringMVC">11-注解配置SpringMVC</span>
+            <span class="post-date" title="2022-02-09 21:46:39">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/09/SpringMVC/10-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="10-异常处理器">10-异常处理器</span>
+            <span class="post-date" title="2022-02-09 21:16:23">2022/02/09</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%8B%A6%E6%88%AA%E5%99%A8%E9%85%8D%E7%BD%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="拦截器配置">拦截器配置</span>
+            <span class="post-date" title="2022-02-08 23:23:03">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/08/SpringMVC/09-%E6%8B%A6%E6%88%AA%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="09-拦截器">09-拦截器</span>
+            <span class="post-date" title="2022-02-08 22:32:07">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/08/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/maven/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="maven配置">maven配置</span>
+            <span class="post-date" title="2022-02-08 17:17:51">2022/02/08</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/02/07/SpringMVC/08-HttpMessageConverter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="08-HttpMessageConverter">08-HttpMessageConverter</span>
+            <span class="post-date" title="2022-02-07 21:19:54">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/02/07/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E5%8F%8A%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="注解驱动及静态资源访问">注解驱动及静态资源访问</span>
+            <span class="post-date" title="2022-02-07 21:06:37">2022/02/07</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC视图解析器配置">SpringMVC视图解析器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:55">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/SpringMVC%E5%89%8D%E7%AB%AF%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SpringMVC前端控制器配置">SpringMVC前端控制器配置</span>
+            <span class="post-date" title="2022-01-27 22:31:28">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/HiddenHtppMethodeFilter/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HiddenHtppMethodeFilter配置">HiddenHtppMethodeFilter配置</span>
+            <span class="post-date" title="2022-01-27 22:30:44">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 常用配置 "
+           href="/2022/01/27/%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/%E7%BC%96%E7%A0%81%E8%BF%87%E6%BB%A4%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编码过滤器配置">编码过滤器配置</span>
+            <span class="post-date" title="2022-01-27 22:30:07">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/27/SpringMVC/07-RESTful/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="07-RESTful">07-RESTful</span>
+            <span class="post-date" title="2022-01-27 15:53:48">2022/01/27</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/25/SpringMVC/06-SpringMVC%E7%9A%84%E8%A7%86%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="06-SpringMVC的视图">06-SpringMVC的视图</span>
+            <span class="post-date" title="2022-01-25 00:01:56">2022/01/25</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/23/SpringMVC/05-%E5%9F%9F%E5%AF%B9%E8%B1%A1%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="05-域对象共享数据">05-域对象共享数据</span>
+            <span class="post-date" title="2022-01-23 22:50:47">2022/01/23</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/04-SpringMVC%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="04-SpringMVC获取请求参数">04-SpringMVC获取请求参数</span>
+            <span class="post-date" title="2022-01-22 22:37:06">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/22/SpringMVC/03-RequestMapping%E6%B3%A8%E8%A7%A3/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="03-RequestMapping注解">03-RequestMapping注解</span>
+            <span class="post-date" title="2022-01-22 15:04:39">2022/01/22</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/21/SpringMVC/02-SpringMVC%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="02-SpringMVC工程创建">02-SpringMVC工程创建</span>
+            <span class="post-date" title="2022-01-21 07:51:07">2022/01/21</span>
+        </a>
+        
+        <a  class="全部文章 SpringMVC "
+           href="/2022/01/19/SpringMVC/01-SpringMVC%E7%AE%80%E4%BB%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="01-SpringMVC简介">01-SpringMVC简介</span>
+            <span class="post-date" title="2022-01-19 22:30:42">2022/01/19</span>
+        </a>
+        
+        <a  class="全部文章 "
+           href="/2022/01/19/hello-world/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2022-01-19 01:09:33">2022/01/19</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-redis/04-配置文件" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">04-配置文件</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Redis">Redis</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2022-04-06 17:38:56'>2022-04-06 17:20</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Units%E5%8D%95%E4%BD%8D"><span class="toc-text">1.1.  Units单位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-INCLUDES%E5%8C%85%E5%90%AB"><span class="toc-text">1.2.  INCLUDES包含</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="toc-text">1.3.  网络相关配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-bind"><span class="toc-text">1.3.1.  bind</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-protected-mode"><span class="toc-text">1.3.2.  protected-mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-Port"><span class="toc-text">1.3.3.  Port</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4-tcp-backlog"><span class="toc-text">1.3.4.  tcp-backlog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5-timeout"><span class="toc-text">1.3.5.  timeout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-6-tcp-keepalive"><span class="toc-text">1.3.6.  tcp-keepalive</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-GENERAL%E9%80%9A%E7%94%A8"><span class="toc-text">1.4.  GENERAL通用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-1-daemonize"><span class="toc-text">1.4.1.  daemonize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-2-pidfile"><span class="toc-text">1.4.2.  pidfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-3-loglevel"><span class="toc-text">1.4.3.  loglevel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-4-logfile"><span class="toc-text">1.4.4.  logfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-5-databases-16"><span class="toc-text">1.4.5.  databases 16</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-SECURITY%E5%AE%89%E5%85%A8"><span class="toc-text">1.5. SECURITY安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-LIMITS%E9%99%90%E5%88%B6"><span class="toc-text">1.6.  LIMITS限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-1-maxclients"><span class="toc-text">1.6.1.  maxclients</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-2-maxmemory"><span class="toc-text">1.6.2.  maxmemory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-3-maxmemory-policy"><span class="toc-text">1.6.3.  maxmemory-policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-4-maxmemory-samples"><span class="toc-text">1.6.4.  maxmemory-samples</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>自定义目录：/myredis/redis.conf</p>
+<h2 id="1-1-Units单位"><a href="#1-1-Units单位" class="headerlink" title="1.1.  Units单位"></a><strong>1.1.</strong>  <strong>Units单位</strong></h2><p>配置大小单位,开头定义了一些基本的度量单位，只支持bytes，不支持bit</p>
+<p>大小写不敏感</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172515164.png" alt="image-20220406172515164">                               </p>
+<h2 id="1-2-INCLUDES包含"><a href="#1-2-INCLUDES包含" class="headerlink" title="1.2.  INCLUDES包含"></a><strong>1.2.</strong>  <strong>INCLUDES包含</strong></h2><p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172605366.png" alt="image-20220406172605366"></p>
+<p>类似jsp中的include，多实例的情况可以把公用的配置文件提取出来</p>
+<h2 id="1-3-网络相关配置"><a href="#1-3-网络相关配置" class="headerlink" title="1.3.  网络相关配置"></a><strong>1.3.</strong>  <strong>网络相关配置</strong></h2><h3 id="1-3-1-bind"><a href="#1-3-1-bind" class="headerlink" title="1.3.1.  bind"></a><strong>1.3.1.</strong>  <strong>bind</strong></h3><p>默认情况bind=127.0.0.1只能接受本机的访问请求</p>
+<p>不写的情况下，无限制接受任何ip地址的访问</p>
+<p>生产环境肯定要写你应用服务器的地址；服务器是需要远程访问的，所以需要将其注释掉</p>
+<p>如果开启了protected-mode，那么在没有设定bind ip且没有设密码的情况下，Redis只允许接受本机的响应</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172623742.png" alt="image-20220406172623742"></p>
+<p>保存配置，停止服务，重启启动查看进程，不再是本机访问了。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172630439.png" alt="image-20220406172630439"></p>
+<h3 id="1-3-2-protected-mode"><a href="#1-3-2-protected-mode" class="headerlink" title="1.3.2.  protected-mode"></a><strong>1.3.2.</strong>  <strong>protected-mode</strong></h3><p>将本机访问保护模式设置no</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172806988.png" alt="image-20220406172806988"></p>
+<h3 id="1-3-3-Port"><a href="#1-3-3-Port" class="headerlink" title="1.3.3.  Port"></a><strong>1.3.3.</strong>  <strong>Port</strong></h3><p>端口号，默认 6379</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406172927233.png" alt="image-20220406172927233"></p>
+<h3 id="1-3-4-tcp-backlog"><a href="#1-3-4-tcp-backlog" class="headerlink" title="1.3.4.  tcp-backlog"></a><strong>1.3.4.</strong>  <strong>tcp-backlog</strong></h3><p>设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和=未完成三次握手队列 + 已经完成三次握手队列。</p>
+<p>在高并发环境下你需要一个高backlog值来避免慢客户端连接问题。</p>
+<p>注意Linux内核会将这个值减小到/proc/sys/net/core/somaxconn的值（128），所以需要确认增大/proc/sys/net/core/somaxconn和/proc/sys/net/ipv4/tcp_max_syn_backlog（128）两个值来达到想要的效果</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173002221.png" alt="image-20220406173002221"></p>
+<h3 id="1-3-5-timeout"><a href="#1-3-5-timeout" class="headerlink" title="1.3.5.  timeout"></a><strong>1.3.5.</strong>  <strong>timeout</strong></h3><p>一个空闲的客户端维持多少秒会关闭，0表示关闭该功能。即永不关闭。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173030322.png" alt="image-20220406173030322"></p>
+<h3 id="1-3-6-tcp-keepalive"><a href="#1-3-6-tcp-keepalive" class="headerlink" title="1.3.6.  tcp-keepalive"></a><strong>1.3.6.</strong>  <strong>tcp-keepalive</strong></h3><p>对访问客户端的一种心跳检测，每个n秒检测一次。</p>
+<p>单位为秒，如果设置为0，则不会进行Keepalive检测，建议设置成60 </p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173117031.png" alt="image-20220406173117031"></p>
+<h2 id="1-4-GENERAL通用"><a href="#1-4-GENERAL通用" class="headerlink" title="1.4.  GENERAL通用"></a><strong>1.4.</strong>  <strong>GENERAL通用</strong></h2><h3 id="1-4-1-daemonize"><a href="#1-4-1-daemonize" class="headerlink" title="1.4.1.  daemonize"></a><strong>1.4.1.</strong>  <strong>daemonize</strong></h3><p>是否为后台进程，设置为yes</p>
+<p>守护进程，后台启动</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173301644.png" alt="image-20220406173301644"></p>
+<h3 id="1-4-2-pidfile"><a href="#1-4-2-pidfile" class="headerlink" title="1.4.2.  pidfile"></a><strong>1.4.2.</strong>  <strong>pidfile</strong></h3><p>存放pid文件的位置，每个实例会产生一个不同的pid文件</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173337634.png" alt="image-20220406173337634"></p>
+<h3 id="1-4-3-loglevel"><a href="#1-4-3-loglevel" class="headerlink" title="1.4.3.  loglevel"></a><strong>1.4.3.</strong>  <strong>loglevel</strong></h3><p>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为<strong>notice</strong></p>
+<p>四个级别根据使用阶段来选择，生产环境选择notice 或者warning</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173352287.png" alt="image-20220406173352287"> </p>
+<h3 id="1-4-4-logfile"><a href="#1-4-4-logfile" class="headerlink" title="1.4.4.  logfile"></a><strong>1.4.4.</strong>  <strong>logfile</strong></h3><p>日志文件名称</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173409003.png" alt="image-20220406173409003"></p>
+<h3 id="1-4-5-databases-16"><a href="#1-4-5-databases-16" class="headerlink" title="1.4.5.  databases 16"></a><strong>1.4.5.</strong>  <strong>databases 16</strong></h3><p>设定库的数量 默认16，默认数据库为0，可以使用SELECT <dbid>命令在连接上指定数据库id</dbid></p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173414624.png" alt="image-20220406173414624"></p>
+<h2 id="1-5-SECURITY安全"><a href="#1-5-SECURITY安全" class="headerlink" title="1.5. SECURITY安全"></a><strong>1.5.</strong> SECURITY安全</h2><p><strong>1.5.1.</strong>  <strong>设置密码</strong></p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173439511.png" alt="image-20220406173439511"></p>
+<p>访问密码的查看、设置和取消</p>
+<p>在命令中设置密码，只是临时的。重启redis服务器，密码就还原了。</p>
+<p>永久设置，需要再配置文件中进行设置。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173459522.png" alt="image-20220406173459522"></p>
+<h2 id="1-6-LIMITS限制"><a href="#1-6-LIMITS限制" class="headerlink" title="1.6.  LIMITS限制"></a><strong>1.6.</strong>  <strong>LIMITS限制</strong></h2><h3 id="1-6-1-maxclients"><a href="#1-6-1-maxclients" class="headerlink" title="1.6.1.  maxclients"></a><strong>1.6.1.</strong>  <strong>maxclients</strong></h3><p>Ø 设置redis同时可以与多少个客户端进行连接。</p>
+<p>Ø 默认情况下为10000个客户端。</p>
+<p>Ø 如果达到了此限制，redis则会拒绝新的连接请求，并且向这些连接请求方发出“max number of clients reached”以作回应。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173754607.png" alt="image-20220406173754607"></p>
+<h3 id="1-6-2-maxmemory"><a href="#1-6-2-maxmemory" class="headerlink" title="1.6.2.  maxmemory"></a><strong>1.6.2.</strong>  <strong>maxmemory</strong></h3><p>Ø 建议<strong>必须设置</strong>，否则，将内存占满，造成服务器宕机</p>
+<p>Ø 设置redis可以使用的内存量。一旦到达内存使用上限，redis将会试图移除内部数据，移除规则可以通过maxmemory-policy来指定。</p>
+<p>Ø 如果redis无法根据移除规则来移除内存中的数据，或者设置了“不允许移除”，那么redis则会针对那些需要申请内存的指令返回错误信息，比如SET、LPUSH等。</p>
+<p>Ø 但是对于无内存申请的指令，仍然会正常响应，比如GET等。如果你的redis是主redis（说明你的redis有从redis），那么在设置内存使用上限时，需要在系统中留出一些内存空间给同步队列缓存，只有在你设置的是“不移除”的情况下，才不用考虑这个因素。</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173807896.png" alt="image-20220406173807896"> </p>
+<h3 id="1-6-3-maxmemory-policy"><a href="#1-6-3-maxmemory-policy" class="headerlink" title="1.6.3.  maxmemory-policy"></a><strong>1.6.3.</strong>  <strong>maxmemory-policy</strong></h3><p>Ø volatile-lru：使用LRU算法移除key，只对设置了过期时间的键；（最近最少使用）</p>
+<p>Ø allkeys-lru：在所有集合key中，使用LRU算法移除key</p>
+<p>Ø volatile-random：在过期集合中移除随机的key，只对设置了过期时间的键</p>
+<p>Ø allkeys-random：在所有集合key中，移除随机的key</p>
+<p>Ø volatile-ttl：移除那些TTL值最小的key，即那些最近要过期的key</p>
+<p>Ø noeviction：不进行移除。针对写操作，只是返回错误信息</p>
+<p><img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173815027.png" alt="image-20220406173815027"> </p>
+<h3 id="1-6-4-maxmemory-samples"><a href="#1-6-4-maxmemory-samples" class="headerlink" title="1.6.4.  maxmemory-samples"></a><strong>1.6.4.</strong>  <strong>maxmemory-samples</strong></h3><p>Ø 设置样本数量，LRU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个。</p>
+<p>Ø 一般设置3到7的数字，数值越小样本越不准确，但性能消耗越小。</p>
+<p> <img src="https://gitee.com/lhymo/mypng/raw/master/img/image-20220406173828998.png" alt="image-20220406173828998"></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022 Drohonyua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
